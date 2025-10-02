@@ -1,0 +1,85 @@
+---
+const {
+  pageTitle = "Cakes and Custom Cakes",
+  orderType = ["Ready made", "Custom"],
+  defaultSizes = ['5"', '8"', '10"'],
+  defaultFlavors = ["Vanilla", "Chocolate", "Carrot", "Red Velvet"]
+} = Astro.props;
+---
+
+<div class="custom-orders">
+    <!-- Page title (prop) -->
+    <h2>{pageTitle}</h2>
+
+    <!-- Cake types (prop: orderType) -->
+    <div class="cake-types">
+        <p>Choose type:</p>
+        <ul>
+            {orderType.map((type:string) => 
+            <li>
+                {type}
+            </li>
+            )}
+        </ul>
+    </div>
+
+    <!-- Sizes (prop: defaultSizes) -->
+    <div class="cake-sizes">
+        <p>Available sizes:</p>
+        <ul>
+            {defaultSizes.map((size:string) => 
+            <li>
+                {size}
+            </li>
+            )}
+        </ul>
+    </div>
+
+    <!-- Cost placeholder -->
+    <div class="cake-cost">
+        <p>Cost: [calculated based on size & type]</p>
+    </div>
+
+    <!-- Flavors (prop: defaultFlavors) -->
+    <div class="cake-flavors">
+        <p>Flavors:</p>
+        <ul>
+            {defaultFlavors.map((flavor:string) => 
+            <li>
+                {flavor}
+            </li>
+            )}
+        </ul>
+    </div>
+
+    <!-- Frosting placeholder -->
+    <div class="cake-frosting">
+        <p>Frosting based on selection for pre-made and then user select for custom?</p>
+    </div>
+
+    <!-- Cake message placeholder -->
+    <div class="cake-message">
+        <p>Message: [user types]</p>
+    </div>
+
+    <!-- Other sections -->
+    <div class="cake-rush-order">
+        <p>Rush Order: [user option]</p>
+    </div>
+
+    <div class="add-to-bag">
+        <p>[Add to Bag button]</p>
+    </div>
+
+    <div class="allergens-ingredients">
+        <p>[Allergens & Ingredients]</p>
+    </div>
+
+    <div class="cake-care">
+        <p>[Cake Care Instructions]</p>
+    </div>
+
+    <div class="pickup-info">
+        <p>[Pickup Instructions]</p>
+    </div>
+</div>
