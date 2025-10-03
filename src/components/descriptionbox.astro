@@ -1,0 +1,65 @@
+---
+const {title="default"} = Astro.props;
+
+
+---
+<div class="description">
+    <details>
+        <summary>
+            <h1 class="title">
+                <strong>{title}</strong>
+            <h1>
+            <span class="arrow">^</span>
+        </summary>
+        <slot name="desc">
+            Lorem ipsum dolor sit amet, 
+            consectetur adipiscing elit, sed do eiusmod tempor 
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat 
+            nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui 
+            officia deserunt mollit anim id est laborum.    
+        </slot> 
+    </details>
+</div>
+  
+<style>
+
+    .description{
+        padding: 10px;
+        border-radius: 10px;
+        border-width: 1px;
+        border-color: black;
+        width: 500px;
+        flex-wrap:wrap;
+    }
+
+    .description details[open] {
+        height: 300px;
+    }
+
+    .title{
+        margin-bottom: 10px;
+    }
+
+    summary {
+        display:flex;
+        justify-content: space-between;
+        cursor:pointer;
+    }
+    
+    span.arrow {
+        width: 24px;
+        height: 24px;
+        transform: rotateX(180deg);
+        transition: 0.3s all;
+        margin-left: 90px;
+    }
+    
+    details[open] summary span.arrow{
+        transform: rotateX(0deg)
+    }
+
+    
+ 
+</style>

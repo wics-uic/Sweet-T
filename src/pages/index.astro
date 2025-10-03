@@ -2,6 +2,7 @@
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
+import Button from "../components/redirectbutton.astro"
 
 import Testimonial from "../components/testimonial.astro";
 
@@ -21,5 +22,6 @@ import '../styles/global.css';
 		<NavBar />
 		<Testimonial name="Josh Perez"/>
 		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
+		<Button body="New Page" url="/mypage"/>
 	</Layout>
 </html>

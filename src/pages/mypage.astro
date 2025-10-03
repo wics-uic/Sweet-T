@@ -1,0 +1,32 @@
+---
+import Layout from "../layouts/layout.astro"
+import Button from "../components/redirectbutton.astro"
+import Description from "../components/descriptionbox.astro"
+import '../styles/global.css';
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	
+    <Layout>
+        <Description title="Allergens"> 
+            <p slot="desc">
+                Testing slots!
+            </p>
+        </Description>
+        <Description title="Care"> 
+            <p slot="desc">
+                This one is for care!
+            </p>
+        </Description>
+        <Description title="Blank slot"/> 
+       
+		<Button body="Back to main page" url="/"/>
+	</Layout>
+</html>
