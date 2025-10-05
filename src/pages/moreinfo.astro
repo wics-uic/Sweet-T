@@ -1,0 +1,34 @@
+---
+import MoreInfo from "../components/moreInfo.astro";
+---
+
+<main class="info-page">
+  <h1>Product ingrediants Page</h1>
+
+  <MoreInfo product = "Strawberry Cupcake" ingrediants = "flour, strawberries, egg" />
+  <MoreInfo product = "Blueberry Cupcake" ingrediants = "flour, blueberry, egg" />
+
+  <a class="back-btn" href="/">Back to Home</a>
+</main>
+
+<style>
+  .info-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 50px;
+    font-family: sans-serif;
+  }
+
+  .back-btn {
+    margin-top: 20px;
+    background-color: #d26e8cff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+</style>

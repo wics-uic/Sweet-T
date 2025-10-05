@@ -1,0 +1,20 @@
+---
+const { product = "default", ingrediants = "default" } = Astro.props;
+---
+
+<div class="greeting">
+  <h2>{product}</h2>
+  <p> The ingrediants are . . . {ingrediants} </p>
+</div>
+
+<style>
+  .greeting {
+    text-align: center;
+    padding: 20px;
+    background-color: #ff6594ff;
+    border-radius: 10px;
+    font-family: sans-serif;
+  }
+</style>
+
+
