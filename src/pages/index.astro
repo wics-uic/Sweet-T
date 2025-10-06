@@ -2,6 +2,7 @@
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
+import CustomOrders from "../components/custom_orders.astro";
 
 import Testimonial from "../components/testimonial.astro";
 
@@ -17,9 +18,14 @@ import '../styles/global.css';
 		<title>Astro</title>
 	</head>
 	<Layout>
-		
 		<NavBar />
+		<a href="/custom">
+			<button type="button" class="btn">Custom Orders</button>
+		</a>
 		<Testimonial name="Josh Perez"/>
 		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
 	</Layout>
+	
+	
+
 </html>
