@@ -6,6 +6,8 @@ import Layout from "../layouts/layout.astro"
 import Testimonial from "../components/testimonial.astro";
 
 import '../styles/global.css';
+
+import MessageCard from "../components/MessageCard.astro";
 ---
 
 <html lang="en">
@@ -23,3 +25,16 @@ import '../styles/global.css';
 		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
 	</Layout>
 </html>
+
+<html>
+  <head>
+    <title>My Page</title>
+  </head>
+  <body>
+    <MessageCard message="Hello is this a component" />
+  </body>
+</html>
+
+<a href="/myPage">
+  <button>Go to My Page</button>
+</a>
