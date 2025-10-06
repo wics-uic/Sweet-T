@@ -3,21 +3,9 @@ const {body="default", url="default"} = Astro.props;
 
 
 ---
-<div class="button">
+<div class="bg-[#D4596B] text-[white] cursor-pointer mt-2.5 px-12 py-4 rounded-xl">
   <a href={url}>
-    <button>{body}</button>
+    {body}
   </a>
 </div>
-<style>
-    .button{
-      margin-top: 10px;
-      background-color: #D4596B;
-      padding-top: 16px;
-      padding-bottom: 16px;
-      padding-right: 48px;
-      padding-left: 48px;
-      border-radius: 12px;
-      color: white;
-    }
-   
-</style>
+
