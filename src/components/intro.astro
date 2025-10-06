@@ -1,0 +1,33 @@
+---
+const {name} = Astro.props;
+---
+
+
+
+<div class="intro">
+    <div class="intro-text">
+        <h1 id="intro-big">Welcome to {name} Bakery!</h1>
+    </div>
+</div>
+
+<style>
+    .intro{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: antiquewhite;
+    }
+    .intro-text{
+        align-self: flex-start;
+        display: flex;
+        padding: 5;
+        margin: 0;
+        color:burlywood;
+    }
+    .intro-big{
+        font-size: 38px;
+    }
+    .intro-small{
+        font-size: 30px;
+    }
+</style>
