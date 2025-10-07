@@ -1,0 +1,11 @@
+---
+const {name = "default",body="default", url="default"} = Astro.props;
+---
+<div class="flex flex-col justify-evenly w-[552px] ">
+    <h2 class="flex justify-start font-bold text-[50px]">{name}</h2>
+        <p class="text-left font-medium text-[26px]">{body}</p>
+    <div class="flex justify-start">
+        <button class="text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px]">Shop all treats</button>
+    </div>
+</div>
+  

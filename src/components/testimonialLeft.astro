@@ -1,0 +1,10 @@
+---
+const {name = "default",body="default", url="default"} = Astro.props;
+import TestimontalTextLeft from "./testimonialTextLeft.astro"
+import Images from "./testimonialImages.astro"
+---
+
+<div class="flex flex-row p-3 bg-[#F0CAC9] w-[1168px] h-auto justify-between">
+  <TestimontalTextLeft name={name}, body={body}, url={url}/>
+  <Images/>
+</div>
