@@ -1,13 +1,16 @@
 ---
-const navLinks = ["Home", "Cakes", "Cupcakes", "Pastelitos", "Cookies", "Flans"];
-const navLinksRightSide = ["Cart", "Login"];
+// const navLinks = ["Home", "Cakes", "Cupcakes", "Pastelitos", "Cookies", "Flans"];
+// const navLinksRightSide = ["Cart", "Login"];
+
+const navLinks = [ {name: "Home", path: "/"}, {name: "Cakes", path: "/cakes"}, {name: "Cupcakes", path: "/cupcakes"}, {name: "Pastelitos", path: "/pastelitos"}, {name: "Cookies", path: "/cookies"}, {name: "Flans", path: "/flans"} ];
+const navLinksRightSide = [ {name: "Cart", path: "/cart"}, {name: "Login", path: "/login"} ];
 ---
 
 <div class="nav-bar">
 
 <div class="nav-bar-left">
   <ul>
-    {navLinks.map((link) => <li><a class="link" href="#">{link}</a></li>)}
+    {navLinks.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}  
   </ul>
 </div>
 
@@ -17,7 +20,7 @@ const navLinksRightSide = ["Cart", "Login"];
 
 <div class="nav-bar-right">
   <ul>
-    {navLinksRightSide.map((link) => <li><a class="link" href="#">{link}</a></li>)}
+    {navLinksRightSide.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}  
   </ul>
 </div>
   
