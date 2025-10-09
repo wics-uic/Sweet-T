@@ -1,0 +1,105 @@
+---
+import NavBar from "../components/navbar.astro";
+import Layout from "../layouts/layout.astro";
+import Product from "../components/product.astro";
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+
+
+	<Layout>
+        <NavBar />
+		<section class="order-section">
+            <!-- left -->
+            <div class= "img-container">
+                <img src="src/assets/landing-cake.png">
+                <div class="circles">
+                    <span class="circle"></span>
+                    <span class="circle"></span>
+                    <span class="circle"></span>
+                    <span class="circle"></span>
+                </div>
+            </div>
+            <!-- right -->
+            <div class="checkout-container">
+                <h2>name of product</h2>
+                <p>other stuff</p>
+            </div>
+        </section>
+
+
+
+		<a href="/">
+			<button class="back-button">Go Back</button>
+		</a>
+	</Layout>
+</html>
+
+<style>
+    .back-button{
+        display: inline-block;
+		background-color: beige;
+		padding: 10px 20px;
+		border: 2px solid black;
+    }
+
+    .img-container{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .img-container img{
+        width: 100%;
+        height: 100%;
+        max-height: 45vh;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+    .circles{
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 12px;
+        width: 100%;
+    }
+    .circle{
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 0.5px solid var(--color-green-100);
+        background-color: transparent;
+    }
+    .circle:first-child{
+        background-color: var(--color-green-100);
+        border-color: var(--color-green-100);
+    }
+
+    .order-section{
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        padding: 100px;
+        min-height: 90vh;
+        gap: 50px;
+        box-sizing: border-box;
+    }
+    .checkout-container{
+        flex: 1;
+        background-color: #f7f7f7;
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
