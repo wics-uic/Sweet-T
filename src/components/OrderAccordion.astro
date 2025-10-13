@@ -1,0 +1,98 @@
+---
+const accordionData = [
+  {
+    title: "Allergens and ingredients",
+    details: `
+      <p>dairy, eggs, soy, wheat, peanuts, tree nuts (walnuts)</p>
+      <p>All treats are made by hand using shared equipment, which</p>
+      <p>processes dairy, eggs, soy, wheat, peanuts, tree nuts, coconut,</p>
+      <p>and sesame. If you have a severe allergy, please know that</p>
+      <p>while we do our best to prevent cross-contamination, we are</p>
+      <p>not an allergen-free bakery.</p>
+    `,
+  },
+  {
+    title: "Care",
+    details: `
+      <p>Once you pick it up direct to party or into the fridge within 30</p>
+      <p>minutes. Remove from fridge 1 hour before serving. Keep level,</p>
+      <p>keep cool, keep covered once cut.</p>
+    `,
+  },
+  {
+    title: "Pickup",
+    details: `
+      <p>Upon ordering, we will reach out to finalize pickup time or details.</p>
+    `,
+  },
+];
+---
+
+<style>
+.accordion {
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.accordion-item {
+  margin-bottom: 16px;
+  border: 1px solid #165713;
+  border-radius: 10px;
+  background-color: #e8e0d8;
+  overflow: hidden;
+}
+
+.accordion-header {
+  padding: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 16px;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+  white-space: normal; /* normal text with paragraphs */
+}
+
+.accordion-item.active .accordion-content {
+  max-height: 500px;
+  padding: 10px 16px 16px 16px;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.arrow.open {
+  transform: rotate(180deg);
+}
+</style>
+
+<div class="accordion">
+  {accordionData.map((item) => (
+    <div class="accordion-item">
+      <div class="accordion-header">
+        {item.title}
+        <span class="arrow">▾</span>
+      </div>
+      <div class="accordion-content" set:html={item.details}></div>
+    </div>
+  ))}
+</div>
+
+<script type="module">
+  document.querySelectorAll('.accordion-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const item = header.parentElement;
+      const arrow = header.querySelector('.arrow');
+
+      item.classList.toggle('active');
+      arrow.classList.toggle('open');
+    });
+  });
+</script>
