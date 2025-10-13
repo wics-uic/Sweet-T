@@ -2,37 +2,31 @@
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
-import Testimonial from "../components/testimonial.astro"
+import InfoBar from "../components/InfoBar.astro";
+import Testimonial from "../components/testimonial.astro";
+
 import '../styles/global.css';
 ---
 
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-
-  <Layout>
-    <NavBar />
-    <Testimonial name="Josh Perez"/>
-    <Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
-
-    <!-- Button to navigate to Order Accordion page -->
-    <div style="text-align:center; margin-top:2rem;">
-      <a href="/order-accordion">
-        <button style="
-          padding: 0.5rem 1rem;
-          background-color: pink;
-          border: none;
-          border-radius: 8px;
-          cursor: pointer;
-        ">
-          View Order Accordion
-        </button>
-      </a>
-    </div>
-  </Layout>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Sweet T</title>
+	</head>
+	<Layout>
+		<NavBar />
+		<InfoBar/>
+	</Layout>
 </html>
+
+<style>
+	.order-button{S
+		display: inline-block;
+		background-color: beige;
+		padding: 10px 20px;
+		border: 2px solid black;
+	}
+</style>
