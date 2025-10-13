@@ -2,13 +2,15 @@
 const { url = "", item_name = "default name", price = "$0" } = Astro.props;
 ---
 
-<div class="product">
+
+<a href={`/orders?item_name=${encodeURIComponent(item_name)}&price=${encodeURIComponent(price)}&url=${encodeURIComponent(url)}`}
+  class="product">
   <img src={url} class="product-image" />
   <div class="product-text">
     <p id="product-name">Ready made & custom {item_name}</p>
     <p id="product-price">{price}</p>
   </div>
-</div>
+</a>
 
 <style>
     .product {

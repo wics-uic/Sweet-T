@@ -1,0 +1,24 @@
+---
+export const prerender = false;
+
+import Layout from "../layouts/layout.astro";
+import NavBar from "../components/navbar.astro";
+import OrderSection from "../components/orderSection.astro";
+
+const params = new URL(Astro.request.url).searchParams;
+const item_name = params.get("item_name") || "default name";
+const price = params.get("price") || "$0";
+const url = params.get("url") || "src/assets/landing-cake.png";
+
+console.log("Params:", item_name, price, url);
+---
+
+<Layout>
+  <NavBar />
+
+  <OrderSection 
+    item_name={item_name}
+    price={price}
+    url={url}
+  />
+</Layout>

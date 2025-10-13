@@ -1,0 +1,223 @@
+---
+const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png" } = Astro.props;
+---
+
+<section class="order-section">
+  <!-- left -->
+  <div class="img-carousel">
+    <div class="carousel">
+      <img id="carouselImage" src="src/assets/landing-cake.png"  />
+    </div>
+    <div class="circles">
+      <button class="circle" onclick="showImage(0)" aria-label="first-image"></button>
+      <button class="circle" onclick="showImage(1)" aria-label="second-image"></button>
+      <button class="circle" onclick="showImage(2)" aria-label="third-image"></button>
+      <button class="circle" onclick="showImage(3)" aria-label="fourth-image"></button>
+    </div>
+  </div>
+
+  <!-- right -->
+  <div class="checkout-container">
+    <h2>Ready made & custom {item_name}</h2>
+    <!--tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(event, 'ready')">Ready made</button>
+      <button class="tab" onclick="switchTab(event, 'custom')">Custom</button>
+    </div>
+    <!--ready tab -->
+    <div id="ready" class="tab-content active">
+      <div class="sizes">
+        <button class="size-button">5 inches</button>
+        <button class="size-button">8 inches</button>
+        <button class="size-button">10 inches</button>
+      </div>
+    </div>
+
+    <!--custom tab -->
+    <div id="custom" class="tab-content">
+      <p>Empty for now</p>
+    </div>
+
+    <button class="add-button">Add to bag</button>
+
+    <div class="accordion-placeholder">
+      <p>Accordian goes here</p>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+  // Carousel Code
+  document.addEventListener("DOMContentLoaded", () => {
+    const images = [
+      "src/assets/landing-cake.png",
+      "src/assets/landing-cake.png",
+      "src/assets/landing-cake.png",
+      "src/assets/landing-cake.png"
+    ];
+
+    const img = document.getElementById("carouselImage");
+    const buttons = document.querySelectorAll(".circle");
+
+    window.showImage = function(index) {
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = images[index];
+        img.style.opacity = 1;
+      }, 150);
+      buttons.forEach((b, i) => b.classList.toggle("active", i === index));
+    };
+
+    showImage(0);
+    
+    // Tab Switching
+    window.switchTab = function(event, tabId){
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+      event.target.classList.add("active");
+      document.getElementById(tabId).classList.add("active");
+    };
+  });
+
+
+
+</script>
+
+<!-- Styles -->
+<style>
+  .order-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 80px 100px;
+    min-height: 90vh;
+    box-sizing: border-box;
+    gap: 50px;
+  }
+
+  .img-carousel {
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  #carouselImage {
+    display: block;
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+  }
+
+  .circles {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+    width: 100%;
+  }
+
+  .circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid var(--color-green-100);
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .circle.active {
+    background-color: var(--color-green-100);
+  }
+
+  .checkout-container {
+    flex: 1;
+    padding: 0 50px 40px; /* removed top padding so heading is flush with image top */
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+    height: 80vh;
+  }
+
+  .checkout-container h2 {
+    margin: 0;
+    font-size: 34px;
+    color: var(--color-green-100);
+    font-weight: 700;
+  }
+
+  .checkout-container p {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 0;
+  }
+
+
+  .tab {
+    padding: 10px 10px;
+    font-size: 16px;
+    position: relative;
+    border-bottom: 1px solid #d0d0d0;
+    color: gray;
+  }
+
+  .tab.active {
+    color: black;
+    font-weight: 500;
+    border-bottom: 2px solid black;
+  }
+
+  .tab-content {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tab-content.active{
+    display: flex;
+  }
+
+  .sizes {
+    display: flex;
+    gap: 14px;
+  }
+
+
+  .size-button {
+    padding: 10px 20px;
+    border: 1px solid #c96b6b;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+
+  .add-button {
+    margin-top: 20px;
+    padding: 14px 0px;
+    width: 100%
+    border: 1px black;
+    background-color: lightgray;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  .accordion-placeholder {
+    margin-top: 30px;
+    border: 1px dashed #aaa;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: #555;
+  }
+</style>
