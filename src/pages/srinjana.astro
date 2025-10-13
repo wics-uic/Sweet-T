@@ -23,14 +23,20 @@ import InfoBar from "../components/InfoBar.astro";
 	</head>
 	<Layout>
 		
-		<NavBar />
+		\\<NavBar />
 		<Testimonial name="Srinjana Chatterjee"/>
 		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
 	</Layout>
 </html>
 
+<div class="horizontal-scrolling-items"></div>
 
-<div class="info-bar">
+<style>
+.horizontal-scrolling-items {
+  display: flex;
+  font-size: 40px; 
+
+  <div class="info-bar">
   <div class="info-item">
     <Image src={scrollBag} alt="Pickup Icon" />
     <p>Pickup in Chicago 9am–5pm daily</p>
@@ -47,6 +53,9 @@ import InfoBar from "../components/InfoBar.astro";
     <p>Made with love</p>
   </div>
 </div>
+}
+</style>
+
 
 <style>
   .info-bar {
