@@ -2,12 +2,13 @@
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
-
+import InfoBar from "../components/InfoBar.astro";
 import Footer from "../components/footer.astro";
 
-import Testimonial from "../components/testimonial.astro";
+import Testimonial from "../components/testimonialSection.astro";
 
 import '../styles/global.css';
+import TestimonialSection from "../components/testimonialSection.astro";
 ---
 
 <html lang="en">
@@ -16,12 +17,21 @@ import '../styles/global.css';
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Sweet T</title>
 	</head>
-</html>
-<Layout>
-	<body>
+	<Layout>
+		
 		<NavBar />
-		<Footer />
-	</body>
-</Layout>
+		<InfoBar/>
+    <TestimonialSection name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" url="src/assets/testimonial-1.jpg"/>
+	</Layout>
+</html>
+
+<style>
+	.order-button{S
+		display: inline-block;
+		background-color: beige;
+		padding: 10px 20px;
+		border: 2px solid black;
+	}
+</style>
