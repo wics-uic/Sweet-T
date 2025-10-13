@@ -3,6 +3,8 @@ import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
 
+import Footer from "../components/footer.astro";
+
 import Testimonial from "../components/testimonial.astro";
 
 import '../styles/global.css';
@@ -16,15 +18,10 @@ import '../styles/global.css';
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<Layout>
-		<NavBar />
-		<a href="/custom">
-			<button type="button" class="btn">Custom Orders</button>
-		</a>
-		<Testimonial name="Josh Perez"/>
-		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
-	</Layout>
-	
-	
-
 </html>
+<Layout>
+	<body>
+		<NavBar />
+		<Footer />
+	</body>
+</Layout>

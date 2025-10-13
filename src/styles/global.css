@@ -3,14 +3,16 @@
 
 @theme {
 
-    /* white */
+    /* font */
+    --font-body: "Bricolage Grotesque", sans-serif;
 
+    /* white */
     --color-white: #FFFFFF;
+
     /* BEIGE */
     --color-beige-50: #F4EDE6;
 
     /* beige container */
-
     --color-beige-100: #E6D6C6;
 
     /*  background */
@@ -29,6 +31,5 @@
     --color-black-50: #010103;
 
     /* gray */
-
     --color-gray-50: #E5E7EB;
 }
