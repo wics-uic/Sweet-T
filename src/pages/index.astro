@@ -2,7 +2,7 @@
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
-
+import InfoBar from "../components/infobar.astro";
 import Testimonial from "../components/testimonial.astro";
 
 import '../styles/global.css';
@@ -19,7 +19,6 @@ import '../styles/global.css';
 	<Layout>
 		
 		<NavBar />
-		<Testimonial name="Josh Perez"/>
-		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
+		<InfoBar/>
 	</Layout>
 </html>
