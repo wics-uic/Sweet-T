@@ -1,33 +1,80 @@
 ---
-const navLinks = ["Home", "About", "Contact"];
+// const navLinks = ["Home", "Cakes", "Cupcakes", "Pastelitos", "Cookies", "Flans"];
+// const navLinksRightSide = ["Cart", "Login"];
+
+const navLinks = [ {name: "Cakes", path: "/cakes"}, {name: "Cupcakes", path: "/cupcakes"}, {name: "Pastelitos", path: "/pastelitos"}, {name: "Cookies", path: "/cookies"}, {name: "Flans", path: "/flans"} ];
+const navLinksRightSide = [ {name: "Cart", path: "/cart", image: "src/assets/nav-basket.svg"}, {name: "Login", path: "/login", image: "src/assets/nav-user.svg"} ];
 ---
 
-<div class="nav-bar">
-  <ul>
-  {navLinks.map((link) => <li><a class="link" href="#">{link}</a></li>)}
-</ul>
+<div class="nav-bar flex justify-center">
+  <div class="nav-bar-left absolute left-[70px]">
+    <ul>
+      {navLinks.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}  
+    </ul>
+  </div>
+
+  <div class="nav-bar-center">
+    <a class="logo" href="/"><img src="src/assets/Sweet_T.svg"/></a>
+  </div>
+
+  <div class="nav-bar-right absolute right-[70px]">
+    <ul>
+      {navLinksRightSide.map((link) => <li><a class="link" href={link.path}><img src={link.image} height="32px" width="32px"/></a></li>)}  
+    </ul>
+  </div>
 </div>
 
 <style>
   .nav-bar {
+    /* border: 1px solid blue; */
     margin: 15px;
-    padding: 10px;
+    padding: 15px;
+    /* display: flex; */
+    align-items: center;
+  }
+
+  .nav-bar-left{
+    display: flex;
+    /* border: 1px solid black; */
+    margin-right: 60px; 
+  }
+  .nav-bar-right {
+    display: flex;
+    /* border: 1px solid black;  */
+    margin-left: 60px; 
   }
 
   ul {
     list-style-type: none;
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 30px;
   }
+
   .link {
-    font-weight: bold;
+    font-weight: thin;
     text-decoration: none;
   }
 
-  .link:hover {
+  /* .link:hover {
     text-decoration: underline;
+  } */
+
+  .nav-bar-center {
+    display: flex;
+    /* border: 1px solid black; */
+    gap: 100px;
+    text-align: center;
+    width: 110px;
   }
+
+  .logo{
+    font-family: "Parisienne", cursive;
+    font-size: 32px;
+    color: #044A25;
+    margin: 0;
+  }
+
 </style>
 
 <script>

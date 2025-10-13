@@ -1,0 +1,23 @@
+---
+import NavBar from "../components/navbar.astro"
+import Product from "../components/product.astro"
+import Layout from "../layouts/layout.astro"
+---
+
+<html lang="en">
+	<Layout>
+		<NavBar />
+		<h1 class = "header"> Shop our Pastelitos!</h1>
+		<Product url="src/assets/products-pastelitos.png" item_name="pastelitos" price="$20/dozen"/>
+	</Layout>
+
+	<style>
+		.header {
+			color: #d12863;
+			font-weight: bold;
+			font-: cursive;
+			text-align: left;
+			font-size: 3rem;
+		}
+	</style>
+</html>
