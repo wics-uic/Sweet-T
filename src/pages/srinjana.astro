@@ -1,0 +1,80 @@
+---
+import { Image } from 'astro:assets';
+import Layout from "../layouts/layout.astro";
+import NavBar from "../components/navbar.astro";
+import SrinjanaComponent from "../components/SrinjanaComponents.astro";
+import Testimonial from "../components/testimonial.astro";
+import Product from "../components/product.astro";
+import "../styles/global.css";
+import scrollBag from "../assets/scroll-bag.png";
+import scrollCake from "../assets/scroll-cake.png";
+import scrollHeart from "../assets/scroll-heart.png";
+import InfoBar from "../components/InfoBar.astro";
+---
+
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+	</head>
+	<Layout>
+		
+		<NavBar />
+		<Testimonial name="Srinjana Chatterjee"/>
+		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
+	</Layout>
+</html>
+
+
+<div class="info-bar">
+  <div class="info-item">
+    <Image src={scrollBag} alt="Pickup Icon" />
+    <p>Pickup in Chicago 9am–5pm daily</p>
+  </div>
+
+
+  <div class="info-item">
+    <Image src={scrollCake} alt="Fresh Cake" />
+    <p>Baked fresh for every order</p>
+  </div>
+
+  <div class="info-item">
+    <Image src={scrollHeart} alt="Heart Icon" />
+    <p>Made with love</p>
+  </div>
+</div>
+
+<style>
+  .info-bar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff;
+    border-top: 2px solid #e6e6e6;
+    border-bottom: 2px solid #e6e6e6;
+    padding: 10px 0;
+    flex-wrap: wrap;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .info-item img {
+    width: 30px;
+    height: auto;
+    opacity: 0.8;
+  }
+
+  .info-item p {
+    margin: 0;
+  }
+</style>
