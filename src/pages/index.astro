@@ -25,7 +25,7 @@ import flan from '/src/assets/products-flan.png';
 	</head>
 
 <Layout>
-  <section class="products">
+  	<section class="products">
 
 		<h1>What celebration are we creating together?</h1>
 		
@@ -40,28 +40,30 @@ import flan from '/src/assets/products-flan.png';
 		</div>
 
 		<div class="grid">
-		<Product image= />
-		<Product image= />
+			<Product cake = {cakes}  item_name="cakes" price="$65" />
+			<Product cupcake = {cupcakes}  item_name="cupcakes" price="$42/dozen" />
 		</div>
 
 		<div class="grid">
-		<Image src= {flan} alt = "flan"/>
-		<Image src= {pastelitos} alt = "pastelito"/>
-		<Image src= {cookies} alt = "cookie"/>
+			<Image src= {flan} alt = "flan"/>
+			<Image src= {pastelitos} alt = "pastelito"/>
+			<Image src= {cookies} alt = "cookie"/>
 		</div>
 
 		<div class="grid">
-		<Product image= />
-		<Product image= />
-		<Product image= />
+			<Product flan = {flan}  item_name="flan" price="$30/dozen" />
+			<Product pastelito = {pastelitos}  item_name="pastelitos" price="$30/dozen" />
+			<Product cookie = {cookies}  item_name="cookies" price="$30/dozen" />
 		</div>
+
 	</section>
+</Layout>
 
-	<style>
-		section.products {
-		padding: 4rem 2rem;
-		text-align: left;
-		}
+<style>
+	section.products {
+	padding: 4rem 2rem;
+	text-align: left;
+	}
 
 		section.products h1 {
 		font-size: 2rem;
@@ -87,5 +89,4 @@ import flan from '/src/assets/products-flan.png';
 		display: block;
 		}
 	</style>
-</Layout>
 </html>
