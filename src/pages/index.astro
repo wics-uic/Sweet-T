@@ -4,10 +4,15 @@ import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
 
 import Testimonial from "../components/testimonial.astro";
-
 import '../styles/global.css';
-
 import MessageCard from "../components/MessageCard.astro";
+
+import { Image } from 'astro:assets';
+import cakes from '/src/assets/products-cake.png';
+import cupcakes from '/src/assets/products-cupcake.png';
+import pastelitos from '/src/assets/products-pastelitos.png';
+import cookies from '/src/assets/products-cookie.png';
+import flan from '/src/assets/products-flan.png';
 ---
 
 <html lang="en">
@@ -18,23 +23,69 @@ import MessageCard from "../components/MessageCard.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
-	<Layout>
+
+<Layout>
+  <section class="products">
+
+		<h1>What celebration are we creating together?</h1>
 		
-		<NavBar />
-		<Testimonial name="Josh Perez"/>
-		<Product url="src/assets/products-cupcake.png" item_name="cupcakes" price="$42/dozen"/>
-	</Layout>
-</html>
+		<div class="grid">
+			<div class="image-wrapper">
+				<Image src={cakes} alt="cake" />
+			</div>
 
-<html>
-  <head>
-    <title>My Page</title>
-  </head>
-  <body>
-    <MessageCard message="Hello is this a component" />
-  </body>
-</html>
+			<div class="image-wrapper">
+				<Image src={cupcakes} alt="cupcake" />
+			</div>
+		</div>
 
-<a href="/myPage">
-  <button>Go to My Page</button>
-</a>
+		<div class="grid">
+		<Product image= />
+		<Product image= />
+		</div>
+
+		<div class="grid">
+		<Image src= {flan} alt = "flan"/>
+		<Image src= {pastelitos} alt = "pastelito"/>
+		<Image src= {cookies} alt = "cookie"/>
+		</div>
+
+		<div class="grid">
+		<Product image= />
+		<Product image= />
+		<Product image= />
+		</div>
+	</section>
+
+	<style>
+		section.products {
+		padding: 4rem 2rem;
+		text-align: left;
+		}
+
+		section.products h1 {
+		font-size: 2rem;
+		font-weight: 700;
+		color: #036b3f;
+		margin-bottom: 2rem;
+		}
+
+		.grid {
+		display: grid;
+		gap: 1.5rem;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		max-width: 1200px;
+		margin: 0 auto;
+		}
+
+		.image-wrapper {
+		height: 250px; /* control the rectangular shape */
+		width: 100%;
+		overflow: hidden;
+		border-radius: 12px;
+		object-fit: cover;
+		display: block;
+		}
+	</style>
+</Layout>
+</html>
