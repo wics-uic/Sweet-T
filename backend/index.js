@@ -22,8 +22,6 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['customer', 'admin'], required: true, default: 'customer' }
-}, {
-    timestamps: true // Automatically add createdAt and updatedAt fields
 });
 
 const User = mongoose.model('User', userSchema);
