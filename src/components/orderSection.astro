@@ -28,15 +28,75 @@ import OrderAccordion from "./OrderAccordion.astro";
     <!--ready tab -->
     <div id="ready" class="tab-content active">
       <div class="sizes">
-        <button class="size-button">5 inches</button>
-        <button class="size-button">8 inches</button>
-        <button class="size-button">10 inches</button>
+        <button class="size-button" data-size="5" >5 inches</button>
+        <button class="size-button" data-size="8" >8 inches</button>
+        <button class="size-button" data-size="10" >10 inches</button>
+      </div>
+
+      <p class="price">$65</p>
+      <p class="serving-info">This feeds around 10–12 people.</p>
+
+      <div class= "flavor">
+        <p>Flavor</p>
+        <div class="radioBtns">
+          <label><input type="radio" name="ready-flavor" value="vanilla" checked> Vanilla</label>
+          <label><input type="radio" name="ready-flavor" value="chocolate"> Chocolate</label>
+          <label><input type="radio" name="ready-flavor" value="carrot"> Carrot</label>
+          <label><input type="radio" name="ready-flavor" value="red velvet"> Red Velvet</label>
+        </div>
+      </div>
+
+      <div id="frosting" class="frosting">
+        <p>Frosting</p>
+        <p class = "autoFrost">We’ll pair this with a <span id="auto-frosting">vanilla buttercream</span> frosting.</p>
+      </div>
+
+      <p>Write a message for the cake</p>
+      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+
+      <div class="rush">
+        <label for="rushBtn">Rush order? +$40</label>
+        <input type="checkbox" id="rushBtn" />
       </div>
     </div>
 
     <!--custom tab -->
     <div id="custom" class="tab-content">
-      <p>Empty for now</p>
+      <div class="sizes">
+        <button class="size-button" data-size="5" >5 inches</button>
+        <button class="size-button" data-size="8" >8 inches</button>
+        <button class="size-button" data-size="10" >10 inches</button>
+      </div>
+
+      <p class="price">$75+</p>
+      <p class="serving-info">Feeds around 10–12 people.</p>
+
+      <div class="flavor">
+        <p>Cake flavor</p>
+        <div class="radioBtns">
+          <label><input type="radio" name="custom-flavor" value="vanilla" checked> Vanilla</label>
+          <label><input type="radio" name="custom-flavor" value="chocolate"> Chocolate</label>
+          <label><input type="radio" name="custom-flavor" value="carrot"> Carrot</label>
+          <label><input type="radio" name="custom-flavor" value="red velvet"> Red Velvet</label>
+        </div>
+      </div>
+
+      <div class="frosting">
+        <p>Frosting</p>
+        <div class="radioBtns">
+          <label><input type="radio" name="custom-frosting" value="vanilla" checked> Vanilla</label>
+          <label><input type="radio" name="custom-frosting" value="chocolate"> Chocolate</label>
+          <label><input type="radio" name="custom-frosting" value="cream cheese"> Cream Cheese</label>
+        </div>
+      </div>
+
+      <p>Write a message for the cake</p>
+      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+
+      <div class="rush">
+        <label for="rushBtn">Rush order? +$40</label>
+        <input type="checkbox" id="rushBtn" />
+      </div>
     </div>
 
     <button class="add-button">Add to bag</button>
@@ -79,9 +139,40 @@ import OrderAccordion from "./OrderAccordion.astro";
       event.target.classList.add("active");
       document.getElementById(tabId).classList.add("active");
     };
+
+    // Ready made sections frosting 
+    const frostingSpan = document.getElementById("auto-frosting");
+    document.querySelectorAll("input[name='ready-flavor']").forEach(radio => {
+      radio.addEventListener("change", e => {
+        const flavor = e.target.value;
+        const frostingMap = { chocolate: "chocolate buttercream", carrot: "cream cheese", "red velvet": "cream cheese", vanilla: "vanilla buttercream" };
+        frostingSpan.textContent = frostingMap[flavor];
+      });
+    });
+
+    const sizeInfo = { 5: { price: "$45", serve: "Feeds around 6–8 people." }, 8: { price: "$65", serve: "Feeds around 10–12 people." }, 10: { price: "$85", serve: "Feeds around 16–18 people." } };
+    function setupSizeButtons(sectionId, updatePrice = true) {
+      const section = document.getElementById(sectionId);
+      const priceEl = section.querySelector(".price");
+      const serveEl = section.querySelector(".serving-info");
+      const buttons = section.querySelectorAll(".size-button");
+
+      buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+          const { price, serve } = sizeInfo[btn.dataset.size];
+          if (updatePrice){
+            priceEl.textContent = price;
+          } 
+          serveEl.textContent = serve;
+          buttons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+    }
+  setupSizeButtons("ready", true);
+  setupSizeButtons("custom", false);
+  
   });
-
-
 
 </script>
 
@@ -209,4 +300,41 @@ import OrderAccordion from "./OrderAccordion.astro";
     text-align: center;
     /* color: #555; */
   }
+
+  .size-button.active {
+    background-color: #D4596B;
+    color: white;
+    border-color: #D4596B;
+  }
+
+  .price {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+
+  .checkout-container .serving-info {
+    color: #555;
+    font-size: 15px;
+  }
+
+  .frosting .autoFrost {
+    font-size: 15px;
+  }
+
+  #messageBox {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .radioBtns {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 12px;
+    margin-top: 6px;
+    input[type="radio"]:checked { accent-color: #D4596B; }
+  }
+  
+
 </style>
