@@ -1,0 +1,124 @@
+<style>
+  .hero-section {
+    background-color: #e8e0d8;
+    padding: 80px 40px;
+    min-height: 520px;
+  }
+
+  .hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #165713;
+    margin-bottom: 30px;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    font-size: 1.15rem;
+    color: #333;
+    margin-bottom: 40px;
+    line-height: 1.6;
+    max-width: 480px;
+  }
+
+  .cta-button {
+    background-color: #d9696f;
+    color: white;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background-color: #c45a60;
+  }
+
+  .hero-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-image img {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    display: block;
+  }
+
+  @media (max-width: 968px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+    }
+
+    .hero-section {
+      padding: 60px 20px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-title {
+      font-size: 2rem;
+    }
+
+    .hero-description {
+      font-size: 1rem;
+    }
+
+    .cta-button {
+      padding: 14px 32px;
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
+<section class="hero-section">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">Chicago's sweetest secret is out.</h1>
+      <p class="hero-description">
+        Custom cakes, Cuban pastelitos, and so much more from Sweet T's kitchen. Your celebration starts here.
+      </p>
+      <a href="#shop" class="cta-button">Shop all treats</a>
+    </div>
+    <div class="hero-image">
+      <img src="/elanding-cake.png"/>
+    </div>
+  </div>
+</section>
