@@ -14,5 +14,13 @@
   "test-4": {
     "name": "Jane D.",
     "message": "My mom cried. It tasted just like her neighborhood bakery in Wrigleyville!"
+  },
+  "test-5": {
+    "name": "Arturo M.",
+    "message": "Their pastelitos are so good!"
+  },
+  "test-6":{
+    "name": "Ian F.",
+    "message": "The owner puts so much detail in her sweets!"
   }
 }
