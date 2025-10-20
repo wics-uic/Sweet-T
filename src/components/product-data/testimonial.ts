@@ -1,6 +1,5 @@
 import fs from 'fs'
 const filePath: string = './src/data/testimonials.json'
-
 const testJson = fs.readFileSync(filePath, 'utf-8');
 
 export type Testimonial = {

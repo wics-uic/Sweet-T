@@ -4,7 +4,7 @@ import testimonials from "./product-data/testimonial";
 const shuffledTests = testimonials.sort(() => 0.5 - Math.random())
 let randomTests = shuffledTests.slice(0, 3)
 ---
-<!-- ^^ this refreshes the random testimonials every time you refresh-->
+<!-- ^^ this refreshes the random testimonials every time you refresh -->
 
 
 <div class="flex flex-col border border-[#D4596B] rounded-[32px] w-[1232px] h-[1132px] bg-[#F0CAC9] items-center gap-[32px] pt-[40px] pr-[104px] pb-[40px] pl-[104px]">
@@ -12,8 +12,9 @@ let randomTests = shuffledTests.slice(0, 3)
     {randomTests.map((test, i) => ( 
         <TestimonialItem name={test.name}, body={test.message}, pic="src/assets/testimonial-1.jpg", order={i % 2 == 0 ? "left" : "right"}/>
     ))}
-    <!-- <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/>
+    <!-- 
+    <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/>
     <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="left"/>
-    <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg",url="" , order="right"/> -->
+    <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/> -->
 </div>
 
