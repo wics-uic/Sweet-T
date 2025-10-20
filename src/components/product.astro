@@ -1,19 +1,21 @@
 ---
-const { url = "", item_name = "default name", price = "$0" } = Astro.props;
+const { url = "", item_name = "default name", price = "$0", width="200px", ready=false } = Astro.props;
 ---
 
 <div class="product">
-  <img src={url} class="product-image" />
+  <img src={url} width={width} height={width} class="product-image" />
   <div class="product-text">
-    <p id="product-name">Ready made & custom {item_name}</p>
+    <!-- <p id="product-name">Ready made & custom {item_name}</p> -->
+
+    <p id="product-name">{ready ? "Ready made & custom " + item_name : item_name}</p>
     <p id="product-price">{price}</p>
   </div>
 </div>
 
 <style>
     .product {
-        max-width: 600px;
-        max-height: 400px;
+        /* max-width: 600px;
+        max-height: 400px; */
         /* border: 1px solid black; */
         border-radius: 10px;
         padding: 10px;
@@ -23,7 +25,7 @@ const { url = "", item_name = "default name", price = "$0" } = Astro.props;
     }
 
     .product-image {
-        width: 600px;
+        /* width: 100px; */
         border: 1px solid black;
         border-radius: 10px;
         overflow: hidden;
