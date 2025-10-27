@@ -12,12 +12,12 @@
   "test-3": {
     "name": "John D.",
     "message": "My dad cried. It tasted just like his neighborhood bakery in Wrigleyville!",
-    "picture": "src/assets/testimonial-4.jpg"
+    "picture": "src/assets/testimonial-4.jpeg"
   },
   "test-4": {
     "name": "Jane D.",
     "message": "My mom cried. It tasted just like her neighborhood bakery in Wrigleyville!",
-    "picture": "src/assets/testimonial-5.jpeg"
+    "picture": "src/assets/testimonial-5.jpg"
   },
   "test-5": {
     "name": "Arturo M.",
