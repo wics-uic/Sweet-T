@@ -1,5 +1,5 @@
 ---
-const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png" } = Astro.props;
+const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
 import OrderAccordion from "./OrderAccordion.astro";
 import tryOtherTreats from "./tryOtherTreats.astro";
 ---
@@ -8,7 +8,7 @@ import tryOtherTreats from "./tryOtherTreats.astro";
   <!-- left -->
   <div class="img-carousel">
     <div class="carousel">
-      <img id="carouselImage" src="src/assets/landing-cake.png"  />
+      <img id="carouselImage" src={url}  />
     </div>
     <div class="circles">
       <button class="circle" onclick="showImage(0)" aria-label="first-image"></button>
@@ -54,10 +54,10 @@ import tryOtherTreats from "./tryOtherTreats.astro";
   // Carousel Code
   document.addEventListener("DOMContentLoaded", () => {
     const images = [
-      "src/assets/landing-cake.png",
-      "src/assets/landing-cake.png",
-      "src/assets/landing-cake.png",
-      "src/assets/landing-cake.png"
+      "src/assets/products-cupcake.png",
+      "src/assets/products-cake.png",
+      "src/assets/products-cookie.png",
+      "src/assets/products-flan.png"
     ];
 
     const img = document.getElementById("carouselImage");

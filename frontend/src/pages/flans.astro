@@ -2,18 +2,18 @@
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
 import ProductLayout from "../layouts/productLayout.astro"
+import OrderSection from "../components/orderSection.astro";
 ---
 
-<html lang="en">
-	<ProductLayout>
-		<!-- <NavBar /> -->
-		 <div class="w-full flex flex-col items-center">
-		<h1 class = "header"> Shop our Flans!</h1>
-		<Product url="src/assets/products-flan.png" item_name="flans" price="$20/dozen"/>
-	</div>
-	</ProductLayout>
+<ProductLayout>
+  <OrderSection
+    item_name="flan"
+    price="45"
+    url="src/assets/products-flan.png"
+  />
+</ProductLayout>
 
-	<style>
+<style>
 		.header {
 			color: #d12863;
 			font-weight: bold;
@@ -21,4 +21,15 @@ import ProductLayout from "../layouts/productLayout.astro"
 			font-size: 3rem;
 		}
 	</style>
-</html>
+
+<!-- <html lang="en">
+	<ProductLayout>
+		<NavBar />
+		 <div class="w-full flex flex-col items-center">
+		<h1 class = "header"> Shop our Cookies!</h1>
+		<Product url="src/assets/products-cookie.png" item_name="cookies" price="$20/dozen"/>
+	</div>
+	</ProductLayout>
+
+	
+</html> -->

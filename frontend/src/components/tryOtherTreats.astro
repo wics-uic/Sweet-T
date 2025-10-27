@@ -1,13 +1,13 @@
 ---
 const treats = [
-  { name: "Ready made & custom cupcakes", price: "$42/dozen", img: "src/assets/products-cupcake.png" },
-  { name: "Pastelitos", price: "$36/dozen", img: "src/assets/products-pastelitos.png" },
-  { name: "Assorted cookies", price: "$36/dozen", img: "src/assets/products-cookie.png" },
-  { name: "Flan", price: "$30/dozen", img: "src/assets/products-flan.png" },
+  { name: "Ready made & custom cupcakes", price: "$42/dozen", img: "src/assets/products-cupcake.png", url:"/cakes" },
+  { name: "Pastelitos", price: "$36/dozen", img: "src/assets/products-pastelitos.png", url: "/pastelitos" },
+  { name: "Assorted cookies", price: "$36/dozen", img: "src/assets/products-cookie.png", url: "/cookies" },
+  { name: "Flan", price: "$30/dozen", img: "src/assets/products-flan.png", url: "/flans" },
 ];
 ---
 
-<a href="/">
+<!-- <a href={treats.url}> -->
 <div class="tryOtherTreats-container py-12 mt-16 flex flex-col items-center justify-center text-center rounded-[32px] px-8">
   <h2 class="text-3xl font-semibold text-green-900 mb-10 text-left justify-start w-full max-w-7xl">
     Try our other treats
@@ -15,6 +15,9 @@ const treats = [
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl">
     {treats.map((treat) => (
+      <a href={treat.url}>
+
+      
       <div class="flex flex-col items-start bg-beige-50  overflow-hidden">
         <img src={treat.img} alt={treat.name} class="w-full rounded-2xl h-80 object-cover bg-beige-100" />
         <div class="p-4 text-left">
@@ -22,7 +25,8 @@ const treats = [
           <p class="text-black mt-1">{treat.price}</p>
         </div>
       </div>
+      </a>
     ))}
   </div>
 </div>
-</a>
+<!-- </a> -->
