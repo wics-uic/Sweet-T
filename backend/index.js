@@ -186,4 +186,4 @@ mongoose.connect(MONGOURL).then(async () => {
 
 // Load routes
 app.use("/api/productDetails", productDetailsRoute)
-app.get("/", (req, res) => res.send("Hello, backend is alive"));
+// app.get("/", (req, res) => res.send("Hello, backend is alive"));
