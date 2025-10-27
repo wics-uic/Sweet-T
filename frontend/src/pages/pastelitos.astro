@@ -1,15 +1,17 @@
 ---
 import NavBar from "../components/navbar.astro"
 import Product from "../components/product.astro"
-import Layout from "../layouts/layout.astro"
+import ProductLayout from "../layouts/productLayout.astro"
 ---
 
 <html lang="en">
-	<Layout>
-		<NavBar />
+	<ProductLayout>
+		<!-- <NavBar /> -->
+		 <div class="w-full flex flex-col items-center">
 		<h1 class = "header"> Shop our Pastelitos!</h1>
 		<Product url="src/assets/products-pastelitos.png" item_name="pastelitos" price="$20/dozen"/>
-	</Layout>
+	</div>
+	</ProductLayout>
 
 	<style>
 		.header {
