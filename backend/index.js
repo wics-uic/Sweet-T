@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cors from "cors";
+import productDetailsRoute from "./Route/productDetailsRoute.js";
 
 const app = express();
 
