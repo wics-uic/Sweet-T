@@ -1,0 +1,24 @@
+---
+import NavBar from "../components/navbar.astro"
+import Product from "../components/product.astro"
+import ProductLayout from "../layouts/productLayout.astro"
+---
+
+<html lang="en">
+	<ProductLayout>
+		<!-- <NavBar /> -->
+		 <div class="w-full flex flex-col items-center">
+		<h1 class = "header"> Shop our Flans!</h1>
+		<Product url="src/assets/products-flan.png" item_name="flans" price="$20/dozen"/>
+	</div>
+	</ProductLayout>
+
+	<style>
+		.header {
+			color: #d12863;
+			font-weight: bold;
+			text-align: left;
+			font-size: 3rem;
+		}
+	</style>
+</html>
