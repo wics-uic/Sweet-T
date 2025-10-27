@@ -181,3 +181,7 @@ mongoose.connect(MONGOURL).then(async () => {
     console.error("MongoDB connection error:", error);
     process.exit(1);
 });
+
+
+// Load routes
+app.use("/api/productDetails", productDetailsRoute)
