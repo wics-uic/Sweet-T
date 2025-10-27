@@ -1,0 +1,12 @@
+---
+const {name = "User",body="This is a default review", url="default" ,pic="src/assets/testimonial-1.jpg", order="left"} = Astro.props;
+import TestimontalText from "./testimonialText.astro"
+import Images from "./testimonialImages.astro"
+---
+
+<div class="flex flex-row p-3 bg-[#F0CAC9] w-[1168px] h-auto justify-between">
+   {order == "left" ? <TestimontalText name={name}, body={body}, url={url}, order="left"/>
+  <Images pic={pic}/> : <Images pic={pic}/> <TestimontalText name={name}, body={body}, url={url}, order="right"/>
+  } 
+  
+</div>

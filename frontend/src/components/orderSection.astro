@@ -1,0 +1,414 @@
+---
+const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
+import OrderAccordion from "./OrderAccordion.astro";
+import tryOtherTreats from "./tryOtherTreats.astro";
+---
+
+<section class="relative order-section z-[999] mb-[200px]">
+  <!-- left -->
+  <div class="img-carousel">
+    <div class="carousel">
+      <img id="carouselImage" src={url}  />
+    </div>
+    <div class="circles">
+      <button class="circle" onclick="showImage(0)" aria-label="first-image"></button>
+      <button class="circle" onclick="showImage(1)" aria-label="second-image"></button>
+      <button class="circle" onclick="showImage(2)" aria-label="third-image"></button>
+      <button class="circle" onclick="showImage(3)" aria-label="fourth-image"></button>
+    </div>
+  </div>
+
+  <!-- right -->
+  <div class="checkout-container">
+    <h2>Ready made & custom {item_name}</h2>
+    <!--tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab(event, 'ready')">Ready made</button>
+      <button class="tab" onclick="switchTab(event, 'custom')">Custom</button>
+    </div>
+    <!--ready tab -->
+    <div id="ready" class="tab-content active">
+      <div class="sizes">
+        <button class="size-button" data-size="5" >5 inches</button>
+        <button class="size-button" data-size="8" >8 inches</button>
+        <button class="size-button" data-size="10" >10 inches</button>
+      </div>
+
+      <p class="price">$65</p>
+      <p class="serving-info">Feeds around 10–12 people.</p>
+
+      <div class= "flavor">
+        <p>Flavor</p>
+        <div class="radioBtns">
+          <label><input type="radio" name="ready-flavor" value="vanilla" checked> Vanilla</label>
+          <label><input type="radio" name="ready-flavor" value="chocolate"> Chocolate</label>
+          <label><input type="radio" name="ready-flavor" value="carrot"> Carrot</label>
+          <label><input type="radio" name="ready-flavor" value="red velvet"> Red Velvet</label>
+        </div>
+      </div>
+
+      <div id="frosting" class="frosting">
+        <p>Frosting</p>
+        <p class = "autoFrost">We’ll pair this with a <span id="auto-frosting">vanilla buttercream</span> frosting.</p>
+      </div>
+
+      <p>Write a message for the cake</p>
+      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+
+      <div class="rush">
+        <label for="rushBtn">Rush order? +$40</label>
+        
+        <label class="switch">
+          <input type="checkbox"> 
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <!--custom tab -->
+    <div id="custom" class="tab-content">
+      <div class="sizes">
+        <button class="size-button" data-size="5" >5 inches</button>
+        <button class="size-button" data-size="8" >8 inches</button>
+        <button class="size-button" data-size="10" >10 inches</button>
+      </div>
+
+      <p class="price">$75+</p>
+      <p class="serving-info">Feeds around 10–12 people.</p>
+
+      <div class="flavor">
+        <p>Flavor</p>
+        <div class="radioBtns">
+          <label><input type="radio" name="custom-flavor" value="vanilla" checked> Vanilla</label>
+          <label><input type="radio" name="custom-flavor" value="chocolate"> Chocolate</label>
+          <label><input type="radio" name="custom-flavor" value="carrot"> Carrot</label>
+          <label><input type="radio" name="custom-flavor" value="red velvet"> Red Velvet</label>
+        </div>
+      </div>
+
+      <div class="frosting">
+        <p>Frosting</p>
+        <div class="radioBtns">
+          <label><input type="radio" name="custom-frosting" value="vanilla" checked> Vanilla</label>
+          <label><input type="radio" name="custom-frosting" value="chocolate"> Chocolate</label>
+          <label><input type="radio" name="custom-frosting" value="cream cheese"> Cream Cheese</label>
+        </div>
+      </div>
+
+      <p>Write a message for the cake</p>
+      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+
+      <div class="rush">
+        <label for="rushBtn">Rush order? +$40</label>
+        
+        <label class="switch">
+          <input type="checkbox"> 
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <button class="add-button">Add to bag</button>
+
+    <div class="accordion-placeholder">
+      <OrderAccordion/>
+      <!-- <tryOtherTreats /> -->
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+  // Carousel Code
+  document.addEventListener("DOMContentLoaded", () => {
+    const images = [
+      "src/assets/products-cupcake.png",
+      "src/assets/products-cake.png",
+      "src/assets/products-cookie.png",
+      "src/assets/products-flan.png"
+    ];
+
+    const img = document.getElementById("carouselImage");
+    const buttons = document.querySelectorAll(".circle");
+
+    window.showImage = function(index) {
+      img.style.opacity = 0;
+      setTimeout(() => {
+        img.src = images[index];
+        img.style.opacity = 1;
+      }, 150);
+      buttons.forEach((b, i) => b.classList.toggle("active", i === index));
+    };
+
+    showImage(0);
+    
+    // Tab Switching
+    window.switchTab = function(event, tabId){
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(tc => tc.classList.remove("active"));
+      event.target.classList.add("active");
+      document.getElementById(tabId).classList.add("active");
+    };
+
+    // Ready made sections frosting 
+    const frostingSpan = document.getElementById("auto-frosting");
+    document.querySelectorAll("input[name='ready-flavor']").forEach(radio => {
+      radio.addEventListener("change", e => {
+        const flavor = e.target.value;
+        const frostingMap = { chocolate: "chocolate buttercream", carrot: "cream cheese", "red velvet": "cream cheese", vanilla: "vanilla buttercream" };
+        frostingSpan.textContent = frostingMap[flavor];
+      });
+    });
+
+    const sizeInfo = { 5: { price: "$45", serve: "Feeds around 6–8 people." }, 8: { price: "$65", serve: "Feeds around 10–12 people." }, 10: { price: "$85", serve: "Feeds around 16–18 people." } };
+    function setupSizeButtons(sectionId, updatePrice = true) {
+      const section = document.getElementById(sectionId);
+      const priceEl = section.querySelector(".price");
+      const serveEl = section.querySelector(".serving-info");
+      const buttons = section.querySelectorAll(".size-button");
+
+      buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+          const { price, serve } = sizeInfo[btn.dataset.size];
+          if (updatePrice){
+            priceEl.textContent = price;
+          } 
+          serveEl.textContent = serve;
+          buttons.forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+        });
+      });
+    }
+  setupSizeButtons("ready", true);
+  setupSizeButtons("custom", false);
+  
+  });
+
+</script>
+
+<!-- Styles -->
+<style>
+  .order-section {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 80px 100px;
+    min-height: 90vh;
+    box-sizing: border-box;
+    gap: 50px;
+  }
+
+  .img-carousel {
+    flex: 1;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  #carouselImage {
+    display: block;
+    width: 100%;
+    height: 40vh;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+  }
+  .circles {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 12px;
+    width: 100%;
+  }
+  .circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid var(--color-green-100);
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .circle.active {
+    background-color: var(--color-green-100);
+  }
+
+
+  .checkout-container {
+    flex: 1;
+    padding: 0 50px 40px; /* removed top padding so heading is flush with image top */
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: flex-start;
+    height: 80vh;
+  }
+  .checkout-container h2 {
+    margin: 0;
+    font-size: 34px;
+    color: var(--color-green-100);
+    font-weight: 700;
+  }
+  .checkout-container p {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 0;
+  }
+
+  .tab {
+    padding: 10px 10px;
+    font-size: 16px;
+    position: relative;
+    border-bottom: 1px solid #d0d0d0;
+    color: gray;
+  }
+  .tab.active {
+    color: black;
+    font-weight: 500;
+    border-bottom: 2px solid black;
+  }
+  .tab-content {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .tab-content.active{
+    display: flex;
+  }
+  .sizes {
+    display: flex;
+    gap: 14px;
+  }
+  .size-button {
+    padding: 10px 20px;
+    border: 1px solid #c96b6b;
+    border-radius: 8px;
+    background: transparent;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .add-button {
+    margin-top: 20px;
+    padding: 14px 0px;
+    width: 100%
+    border: 1px black;
+    background-color: lightgray;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+
+  .accordion-placeholder {
+    margin-top: 30px;
+    /* border: 1px dashed #aaa; */
+    /* padding: 20px; */
+    border-radius: 8px;
+    text-align: center;
+    /* color: #555; */
+  }
+
+  .size-button.active {
+    background-color: #D4596B;
+    color: white;
+    border-color: #D4596B;
+  }
+
+  .price {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+
+  .checkout-container .serving-info {
+    color: #555;
+    font-size: 15px;
+  }
+
+  .frosting .autoFrost {
+    font-size: 15px;
+  }
+
+  #messageBox {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .radioBtns {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 12px;
+    margin-top: 6px;
+    input[type="radio"]:checked { accent-color: #D4596B; }
+  }
+
+  .rush {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #D4596B;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #D4596B;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(20px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>

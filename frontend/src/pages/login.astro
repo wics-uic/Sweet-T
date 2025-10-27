@@ -1,0 +1,203 @@
+---
+import NavBar from "../components/navbar.astro"
+import Layout from "../layouts/layout.astro"
+---
+<html lang="en">
+	<Layout>
+		<NavBar />
+		<div class="loginBody">
+			<!-- <h1 class = "header"> Login Page</h1> -->
+			<div class="login-container">
+				<h1>Login</h1>
+				
+				<div id="error" class="error"></div>
+		
+				<form id="loginForm">
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input type="email" id="email" name="email" required>
+					</div>
+		
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" id="password" name="password" required>
+					</div>
+		
+					<button type="submit" id="submitBtn">Login</button>
+				</form>
+			</div>
+		
+			<script>
+				const API_URL = 'http://localhost:8000'; // Change this to your backend URL
+		
+				document.getElementById('loginForm').addEventListener('submit', async (e) => {
+					e.preventDefault();
+		
+					const submitBtn = document.getElementById('submitBtn');
+					const errorDiv = document.getElementById('error');
+					
+					// Get form data
+					const email = document.getElementById('email').value;
+					const password = document.getElementById('password').value;
+		
+					// Disable button and show loading state
+					submitBtn.disabled = true;
+					submitBtn.textContent = 'Logging in...';
+					errorDiv.classList.remove('show');
+		
+					try {
+						const response = await fetch(`${API_URL}/api/login`, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+							},
+							body: JSON.stringify({ email, password })
+						});
+		
+						const data = await response.json();
+		
+						if (data.success) {
+							// Store token and user info
+							localStorage.setItem('token', data.token);
+							localStorage.setItem('user', JSON.stringify(data.user));
+		
+							// Redirect based on role
+							if (data.user.email === 'admin@gmail.com') {
+								window.location.href = '/this_will_fail';
+							} else {
+								window.location.href = '/';
+							}
+						} else {
+							// Show error message
+							errorDiv.textContent = data.message || 'Login failed';
+							errorDiv.classList.add('show');
+						}
+					} catch (error) {
+						console.error('Login error:', error);
+						errorDiv.textContent = 'Connection error. Please try again.';
+						errorDiv.classList.add('show');
+					} finally {
+						// Re-enable button
+						submitBtn.disabled = false;
+						submitBtn.textContent = 'Login';
+					}
+				});
+			</script>
+
+		</div>
+	</Layout>
+
+
+
+	<style>
+
+		.loginBody{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: calc(100vh - 80px); 
+			padding: 20px;
+		}
+		.header {
+			color: #d12863;
+			font-weight: bold;
+			text-align: center;
+			font-size: 3rem;
+			margin-bottom: 20px;
+		}
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #d12863 0%, #e37fa2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+	</style>
+</html>
