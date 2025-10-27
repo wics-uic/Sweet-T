@@ -15,13 +15,39 @@ const productDetailsSchema = new mongoose.Schema({
         required: true
     },
     Ready_Made_Options:{
-        type:Object,
+        type: new mongoose.Schema({
+            quantities: {
+                type: [String],
+                required: true
+            },
+            flavors: {
+                type: [String],
+                required: true
+            }
+        }),
         required: true
     },
     Custom_Option:{
-        type:Object,
+        type: new mongoose.Schema({
+            quantities: {
+                type: [String],
+                required: true
+            },
+            flavors: {
+                type: [String],
+                required: true
+            },
+            color: {
+                type: String,
+                required: true
+            },
+            description: {
+                type: String,
+                required: true
+            }
+        }),
         required: true
     }
 })
 
-export default mongoose.model("Product Details", productDetailsSchema);
+export default mongoose.model("ProductDetail", productDetailsSchema);
