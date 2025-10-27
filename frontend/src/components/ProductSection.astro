@@ -11,44 +11,31 @@ import cookies from '/src/assets/products-cookie.png';
 import flan from '/src/assets/products-flan.png';
 ---
 
-<section class="products">
+<div class="flex justify-center w-full align-middle items-center">
+
+
+<section class="products  ">
 
 		<h1>What celebration are we creating together?</h1>
-		
-		<!-- <div class="grid">
-			<div class="image-wrapper">
-				<Image src={cakes} alt="cake" />
-			</div>
-
-			<div class="image-wrapper">
-				<Image src={cupcakes} alt="cupcake" />
-			</div>
-		</div> -->
 
 		<div class="grid">
-			<Product cake = {cakes}  item_name="cakes" price="$65" url="/src/assets/products-cake.png" width="400px" ready="true"/>
-			<Product cupcake = {cupcakes}  item_name="cupcakes" price="$42/dozen" url="/src/assets/products-cupcake.png" width="400px" ready="true"/>
+			<Product cake = {cakes}  item_name="cakes" price="$65" url="/src/assets/products-cake.png" width="600px" ready="true"/>
+			<Product cupcake = {cupcakes}  item_name="cupcakes" price="$42/dozen" url="/src/assets/products-cupcake.png" width="600px" ready="true"/>
 		</div>
 
-		<!-- <div class="grid">
-			<Image src= {flan} alt = "flan"/>
-			<Image src= {pastelitos} alt = "pastelito"/>
-			<Image src= {cookies} alt = "cookie"/>
-		</div> -->
-
 		<div class="grid">
-			<Product flan = {flan}  item_name="flan" price="$30/dozen" url="/src/assets/products-flan.png" />
-			<Product pastelito = {pastelitos}  item_name="pastelitos" price="$30/dozen" url="/src/assets/products-pastelitos.png"/>
-			<Product cookie = {cookies}  item_name="cookies" price="$30/dozen" url="/src/assets/products-cookie.png"/>
+			<Product flan = {flan}  item_name="Flan" price="$30/dozen" url="/src/assets/products-flan.png" width="400px"/>
+			<Product pastelito = {pastelitos}  item_name="Pastelitos" price="$30/dozen" url="/src/assets/products-pastelitos.png" width="400px"/>
+			<Product cookie = {cookies}  item_name="Cookies" price="$30/dozen" url="/src/assets/products-cookie.png" width="400px"/>
 		</div>
 	</section>
-
+</div>
 
 <style>
 	section.products {
 	/* padding: 4rem 2rem; */
 	text-align: left;
-    width: fit-content;
+    /* width: fit-content; */
 	}
 
 		section.products h1 {

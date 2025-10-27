@@ -3,7 +3,7 @@ const { url = "", item_name = "default name", price = "$0", width="200px", ready
 ---
 
 <div class="product">
-  <img src={url} width={width} height={width} class="product-image" />
+  <img src={url} width={width} height=auto class="product-image" />
   <div class="product-text">
     <!-- <p id="product-name">Ready made & custom {item_name}</p> -->
 
@@ -26,7 +26,7 @@ const { url = "", item_name = "default name", price = "$0", width="200px", ready
 
     .product-image {
         /* width: 100px; */
-        border: 1px solid black;
+        /* border: 1px solid black; */
         border-radius: 10px;
         overflow: hidden;
         object-fit: cover;
