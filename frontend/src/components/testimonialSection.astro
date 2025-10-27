@@ -1,0 +1,18 @@
+---
+
+const {name = "default",body="default", url="src/assets/testimonial-1.jpg"} = Astro.props;
+
+import TestimonialLeft from "./testimonialRight.astro"
+import TestimonialRight from "./testimonialLeft.astro"
+import TestimonialItem from "./testimonialItem.astro";
+---
+
+<section class="">
+
+
+<div class="flex flex-col m-[30px] border border-[#D4596B] rounded-[32px] bg-[#F0CAC9] items-center gap-[32px] pt-[40px] pr-[104px] pb-[40px] pl-[104px]">
+    <TestimonialItem name={name}, body={body}, url={url} order="left"/>
+    <TestimonialItem name={name}, body={body}, url={url} order="right"/>
+    <TestimonialItem name={name}, body={body}, url={url} order="left"/>
+</div>
+</section>

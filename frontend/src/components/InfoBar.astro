@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import scrollBag from '/src/assets/scroll-bag.png';
+import scrollCake from '/src/assets/scroll-cake.png';
+import scrollHeart from '/src/assets/scroll-heart.png';
+---
+
+<div class="scroll-container">
+  <div class="scroll-content">
+    <div class="info-item">
+      <Image src={scrollBag} alt="Pickup Icon" />
+      <p>Pickup in Chicago 9am–5pm daily</p>
+    </div>
+    <div class="info-item">
+      <Image src={scrollCake} alt="Fresh Cake" />
+      <p>Baked fresh for every order</p>
+    </div>
+    <div class="info-item">
+      <Image src={scrollHeart} alt="Heart Icon" />
+      <p>Made with love</p>
+    </div>
+    <div class="info-item">
+      <Image src={scrollBag} alt="Pickup Icon" />
+      <p>Pickup in Chicago 9am–5pm daily</p>
+    </div>
+    <div class="info-item">
+      <Image src={scrollCake} alt="Fresh Cake" />
+      <p>Baked fresh for every order</p>
+    </div>
+    <div class="info-item">
+      <Image src={scrollHeart} alt="Heart Icon" />
+      <p>Made with love</p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .scroll-container {
+    width: 100%;
+    /* overflow: hidden; */
+    border-top: 2px solid #e6e6e6;
+    border-bottom: 2px solid #e6e6e6;
+    background-color: #fff;
+  }
+
+  .scroll-content {
+    display: flex;
+    width: max-content;
+    animation: scrollLoop 20s linear infinite;
+  }
+
+  .scroll-container:hover .scroll-content {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollLoop {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+    padding: 10px 20px;
+    white-space: nowrap;
+  }
+
+  .info-item img {
+    width: 30px;
+    height: auto;
+    opacity: 0.8;
+  }
+
+  .info-item p {
+    margin: 0;
+  }
+</style>
