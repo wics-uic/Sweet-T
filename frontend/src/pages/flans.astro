@@ -1,0 +1,35 @@
+---
+import NavBar from "../components/navbar.astro"
+import Product from "../components/product.astro"
+import ProductLayout from "../layouts/productLayout.astro"
+import OrderSection from "../components/orderSection.astro";
+---
+
+<ProductLayout>
+  <OrderSection
+    item_name="flan"
+    price="45"
+    url="src/assets/products-flan.png"
+  />
+</ProductLayout>
+
+<style>
+		.header {
+			color: #d12863;
+			font-weight: bold;
+			text-align: left;
+			font-size: 3rem;
+		}
+	</style>
+
+<!-- <html lang="en">
+	<ProductLayout>
+		<NavBar />
+		 <div class="w-full flex flex-col items-center">
+		<h1 class = "header"> Shop our Cookies!</h1>
+		<Product url="src/assets/products-cookie.png" item_name="cookies" price="$20/dozen"/>
+	</div>
+	</ProductLayout>
+
+	
+</html> -->
