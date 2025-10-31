@@ -24,14 +24,14 @@ let randomTests = shuffledTests.slice(0, 3)
 
 
 <section class="w-full flex p-[15px] justify-center ">
-<div class="flex flex-col border  border-[#D4596B] rounded-[32px]  h-auto bg-[#F0CAC9] items-center gap-[32px] pt-[40px] pr-[104px] pb-[40px] pl-[104px]">
-    <!--i had no idea that the index argument was a thing, this is magic -->
-    {randomTests.map((test, i) => ( 
-        <TestimonialItem name={test.name}, body={test.message}, pic="src/assets/testimonial-1.jpg", order={i % 2 == 0 ? "right" : "left"}/>
-    ))}
-    <!-- 
-    <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/>
-    <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="left"/>
-    <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/> -->
-</div>
+    <div class="flex flex-col border  border-[#D4596B] rounded-[32px]  h-auto bg-[#F0CAC9] items-center gap-[32px] pt-[40px] pr-[104px] pb-[40px] pl-[104px]">
+        <!--i had no idea that the index argument was a thing, this is magic -->
+        {randomTests.map((test, i) => ( 
+            <TestimonialItem name={test.name}, body={test.message}, pic="src/assets/testimonial-1.jpg", order={i % 2 == 0 ? "right" : "left"}/>
+        ))}
+        <!-- 
+        <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/>
+        <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="left"/>
+        <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/> -->
+    </div>
 </section>
