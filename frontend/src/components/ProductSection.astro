@@ -1,0 +1,64 @@
+---
+import Product from "./product.astro"
+
+import MessageCard from "../components/MessageCard.astro";
+
+import { Image } from 'astro:assets';
+import cakes from '/src/assets/products-cake.png';
+import cupcakes from '/src/assets/products-cupcake.png';
+import pastelitos from '/src/assets/products-pastelitos.png';
+import cookies from '/src/assets/products-cookie.png';
+import flan from '/src/assets/products-flan.png';
+---
+
+<div class="flex justify-center w-full align-middle items-center">
+
+
+<section class="products  ">
+
+		<h1>What celebration are we creating together?</h1>
+
+		<div class="grid">
+			<Product cake = {cakes}  item_name="cakes" price="$65" url="/src/assets/products-cake.png" width="600px" ready="true"/>
+			<Product cupcake = {cupcakes}  item_name="cupcakes" price="$42/dozen" url="/src/assets/products-cupcake.png" width="600px" ready="true"/>
+		</div>
+
+		<div class="grid">
+			<Product flan = {flan}  item_name="Flan" price="$30/dozen" url="/src/assets/products-flan.png" width="400px"/>
+			<Product pastelito = {pastelitos}  item_name="Pastelitos" price="$30/dozen" url="/src/assets/products-pastelitos.png" width="400px"/>
+			<Product cookie = {cookies}  item_name="Cookies" price="$30/dozen" url="/src/assets/products-cookie.png" width="400px"/>
+		</div>
+	</section>
+</div>
+
+<style>
+	section.products {
+	/* padding: 4rem 2rem; */
+	text-align: left;
+    /* width: fit-content; */
+	}
+
+		section.products h1 {
+		font-size: 2rem;
+		font-weight: 700;
+		color: #036b3f;
+		margin-bottom: 2rem;
+		}
+
+		.grid {
+		display: grid;
+		gap: 1.5rem;
+		grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+		/* max-width: 1200px; */
+		margin: 0 auto;
+		}
+
+		.image-wrapper {
+		height: 250px; /* control the rectangular shape */
+		width: 100%;
+		overflow: hidden;
+		border-radius: 12px;
+		object-fit: cover;
+		display: block;
+		}
+	</style>

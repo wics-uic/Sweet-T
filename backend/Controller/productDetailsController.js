@@ -61,22 +61,20 @@ export const fetch = async (req, res)=>{
     
 
 
-// // Code for UPDATING a product detail by ID
-
-// export const update = async (req, res)=>{
-//      try{
-//          const id = req.params.id
-
-//          // check if product exists in the db
-//          const productExists = await ProductDetail.findOne({_id:id});
-//          if (!productExists) {
-//              return res.status(404).json({messge: "product not found"});
-//          }
-//          const updateProduct = await ProductDetail.findByIdAndUpdate(id, req.body, {new:true});
-//          return res.status(201).json(updateProduct)
-//      }
-//      catch (error){
-//          res.status(500).json({error:"Internal Server error."})
-//      }
-//     };
+// Code for UPDATING a product detail by ID
+export const update = async (req, res)=>{
+     try{
+         const id = req.params.id
+         // check if product exists in the db
+         const productExists = await ProductDetail.findOne({_id:id});
+         if (!productExists) {
+             return res.status(404).json({messge: "product not found"});
+         }
+         const updateProduct = await ProductDetail.findByIdAndUpdate(id, req.body, {new:true});
+         return res.status(201).json(updateProduct)
+     }
+     catch (error){
+         res.status(500).json({error:"Internal Server error."})
+     }
+    };
     
