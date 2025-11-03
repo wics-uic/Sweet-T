@@ -64,13 +64,13 @@ export const fetch = async (req, res)=>{
 // Code for UPDATING a product detail by ID
 export const update = async (req, res)=>{
      try{
-         const id = req.params.id
+         const {name} = req.params
          // check if product exists in the db
-         const productExists = await ProductDetail.findOne({_id:id});
+         const productExists = await ProductDetail.findOne({product_name: name});
          if (!productExists) {
              return res.status(404).json({messge: "product not found"});
          }
-         const updateProduct = await ProductDetail.findByIdAndUpdate(id, req.body, {new:true});
+         const updateProduct = await ProductDetail.findOneAndUpdate({product_name: name}, req.body, {new:true});
          return res.status(201).json(updateProduct)
      }
      catch (error){
