@@ -66,8 +66,6 @@ const navInfoLinks = ["Contact us", "FAQ"];
     }
   });
 
-  
-
   // Only run if elements exist
   if (emailButton && emailInput) {
     emailButton.addEventListener("click", async () => {
@@ -75,6 +73,12 @@ const navInfoLinks = ["Contact us", "FAQ"];
 
       if (!email) {
         alert("Please enter an email.");
+        return;
+      }
+      // if not a valid email address, then alert
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
         return;
       }
 
@@ -95,5 +99,3 @@ const navInfoLinks = ["Contact us", "FAQ"];
     });
   }
 </script>
-
-<!-- email verification: gmail, apple mail, yahoo, outlook -->
