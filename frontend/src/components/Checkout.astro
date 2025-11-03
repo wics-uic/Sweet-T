@@ -11,53 +11,59 @@ import { Image } from "astro:assets";
 <section class="cart-section">
     <h1>My Cart</h1>
 
-    <!-- Custom Cake Item -->
-    <div class="cart-item">
-        <Image src={cakeImage} alt="Custom Cake" class="item-image" />
-        <div class="item-content">
-            <div class="item-header">
-                <span class="item-name">Custom Cake</span>
-                <span class="item-price">Total: $65.00</span>
-            </div>
-            <div class="item-details">Qty: 1</div>
-            <div class="item-details">Notes:</div>
-            <div class="item-actions">
-                <span class="action-link">Delete</span>
-                <span class="action-link">Edit</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Custom Cupcake Item -->
-    <div class="cart-item">
-        <Image src={cupcakeImage} alt="Custom Cupcakes" class="item-image" />
-        <div class="item-content">
-            <div class="item-header">
-                <span class="item-name">Custom Cupcake</span>
-                <span class="item-price">Total: $42.00</span>
-            </div>
-            <div class="item-details">Qty: 1</div>
-            <div class="item-details">Notes:</div>
-            <div class="item-actions">
-                <span class="action-link">Delete</span>
-                <span class="action-link">Edit</span>
+    <!-- Cart Items Container -->
+    <div class="cart-items-container">
+        <!-- Custom Cake Item -->
+        <div class="cart-item">
+            <div class="item-row">
+                <div class="item-info">
+                    <Image src={cakeImage} alt="Custom Cake" class="item-image" />
+                    <div class="item-details">
+                        <div class="item-name">Custom Cake</div>
+                        <div class="item-qty">Qty: 1</div>
+                        <div class="item-notes">Notes:</div>
+                        <div class="item-actions">
+                            <span class="action-link">Delete</span> | <span class="action-link">Edit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-total">Total: $65.00</div>
             </div>
         </div>
-    </div>
 
-    <!-- Custom Pastelitos Item -->
-    <div class="cart-item">
-        <Image src={pastelitosImage} alt="Pastelitos" class="item-image" />
-        <div class="item-content">
-            <div class="item-header">
-                <span class="item-name">Pastelitos</span>
-                <span class="item-price">Total: $36.00</span>
+        <!-- Custom Cupcake Item -->
+        <div class="cart-item">
+            <div class="item-row">
+                <div class="item-info">
+                    <Image src={cupcakeImage} alt="Custom Cupcakes" class="item-image" />
+                    <div class="item-details">
+                        <div class="item-name">Custom Cupcake</div>
+                        <div class="item-qty">Qty: 1</div>
+                        <div class="item-notes">Notes:</div>
+                        <div class="item-actions">
+                            <span class="action-link">Delete</span> | <span class="action-link">Edit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-total">Total: $42.00</div>
             </div>
-            <div class="item-details">Qty: 1</div>
-            <div class="item-details">Notes:</div>
-            <div class="item-actions">
-                <span class="action-link">Delete</span>
-                <span class="action-link">Edit</span>
+        </div>
+
+        <!-- Custom Pastelitos Item -->
+        <div class="cart-item">
+            <div class="item-row">
+                <div class="item-info">
+                    <Image src={pastelitosImage} alt="Pastelitos" class="item-image" />
+                    <div class="item-details">
+                        <div class="item-name">Pastelitos</div>
+                        <div class="item-qty">Qty: 1</div>
+                        <div class="item-notes">Notes:</div>
+                        <div class="item-actions">
+                            <span class="action-link">Delete</span> | <span class="action-link">Edit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-total">Total: $36.00</div>
             </div>
         </div>
     </div>
@@ -113,14 +119,29 @@ import { Image } from "astro:assets";
         color: #2c5530;
     }
 
+    .cart-items-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
     .cart-item{
         background-color: white;
         border:1px solid #ddd;
         border-radius:4px;
-        margin-bottom:15px;
         padding:15px;
-        display:flex;
-        gap:15px;
+    }
+
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .item-info {
+        display: flex;
+        gap: 15px;
+        flex: 1;
     }
 
     .item-image{
@@ -130,32 +151,31 @@ import { Image } from "astro:assets";
         border-radius:4px;
     }
 
-    .item-content{
-        flex:1;
-    }
-
-    .item-header{
-        display:flex;
-        justify-content: space-between;
-        margin-bottom:8px;
+    .item-details {
+        display: flex;
+        flex-direction: column;
     }
 
     .item-name{
         font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 5px;
     }
 
-    .item-price{
-        font-weight:bold;
-    }
-
-    .item-details{
-        margin-bottom: 10px;
+    .item-qty, .item-notes {
         color: #666;
+        margin-bottom: 5px;
+    }
+
+    .item-total{
+        font-weight:bold;
+        font-size: 16px;
+        text-align: right;
+        white-space: nowrap;
     }
 
     .item-actions{
-        display:flex;
-        gap:15px;
+        margin-top: 10px;
     }
 
     .action-link{
@@ -191,7 +211,7 @@ import { Image } from "astro:assets";
     
     .checkout-button{
         background-color: #2c5530;
-        color:white
+        color:white;
         border: none;
         border-radius: 4px;
         padding: 12px;
@@ -208,3 +228,33 @@ import { Image } from "astro:assets";
         padding-top: 15px;
         border-top: 1px solid #ddd;
     }
+
+    .nav-bar-right .link{
+        padding: 8px 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar-right .link:hover{
+        background-color: rgba(4, 74,37,0.1);
+        text-decoration: underline;
+        text-decoration-color: #044A25;
+        text-underline-offset: 4px;
+    }
+
+    @media (max-width: 968px) {
+        .cart-layout {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .summary-column {
+            flex: 1;
+            width: 100%;
+            position: static;
+        }
+    }
+
+</style>
