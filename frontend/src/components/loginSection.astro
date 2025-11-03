@@ -1,43 +1,43 @@
 <div class="flex flex-row h-screen">
    <!-- transparent background -->
-   <div class="h-full w-2/5 bg-[url(../assets/login-background.jpg)] z-1 opacity-10 absolute"></div>
+   <div class="h-screen w-2/5 bg-[url(../assets/login-background.jpg)] z-1 opacity-10 absolute"></div>
 
    <!-- linear gradient over background -->
    <div class="flex flex-col justify-center items-center h-screen w-2/5 bg-linear-to-b from-[#044A25] to-[#7FA89A] bg-blend-overlay z-0">
         <!-- welcome message -->
         <div class="flex flex-col font-sans font-[Inter] text-white z-2 gap-[12px]">
-            <h1>Sweet T Bakery</h1>
-            <p class="text-[20px]">Admin Dashboard</p>
-            <p>Welcome back! Let's bake some magic today.</p>
+            <h1 class="text-[12px] sm:text-[16px]">Sweet T Bakery</h1>
+            <p class="text-[15px] sm:text-[20px]">Admin Dashboard</p>
+            <p class="text-[12px] sm:text-[16px]">Welcome back! Let's bake some magic today.</p>
         </div>
    </div>
 
    <!-- login area -->
    <div class="flex flex-col justify-center items-center h-screen w-3/5 bg-[#F9FAFB] font-sans font-[Inter]">
-        <!-- card container for entire login -->
-        <div class="flex flex-col border border-[#0000001A] shadow-lg bg-white w-[420px] h-[557px] rounded-[14px] p-[24px]">
+        <!-- card container for login portion -->
+        <div class="flex flex-col border border-[#0000001A] shadow-lg bg-white w-[220px] sm:w-[420px] h-[400px] sm:h-[557px] rounded-[14px] p-[12px] sm:p-[24px]">
             <!-- card header -->
-            <div class="flex flex-col gap-[10px] h-[114px]">
-                <p class="text-[24px] font-[510] text-[#0A0A0A]">Sign In</p>
-                <p class="text-[#717182]">Access your dashboard</p>
+            <div class="flex flex-col gap-[5px] sm:gap-[10px] h-[114px] mb-[16px] sm:mb-[0px]">
+                <p class="text-[16px] sm:text-[24px] font-[510] text-[#0A0A0A]">Sign In</p>
+                <p class="text-[12px] sm:text-[16px] text-[#717182]">Access your dashboard</p>
             </div>
             <!-- card content -->
-            <div class ="flex flex-col gap-[20px]">
+            <div class ="flex flex-col gap-[10px] sm:gap-[20px]">
                 <!-- email container -->
                 <div class="flex flex-col gap-[8px]">
-                    <p class="text-[16px] text-[#0A0A0A] font-[505]">Email</p>
-                    <div class="flex flex-row items-center justify-center gap-[8px] w-[370px] h-[48px] bg-[#F3F3F5] rounded-[8px]">
-                        <img class="ml-[12px] h-[20px] w-[20px]" src="../src/assets/mail.svg"/>
-                        <input class="w-[330px] text-[#717182]" type="email" placeholder="Enter your email">
+                    <p class="text-[14px] sm:text-[16px] text-[#0A0A0A] font-[505]">Email</p>
+                    <div class="flex flex-row items-center justify-center gap-[8px] w-[200px] sm:w-[370px] h-[36px] sm:h-[48px] bg-[#F3F3F5] rounded-[8px]">
+                        <img class="ml-[12px] h-[15px] w-[15px] sm:h-[20px] sm:w-[20px]" src="../src/assets/mail.svg"/>
+                        <input class="w-[330px] text-[#717182] text-[12px] sm:text-[16px]" type="email" placeholder="Enter your email">
                     </div>
                 </div>
                 <!-- password container -->
                  <div class="flex flex-col gap-[8px]">
-                    <p class="text-[16px] text-[#0A0A0A] font-[505]">Password</p>
-                    <div class="flex flex-row items-center justify-center gap-[8px] w-[370px] h-[48px] bg-[#F3F3F5] rounded-[8px]">
-                        <img class="ml-[12px] h-[20px] w-[20px]" src="../src/assets/lock.svg"/>
-                        <input class="w-[330px] text-[#717182]" type="password" placeholder="Enter your password" id="passwordField">
-                        <input class="w-[20px] h-[20px] mr-[12px]"type="image" src ="../src/assets/eye.svg" id="toggle" onclick="togglePassword()">
+                    <p class="text-[14px] sm:text-[16px] text-[#0A0A0A] font-[505]">Password</p>
+                    <div class="flex flex-row items-center justify-center gap-[8px] w-[200px] sm:w-[370px] h-[36px] sm:h-[48px] bg-[#F3F3F5] rounded-[8px]">
+                        <img class="ml-[16px] h-[15px] w-[15px] sm:h-[20px] sm:w-[20px]" src="../src/assets/lock.svg"/>
+                        <input class="w-[330px] text-[#717182] text-[12px] sm:text-[16px]" type="password" placeholder="Enter your password" id="passwordField">
+                        <input class="w-[15px] h-[15px] sm:w-[20px] sm:h-[20px] mr-[12px]"type="image" src ="../src/assets/eye.svg" id="toggle" onclick="togglePassword()">
                     </div>
                  </div>
                  <!-- checkbox part -->
