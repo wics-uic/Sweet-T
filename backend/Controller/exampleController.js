@@ -80,38 +80,20 @@ Note: frontend must send an API request
 export const update = async(req, res)=>{
     try {
         const id = req.params.id;
+        const {quantity} = req.body;
+        const quantityToAdd = parseInt(quantity, 10);
 
-        const productInCart = await Cart.findOne({_id:id});
+        if (quantity === undefined) {
+            return res.status(400).json({message: "missing 'quantity' in request body"});
+        }
 
-        if (!productInCart) {
+        const updateCart = await Cart.findByIdAndUpdate(id, { $inc: {quantity: quantityToAdd }}, {new: true});
+        
+        if (!updateCart) {
             return res.status(404).json({message: "Product not in cart"});
         }
-        const updateCart = await Cart.findByIdAndUpdate(id, req.body, {new: true});
         res.status(201).json(updateCart);
-        // const { cartId, productId, quantity } = req.body;
-        // // validate necessary product information is given 
-        // if (!cartId || !productId ||quantity == null) {
-        //     return res.status(400).json({ error: "Missing required information" });
-        // }
         
-        // if (quantity <= 0) {
-        //     return res.status(400).json({ message: "Quantity must be 1 or more."});
-        // }
-
-        // if (!cart) {
-        //     return res.status(404).json({ message: "Cart not found."});
-        // }
-
-        // const itemIndex = cart.products.findIndex(p => p.productId == productId);
-        // if (itemIndex > -1) {
-        //     // Product found
-        //     cart.products[itemIndex].quantity = quantity;
-        //     const updatedCart = await cart.save();
-        //     return res.status(200).json(updatedCart);
-        // } else {
-        //     // Product not found (should've been taken care of in AddItemToCart)
-        //     return res.status(404).json({ message: "Product not found in cart."});
-        // }
     } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server error."});
