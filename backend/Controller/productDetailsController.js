@@ -7,9 +7,9 @@ import ProductDetail from "../Model/productDetailsModel.js"
 export const create = async(req, res)=>{
     try{
         const productData = new ProductDetail(req.body);
-        const {name, size}= productData; // extract name and size from object
+        const {product_name, type}= productData; // extract name and size from object
 
-        const productExist = await ProductDetail.findOne({name, size})
+        const productExist = await ProductDetail.findOne({product_name, type})
         if (productExist){
             return res.status(400).json({message: "Product Detail already exists."})
         }
@@ -23,7 +23,7 @@ export const create = async(req, res)=>{
     }
     }
 
-  // Code for GETting all the data from the database
+// Code for GETting all the data from the database
 
 export const fetch = async (req, res)=>{
     try{
@@ -40,28 +40,7 @@ export const fetch = async (req, res)=>{
 }
 
 
-//  //Code for DELETING a product by ID
-
-// export const deleteProduct = async (req, res)=>{
-//     try{
-
-//         const id = req.params.id
-//         // check if product exists in the db
-//         const productExists = await ProductDetail.findOne({_id:id});
-//         if (!productExists) {
-//             return res.status(404).json({messge: "product not found"});
-//         }
-//         await ProductDetail.findByIdAndDelete(id);
-//         return res.status(201).json({message: "Product deleted successfully"});
-//     }
-//     catch (error){
-//         res.status(500).json({error:"Internal Server error."})
-//     }
-// }
-    
-
-
-// Code for UPDATING a product detail by ID
+// Code for UPDATING a product detail by product name
 export const update = async (req, res)=>{
      try{
          const {name} = req.params
@@ -77,4 +56,24 @@ export const update = async (req, res)=>{
          res.status(500).json({error:"Internal Server error."})
      }
     };
+
+
+
+
+//Code for DELETING a product by product name
+export const deleteProduct = async (req, res)=>{
+    try{
+        const {name} = req.params
+        // check if product exists in the db
+        const productExists = await ProductDetail.findOne({product_name: name});
+         if (!productExists) {
+             return res.status(404).json({messge: "product not found"});
+         }
+        await ProductDetail.findOneAndDelete({product_name: name});
+        return res.status(201).json({message: "Product deleted successfully"});
+    }
+    catch (error){
+        res.status(500).json({error:"Internal Server error."})
+    }
+}
     
