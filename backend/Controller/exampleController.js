@@ -1,15 +1,15 @@
 // This is am empty file
 
-import Cart from "./model/exampleModel.js";
+import Cart from "../Model/exampleModel.js";
 
 /*
 POST API: add item to the cart 
 If cart doesn't exists, create a new cart 
-Increase quantity of product
 
 Note: frontend must send an API request 
-
-POSTing the data into the dataset 
+Note: we are creating a new Product only!
+we are setting the quantity to the original number given
+we must UPDATE the Cart Product quantity in a different API 
 */
 export const addItemToCart = async(req, res)=>{
     try {
@@ -61,6 +61,9 @@ export const addItemToCart = async(req, res)=>{
 
 }
 
+/*
+GET API: fetch the JSON for the entire Cart (carts) cluster 
+*/ 
 export const fetch = async(req,res)=>{
     try{
         const products = await Cart.find({});
@@ -113,9 +116,9 @@ export const deleteProduct = async(req, res) => {
             return res.status(400).json({ message: "Product in cart not found"});
         }
 
-        const deletedProduct = await Card.findByIdAndDelete(id);
+        const deletedProduct = await Cart.findByIdAndDelete(id);
         return res.status(200).json({
-            message: "Cart deleted successfully.", 
+            message: "Product deleted successfully.", 
             productId: deletedProduct._id
         });
     } catch(error) {

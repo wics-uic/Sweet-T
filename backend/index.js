@@ -6,12 +6,17 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cors from "cors";
+import exampleRoutes from './Route/exampleRoute.js'
+
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for Astro frontend
 dotenv.config();
+
+app.use('/api/cart/', exampleRoutes);
+
 
 const PORT = process.env.PORT || 8000;
 const MONGOURL = process.env.MONGO_URL;

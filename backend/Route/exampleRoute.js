@@ -6,7 +6,7 @@ import {
     addItemToCart, 
     update, 
     deleteProduct
-} from "..controller/exampleController.js";
+} from "../Controller/exampleController.js";
 
 const route = express.Router();
 
