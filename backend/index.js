@@ -9,6 +9,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 import exampleRoutes from './Route/exampleRoute.js';
+import checkoutRoutes from './Route/checkoutRoute.js';
 
 const app = express();
 
@@ -19,6 +20,8 @@ app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:4321', // Frontend URL
     credentials: true // Enable credentials (cookies) to be sent
 }));
+
+
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
@@ -188,6 +191,7 @@ app.get('/api/test-user', (req, res) => {
 
 // Call the exampleRoutes API here url: http://localhost:8000/api/{all api's are added here}
 app.use('/api', exampleRoutes);
+app.use('/api/orders', checkoutRoutes);
 
 // Connect to MongoDB
 mongoose.connect(MONGOURL).then(async () => {
