@@ -1,6 +1,6 @@
 // This is am empty file
 
-import Cart from "../model/exampleModel.js";
+import Cart from "./model/exampleModel.js";
 
 /*
 POST API: add item to the cart 
@@ -8,38 +8,52 @@ If cart doesn't exists, create a new cart
 Increase quantity of product
 
 Note: frontend must send an API request 
+
+POSTing the data into the dataset 
 */
 export const addItemToCart = async(req, res)=>{
     try {
-        // grab Product from frontend/Button 
-        const { product, cartId } = req.body; 
+        // request Cart model 
+        const cartData = new Cart(req.body);
+        // extract productId and quantity from cartData    
+        const {productId, quantity} = cartData;
 
-        // validate necessary product information is given 
-        if (!product ||!product.quantity) {
-            return res.status(400).json({ error: "Missing product information" });
+        // find if productId already exists in the cart
+        const productInCart = await Cart.findOne({productId});
+        if (productInCart) {
+            return res.status(400).json({message: "product already in the cart."});
         }
 
-        let cart = await Cart.findById(cartId);
+        // if product doesn't exist, add to cart database 
+        const savedProduct = await cartData.save();
+        res.status(200).json(savedProduct);
+
+        // // validate necessary product information is given 
+        // if (!product ||!product.quantity) {
+        //     return res.status(400).json({ error: "Missing product information" });
+        // }
+
+        // let cart = await Cart.findById(cartId);
         
-        if (cart) {
-            // found cart 
-            const itemIndex = cart.products.findIndex(p => p.productId == product.productId)
+        // if (cart) {
+        //     // found cart 
+        //     const itemIndex = cart.products.findIndex(p => p.productId == product.productId)
             
-            if (itemIndex > -1) {
-                cart.products[itemIndex].quantity += product.quantity
-            } else {
-                cart.products.push(product)
-            }
-            const updatedCart = await cart.save();
-            return res.status(200).json(updatedCart);
+        //     if (itemIndex > -1) {
+        //         cart.products[itemIndex].quantity += product.quantity
+        //     } else {
+        //         cart.products.push(product)
+        //     }
+        //     const updatedCart = await cart.save();
+        //     return res.status(200).json(updatedCart);
 
-        } else {
-            // create new cart 
-            const newCart = await Cart.create({
-                products: [product]
-            });
-            return res.status(201).json(newCart);
-        }
+        // } else {
+        //     // create new cart 
+        //     const newCart = await Cart.create({
+        //         products: [product]
+        //     });
+        //     return res.status(201).json(newCart);
+        // }
     } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server error."})
@@ -47,39 +61,57 @@ export const addItemToCart = async(req, res)=>{
 
 }
 
+export const fetch = async(req,res)=>{
+    try{
+        const products = await Cart.find({});
+        if (products.length === 0) {
+            res.status(400).json({message: "product not found"});
+        }
+        res.status(200).json(products);
+    }catch(error){
+        res.status(500).json({error: "Internal Server error."})
+    }
+}
 /*
-PUT API: add item to the cart 
-If cart doesn't exists, create a new cart 
-Increase quantity of product
+PUT API: add/update item in the cart 
 
 Note: frontend must send an API request 
 */
-export const updateItemQuantity = async(req, res)=>{
+export const update = async(req, res)=>{
     try {
-        const { cartId, productId, quantity } = req.body;
-        // validate necessary product information is given 
-        if (!cartId || !productId ||quantity == null) {
-            return res.status(400).json({ error: "Missing required information" });
+        const id = req.params.id;
+
+        const productInCart = await Cart.findOne({_id:id});
+
+        if (!productInCart) {
+            return res.status(404).json({message: "Product not in cart"});
         }
+        const updateCart = await Cart.findByIdAndUpdate(id, req.body, {new: true});
+        res.status(201).json(updateCart);
+        // const { cartId, productId, quantity } = req.body;
+        // // validate necessary product information is given 
+        // if (!cartId || !productId ||quantity == null) {
+        //     return res.status(400).json({ error: "Missing required information" });
+        // }
         
-        if (quantity <= 0) {
-            return res.status(400).json({ message: "Quantity must be 1 or more."});
-        }
+        // if (quantity <= 0) {
+        //     return res.status(400).json({ message: "Quantity must be 1 or more."});
+        // }
 
-        if (!cart) {
-            return res.status(404).json({ message: "Cart not found."});
-        }
+        // if (!cart) {
+        //     return res.status(404).json({ message: "Cart not found."});
+        // }
 
-        const itemIndex = cart.products.findIndex(p => p.productId == productId);
-        if (itemIndex > -1) {
-            // Product found
-            cart.products[itemIndex].quantity = quantity;
-            const updatedCart = await cart.save();
-            return res.status(200).json(updatedCart);
-        } else {
-            // Product not found (should've been taken care of in AddItemToCart)
-            return res.status(404).json({ message: "Product not found in cart."});
-        }
+        // const itemIndex = cart.products.findIndex(p => p.productId == productId);
+        // if (itemIndex > -1) {
+        //     // Product found
+        //     cart.products[itemIndex].quantity = quantity;
+        //     const updatedCart = await cart.save();
+        //     return res.status(200).json(updatedCart);
+        // } else {
+        //     // Product not found (should've been taken care of in AddItemToCart)
+        //     return res.status(404).json({ message: "Product not found in cart."});
+        // }
     } catch (error) {
         console.error(error);
         res.status(500).json({error: "Internal Server error."});
@@ -87,20 +119,22 @@ export const updateItemQuantity = async(req, res)=>{
 }
 
 /**
- * DELETE API: delete entire cart if given cartId 
+ * DELETE API: delete product in cart given its productId
  */
-export const deleteCart = async(req, res) => {
+export const deleteProduct = async(req, res) => {
     try {
-        const {cartId } = req.params;
+        const id = req.params.id;
 
-        if (!cardId) {
-            return res.status(400).json({ message: "missing cardId in the URL"});
+        const productInCart = await Cart.findOne({_id: id});
+        
+        if (!productInCart) {
+            return res.status(400).json({ message: "Product in cart not found"});
         }
 
-        const deletedCart = await Card.findByIdAndDelete(cartId);
+        const deletedProduct = await Card.findByIdAndDelete(id);
         return res.status(200).json({
             message: "Cart deleted successfully.", 
-            cartId: deletedCart._id
+            productId: deletedProduct._id
         });
     } catch(error) {
         console.error(error);

@@ -1,15 +1,18 @@
 // This is am empty file
 import express from "express";
+
 import {
+    fetch,
     addItemToCart, 
-    updateItemQuantity, 
-    deleteCart
+    update, 
+    deleteProduct
 } from "..controller/exampleController.js";
 
 const route = express.Router();
 
-route.post('/add', addItemToCart);
-route.put('/update', updateItemQuantity);
-route.delete('/:cardId', deleteCart);
+route.get("/fetch", fetch); // grab payload from "add to bag" button
+route.post("/create", addItemToCart);
+route.put("/update/:id", update);
+route.delete("/delete/:id", deleteProduct);
 
 export default route;

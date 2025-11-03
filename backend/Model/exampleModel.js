@@ -1,31 +1,21 @@
 import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
-    products: [productSchema], // replace with the Product Model
-}, {
-    // mongoose auto adds an '_id', which will be cardId
-    timestamps: true
-})
-
-const productSchema = new mongoose.Schema({
-    productId:{
-        type: String,
-        required: true
+    userId: {
+        type:String,
+        required:false
     },
-    name: {
-        type: String,
-        required: true
+    productId: {
+        type:String,
+        requred:true
     },
-    price: {    
-        type: Number,
-        required: true
-    },
-    quantity:{
-        type: Number,
-        required: true,
-        min: 0,
-        default: 0
+    quantity: {
+        type:Number,
+        required:true
     }
+}, {
+    // mongoose auto adds an '_id', which will be cartId
+    // timestamps: true
 })
 
 export default mongoose.model("cart", cartSchema);
