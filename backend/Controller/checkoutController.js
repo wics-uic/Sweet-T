@@ -4,7 +4,7 @@ export const createOrder = async (req, res) => {
     try {
         console.log("Testing recieved", req.body);
         const {
-            // ProductsOrdered,
+            // OrderedObjects,
             email,
             credCardNum,
             phone,
@@ -22,7 +22,7 @@ export const createOrder = async (req, res) => {
 
         const newOrder = await Orders.create({
             user_id: req.userId || req.body.user_id,
-            // ProductsOrdered,
+            // OrderedObjects,
             email,
             credCardNum,
             phone,
@@ -52,6 +52,27 @@ export const createOrder = async (req, res) => {
         res.status(500).json({
             success: false,
             message: "Failed to create order",
+            error: error.message
+        });
+    }
+};
+
+
+export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Orders.find();
+
+        res.status(200).json({
+            success: true,
+            message: "Orders was fetched successfully",
+            totalOrders: orders.length,
+            orders
+        });
+    } catch (error) {
+        console.error("Error in fetching orders:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch orders",
             error: error.message
         });
     }
