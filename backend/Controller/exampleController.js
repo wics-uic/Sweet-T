@@ -86,6 +86,9 @@ export const update = async(req, res)=>{
  */
 export const deleteProduct = async(req, res) => {
     try {
+        const { userId, products } = req.body;
+
+        
         const id = req.params.id;
 
         const productInCart = await Cart.findOne({_id: id});
@@ -99,6 +102,31 @@ export const deleteProduct = async(req, res) => {
             message: "Product deleted successfully.", 
             productId: deletedProduct._id
         });
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({error: "Internal Server error."});
+    }
+}
+
+/**
+ * DELETE API: delete cart based off of userId
+ */
+export const deleteCart = async(req, res) => {
+    try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({error: "userId is required"});
+        }
+        
+        const deletedCart = await Cart.findOneAndDelete({userId});
+
+        if (!deletedCart) {
+            return res.status(404).json({ message: "Cart not found" });
+        }
+
+    res.status(200).json({ message: "Cart deleted successfully", cart: deletedCart });
+  
     } catch(error) {
         console.error(error);
         res.status(500).json({error: "Internal Server error."});
