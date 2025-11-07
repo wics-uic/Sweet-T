@@ -57,33 +57,6 @@ export const fetch = async(req,res)=>{
     }
 }
 
-/*
-PUT API: add/update item in the cart 
-Note: frontend must send an API request 
-*/
-export const update = async(req, res)=>{
-    try {
-        const id = req.params.id;
-        const {quantity} = req.body;
-        const quantityToAdd = parseInt(quantity, 10);
-
-        if (quantity === undefined) {
-            return res.status(400).json({message: "missing 'quantity' in request body"});
-        }
-
-        const updateCart = await Cart.findByIdAndUpdate(id, { $inc: {quantity: quantityToAdd }}, {new: true});
-        
-        if (!updateCart) {
-            return res.status(404).json({message: "Product not in cart"});
-        }
-        res.status(201).json(updateCart);
-        
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({error: "Internal Server error."});
-    }
-}
-
 /**
  * DELETE API: delete product in cart given its productId
  */
@@ -112,18 +85,44 @@ export const deleteProduct = async(req, res) => {
 }
 
 /**
- * DELETE API: delete cart based off of userId or _id 
+ * DELETE API: delete cart based off of userId (user name)
  */
-export const deleteCart = async(req, res) => {
+export const deleteCartByUserId = async(req, res) => {
     try {
-        const { userId } = req.body; 
-        const id = req.body._id;
+        const userId = req.params.id;
 
         if (!userId) {
             return res.status(400).json({error: "userId is required"});
         }
         
         const deletedCart = await Cart.findOneAndDelete({userId}); // can change to id as well
+
+        if (!deletedCart) {
+            return res.status(404).json({ message: "Cart not found" });
+        }
+
+    res.status(200).json({ message: "Cart deleted successfully", cart: deletedCart });
+  
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({error: "Internal Server error."});
+    }
+}
+
+/**
+ * DELETE API: delete cart based off of _id (session)
+ * Note: The actual ID will not matter, because as long as its _id (for the session) 
+ * it will update the "most recent?" cart
+ */
+export const deleteCart = async(req, res) => {
+    try {
+        const id = req.params.id;
+
+        if (!id) {
+            return res.status(400).json({error: "userId is required"});
+        }
+        
+        const deletedCart = await Cart.findOneAndDelete(id); // can change to id as well
 
         if (!deletedCart) {
             return res.status(404).json({ message: "Cart not found" });
