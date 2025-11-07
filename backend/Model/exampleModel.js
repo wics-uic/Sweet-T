@@ -5,17 +5,26 @@ const cartSchema = new mongoose.Schema({
         type:String,
         required:false
     },
-    productId: {
-        type:String,
-        required:true
-    },
-    quantity: {
-        type:Number,
-        required:true
-    }
-}, {
-    // mongoose auto adds an '_id', which will be cartId
-    // timestamps: true
-})
+    list_of_products: [{
+        // Method 1: Normalized data 
+        // _id 
+        name: {
+            type:String,
+            required:true
+        },
+        quantity: {
+            type:Number,
+            default:0
+        }
+        // Method 2: denormalized 
+        // name: String,
+        // price: Number,
+        // quantity: {
+        //     type: Number,
+        //     default: 0
+        // }
+    }],
+ 
+});
 
-export default mongoose.model("Cart", cartSchema, "Cart");
+export default mongoose.model("Cart", cartSchema, "Cart"); // carts
