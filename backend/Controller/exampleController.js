@@ -8,8 +8,10 @@ If cart doesn't exists, create a new cart
 */
 export const addProductToCart = async(req, res)=>{
     try {
-        const userId = req.user.userId;
-        const { name, quantity, customizations } = req.body;
+        // console.log("Decoded user:", req.user);// implemented later 
+        // const userId = req.user.userId;// for user session ID (userId = verifyToken)
+
+        const { userId,name, quantity, customizations } = req.body;
 
         // 1. Check if cart exists 
         let cart = await Cart.findOne({ userId });
@@ -110,17 +112,18 @@ export const deleteProduct = async(req, res) => {
 }
 
 /**
- * DELETE API: delete cart based off of userId
+ * DELETE API: delete cart based off of userId or _id 
  */
 export const deleteCart = async(req, res) => {
     try {
-        const { userId } = req.body;
+        const { userId } = req.body; 
+        const id = req.body._id;
 
         if (!userId) {
             return res.status(400).json({error: "userId is required"});
         }
         
-        const deletedCart = await Cart.findOneAndDelete({userId});
+        const deletedCart = await Cart.findOneAndDelete({userId}); // can change to id as well
 
         if (!deletedCart) {
             return res.status(404).json({ message: "Cart not found" });
