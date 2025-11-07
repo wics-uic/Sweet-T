@@ -5,7 +5,7 @@ const cartSchema = new mongoose.Schema({
         type:String,
         required:false
     },
-    list_of_products: [{
+    products: [{
         // Method 1: Normalized data 
         // _id 
         name: {
@@ -15,6 +15,10 @@ const cartSchema = new mongoose.Schema({
         quantity: {
             type:Number,
             default:0
+        },
+        customizations: {
+            type:String,
+            required:false
         }
         // Method 2: denormalized 
         // name: String,

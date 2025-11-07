@@ -3,15 +3,15 @@ import express from "express";
 
 import {
     fetch,
-    addItemToCart, 
+    addProductToCart, 
     update, 
-    deleteProduct
+    deleteProduct,
 } from "../Controller/exampleController.js";
 
 const route = express.Router();
 
 route.get("/fetch", fetch); // grab payload from "add to bag" button
-route.post("/create", addItemToCart);
+route.post("/create", addProductToCart);
 route.put("/update/:id", update);
 route.delete("/delete/:id", deleteProduct);
 
