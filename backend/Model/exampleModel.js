@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
     userId: {
-        type:String,
-        required:false
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User",
+        required:true
     },
     products: [{
         // Method 1: Normalized data 

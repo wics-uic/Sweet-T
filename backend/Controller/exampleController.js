@@ -8,7 +8,8 @@ If cart doesn't exists, create a new cart
 */
 export const addProductToCart = async(req, res)=>{
     try {
-        const { userId, name, quantity, customizations } = req.body;
+        const userId = req.user.userId;
+        const { name, quantity, customizations } = req.body;
 
         // 1. Check if cart exists 
         let cart = await Cart.findOne({ userId });
