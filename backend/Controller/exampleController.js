@@ -95,7 +95,7 @@ export const deleteCartByUserId = async(req, res) => {
             return res.status(400).json({error: "userId is required"});
         }
         
-        const deletedCart = await Cart.findOneAndDelete({userId}); // can change to id as well
+        const deletedCart = await Cart.findOneAndDelete({userId}); // deletes by userId value 
 
         if (!deletedCart) {
             return res.status(404).json({ message: "Cart not found" });
@@ -122,7 +122,7 @@ export const deleteCart = async(req, res) => {
             return res.status(400).json({error: "userId is required"});
         }
         
-        const deletedCart = await Cart.findOneAndDelete(id); // can change to id as well
+        const deletedCart = await Cart.findOneAndDelete(id); // deletes by card _id 
 
         if (!deletedCart) {
             return res.status(404).json({ message: "Cart not found" });

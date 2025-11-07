@@ -30,6 +30,10 @@ const cartSchema = new mongoose.Schema({
         //     default: 0
         // }
     }],
+    promoCodes: {
+        type:String,
+        required:false
+    },
  
 });
 
