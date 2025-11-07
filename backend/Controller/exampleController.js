@@ -62,22 +62,25 @@ export const fetch = async(req,res)=>{
  */
 export const deleteProduct = async(req, res) => {
     try {
-        const { userId, products } = req.body;
+        const productId = req.params.id;
 
-        
-        const id = req.params.id;
-
-        const productInCart = await Cart.findOne({_id: id});
-        
-        if (!productInCart) {
-            return res.status(400).json({ message: "Product in cart not found"});
+        if (!productId) {
+            return res.status(400).json({error: "productId not found in cart"});
         }
 
-        const deletedProduct = await Cart.findByIdAndDelete(id);
-        return res.status(200).json({
-            message: "Product deleted successfully.", 
-            productId: deletedProduct._id
-        });
+        // Find the cart that contains the productId
+        const cart = await Cart.findOne({ "products._id": productId });
+
+        if (!cart) {
+            return res.status(400).json({message: "Cart containing product not found"});
+        }
+        // Remove product from products array 
+        cart.products = cart.products.filter(p => p._id.toString() !== productId);
+
+        await cart.save();
+
+        res.status(200).json({message: "product removed from cart", cart});
+        
     } catch(error) {
         console.error(error);
         res.status(500).json({error: "Internal Server error."});
