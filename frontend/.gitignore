@@ -7,14 +7,19 @@ dist/
 node_modules/
 frontend/node_modules
 
+frontend/package-lock.json
+frontend/package.json
+
+package-lock.json
+package.json
+
 # logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-frontend/package-lock.json
-frontend/package.json
+
 
 # environment variables
 .env
