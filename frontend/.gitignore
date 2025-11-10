@@ -13,8 +13,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-package-lock.json
-package.json
+frontend/package-lock.json
+frontend/package.json
 
 # environment variables
 .env
