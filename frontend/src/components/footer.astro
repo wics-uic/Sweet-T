@@ -1,61 +1,101 @@
 ---
-const navOrderLinks = [
-  "🍰 Cakes",
-  "🎂 Custom cakes",
-  "🧁 Cupcakes",
-  "🧁✨ Custom cupcakes",
-  "🥧 Pastelitos",
-  "🍮 Flan",
-  "🍪 Assorted cookies",
-];
+const navOrderLinks = [ "Cakes", "Custom cakes", "Cupcakes", "Custom cupcakes", "Pastelitos", "Flan", "Assorted cookies"];
+const navInfoLinks = ["Contact us", "FAQ"];
 ---
 
 <div class="footer-container bg-green-100 py-8 m-[30px] flex flex-col items-center justify-center text-center rounded-t-[32px] rounded-b-[32px] p-[50px]">
-  <!-- top content -->
   <div class="footer-items flex flex-col items-center gap-4">
     <img src="src/assets/Sweet_T_clear.svg" alt="Sweet T logo" class="w-24 sm:w-32" />
 
     <h2 class="quote text-xl font-semibold text-beige-50">No spam, just flan.</h2>
-    <h3 class="email-statement text-sm text-beige-50 max-w-md mt-2">
-      Just weekly menus, pickup reminders for your orders.
+    <h3 class="email-statement text-sm text-beige-50 max-w-md mt-2 px-2">
+      Just weekly menus, pickup reminders for your orders, and heads up when Teresa experiments with new flavors.
     </h3>
 
     <!-- Email signup -->
-    <div class="email_input flex">
-      <input
+    <div id="emailData" class="email_input flex flex-col sm:flex-row w-full sm:w-auto items-center justify-center mt-2">
+      <input 
         id="email-input"
-        type="email"
-        placeholder="Email"
-        class="p-3 w-125 rounded-l-xl bg-beige-50 border border-beige-50 text-gray-800 focus:outline-none"
+        type="email" 
+        placeholder="Email" 
+        class="p-3 w-full sm:w-64 rounded-l-xl sm:rounded-l-xl sm:rounded-r-none bg-beige-50 border border-beige-50 text-gray-800 focus:outline-none mb-3 sm:mb-0" 
       />
-      <button
-        class="bg-beige-50 text-[#013220] px-4 rounded-r-xl hover:bg-beige-200 transition flex items-center justify-center"
-      >
-        <img src="src/assets/arrow.svg" />
+      <button id="emailButton" class="bg-beige-50 text-[#013220] px-4 py-3 rounded-xl sm:rounded-l-none sm:rounded-r-xl hover:bg-beige-200 transition flex items-center justify-center w-full sm:w-auto">
+        <img src="src/assets/arrow.svg" alt="Submit"/>
       </button>
+
+      <!-- test deployment id: AKfycbz9ltTAvpnmI5_qLVb51STKVRICSgeYEuXYzamab6PS6SpfpMo4GYf3onjX3j_PJ1UyTw -->
+      <!-- test deployment url:  https://script.google.com/a/macros/uic.edu/s/AKfycbz9ltTAvpnmI5_qLVb51STKVRICSgeYEuXYzamab6PS6SpfpMo4GYf3onjX3j_PJ1UyTw/exec -->
     </div>
   </div>
 
-  <!-- bottom footer links (responsive) -->
-  <div class="w-full flex flex-col items-center gap-6 mt-10">
-    <!-- Navigation links for food -->
-    <div class="flex flex-wrap justify-center gap-6 text-beige-50 text-sm">
-      {navOrderLinks.map((item) => (
-        <a href="#" class="hover:underline">{item}</a>
-      ))}
-    </div>
+  <!-- Navigation links -->
+  <div class="mt-10 flex flex-wrap justify-center gap-4 sm:gap-6 text-beige-50 text-sm">
+    <a href="/cakes" class="hover:underline">🍰 Cakes</a>
+    <a href="/customCakes" class="hover:underline">🎂 Custom cakes</a>
+    <a href="/cupcakes" class="hover:underline">🧁 Cupcakes</a>
+    <a href="/customCupcakes" class="hover:underline">🧁✨ Custom cupcakes</a>
+    <a href="/pastelitos" class="hover:underline">🥧 Pastelitos</a>
+    <a href="/flans" class="hover:underline">🍮 Flan</a>
+    <a href="/cookies" class="hover:underline">🍪 Assorted cookies</a>
+  </div>
 
-    <!-- Navigation info links (always centered) -->
-    <div class="flex flex-col gap-3 text-beige-50 text-sm items-center text-center">
-      <a href="#" class="hover:underline">Contact us</a>
-      <a href="#" class="hover:underline">FAQ</a>
-    </div>
+  <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-6 text-beige-50 text-sm justify-center">
+    <a href="#" class="hover:underline">Contact us</a>
+    <a href="#" class="hover:underline">FAQ</a>
   </div>
 </div>
 
 <style>
-  /* match the class name you used in the HTML */
-  .email_input {
+  .email-input {
     background-image: url('arrow.svg');
   }
 </style>
+
+<script>
+  // Get elements safely with typing
+  const emailInput = document.getElementById("email-input") as HTMLInputElement;
+  const emailButton = document.getElementById("emailButton") as HTMLButtonElement;
+
+  emailInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      // Prevent default Enter key behavior (e.g., adding a new line in a textarea)
+      event.preventDefault(); 
+      // Manually submit the form 
+      emailButton.click();
+    }
+  });
+
+  // Only run if elements exist
+  if (emailButton && emailInput) {
+    emailButton.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        alert("Please enter an email.");
+        return;
+      }
+      // if not a valid email address, then alert
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      try {
+        await fetch("https://script.google.com/a/macros/uic.edu/s/AKfycbz9ltTAvpnmI5_qLVb51STKVRICSgeYEuXYzamab6PS6SpfpMo4GYf3onjX3j_PJ1UyTw/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        alert("Email submitted!");
+        emailInput.value = "";
+      } catch (err) {
+        console.error(err);
+        alert("Error submitting email");
+      }
+    });
+  }
+</script>

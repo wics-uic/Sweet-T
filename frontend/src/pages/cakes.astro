@@ -2,9 +2,20 @@
 import NavBar from "../components/navbar.astro";
 import Product from "../components/product.astro";
 import ProductLayout from "../layouts/productLayout.astro";
+import OrderSection from "../components/orderSection.astro";
+
+// const {item_name="Item Name", price="$0", url="src/assets/products-cake.png"} = Astro.props;
 ---
 
 <ProductLayout>
+  <OrderSection
+    item_name="Cake"
+    price="45"
+    url="src/assets/products-cake.png"
+  />
+</ProductLayout>
+
+<!-- <ProductLayout>
   <div class="w-full flex flex-col items-center">
     <h1 class="header">Shop our Cakes!</h1>
     <Product
@@ -13,8 +24,8 @@ import ProductLayout from "../layouts/productLayout.astro";
       price="$20/dozen"
     />
   </div>
-  <!-- <NavBar /> -->
-</ProductLayout>
+  <NavBar />
+</ProductLayout> -->
 
 <style>
   .header {
