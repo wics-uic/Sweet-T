@@ -77,3 +77,48 @@ export const getAllOrders = async (req, res) => {
         });
     }
 };
+
+export const completeOrder = async (req, res) => {
+    try {
+        const { user_id } = req.body; // get user_id from the request body
+
+
+        if (!user_id) {
+            return res.status(400).json({
+                success: false,
+                message: "user_id is required"
+            });
+        }
+
+
+        const updatedOrders = await Orders.updateMany(
+            { user_id },
+            { $set: { Order_complete: true } } // update
+        );
+
+
+        if (updatedOrders.matchedCount === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No orders found for this user_id"
+            });
+        }
+
+
+        res.status(200).json({
+            success: true,
+            message: "Order(s) marked as complete successfully",
+            modifiedCount: updatedOrders.modifiedCount
+        });
+
+
+    } catch (error) {
+        console.error("Error updating order:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to update order",
+            error: error.message
+        });
+    }
+};
+
