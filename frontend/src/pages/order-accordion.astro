@@ -1,32 +1,54 @@
 ---
-import Accordion from "../components/OrderAccordion.astro";
+export interface Props {
+  customerName?: string;
+  orderItems?: string;
+  pickupTime?: string;
+  status?: 'pending' | 'ready' | 'complete';
+  itemStatus?: string;
+}
+
+const {
+  customerName = "Name",
+  orderItems = "No items",
+  pickupTime = "Pickup time",
+  status = "pending",
+  itemStatus
+} = Astro.props;
+
+const statusColors = {
+  pending: 'bg-yellow-100 text-yellow-700',
+  ready: 'bg-green-100 text-green-700',
+  complete: 'bg-green-600 text-white'
+};
+
+const statusText = {
+  pending: 'Pending',
+  ready: 'Ready for Pickup',
+  complete: 'Complete'
+};
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Order Details</title>
-</head>
-<body style="font-family: sans-serif; background-color: #e8e0d8; padding: 2rem;">
-
-  <h1 style="text-align: center; color: #333; margin-bottom: 2rem;">Order Information</h1>
-
-  <Accordion />
-
-  <div style="text-align: center; margin-top: 2rem;">
-    <a href="/">
-      <button style="
-        padding: 0.5rem 1rem;
-        background-color: pink;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        cursor: pointer;
-      ">
-        Back to Main Page
+<div class="bg-white rounded-lg p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow mb-4">
+  <div class="flex items-start justify-between">
+    <div class="flex-1">
+      <h3 class="text-lg font-semibold text-gray-900 mb-1">{customerName}</h3>
+      <p class="text-sm text-gray-600 mb-1">{orderItems}</p>
+      <div class="flex items-center gap-2 text-sm text-gray-500 mb-2">
+        <span>{pickupTime}</span>
+      </div>
+      {itemStatus && (
+        <span class="inline-block text-xs text-red-500 font-medium">{itemStatus}</span>
+      )}
+    </div>
+    <div class="flex items-center gap-2">
+      <span class={`px-3 py-1 rounded-full text-xs font-medium ${statusColors[status]}`}>
+        {statusText[status]}
+      </span>
+      <button class="text-gray-400 hover:text-gray-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
       </button>
-    </a>
+    </div>
   </div>
-</body>
-</html>
+</div>
