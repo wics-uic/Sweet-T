@@ -1,3 +1,16 @@
-<layout>
-    <h3>login</h3>
-</layout>
+---
+import LoginSection from "../../components/loginSection.astro"
+import AdminLayout from "../../layouts/adminLayout.astro"
+---
+<AdminLayout>
+    <LoginSection/>
+</AdminLayout>
+
+<style>
+    html,
+    body {
+        margin-top: 0;
+        margin-bottom: 0;
+        gap: 0;
+    }
+</style>
