@@ -5,6 +5,7 @@ const testJson = fs.readFileSync(filePath, 'utf-8');
 export type Testimonial = {
     name: string;
     message: string;
+    picture: string;
 };
 
 interface TestimonialsList {
