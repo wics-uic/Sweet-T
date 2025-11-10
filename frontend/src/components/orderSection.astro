@@ -28,9 +28,9 @@ import OrderAccordion from "./OrderAccordion.astro";
     <!--ready tab -->
     <div id="ready" class="tab-content active">
       <div class="sizes">
-        <button class="size-button" id="btnPress1">5 inches</button>
-        <button class="size-button" id="btnPress2">8 inches</button>
-        <button class="size-button" id="btnPress3">10 inches</button>
+        <button class="size-button">5 inches</button>
+        <button class="size-button">8 inches</button>
+        <button class="size-button">10 inches</button>
       </div>
     </div>
 
@@ -82,10 +82,33 @@ import OrderAccordion from "./OrderAccordion.astro";
   });
 
 
+  // Cart Style Upgrades (Edited: ichelle T)
 
-  const btn = document.getElementById('btnPress1');
-  btn?.addEventListener('click', function() {
-    this.classList.toggle('clicked');
+  const sizeButtons = document.querySelectorAll('.size-button');
+  const addButton = document.querySelector('.add-button');
+
+  sizeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // If the clicked button is already active, deactivate it
+      if (button.classList.contains('active')) {
+        button.classList.remove('active');
+
+        // Check if any button is still active
+        const anyActive = Array.from(sizeButtons).some(btn => btn.classList.contains('active'));
+        if (!anyActive) {
+          addButton.classList.remove('active');
+        }
+      } else {
+        // Remove 'active' from all size buttons
+        sizeButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Activate the clicked button
+        button.classList.add('active');
+
+        // Activate the add-button
+        addButton.classList.add('active');
+      }
+    });
   });
 </script>
 
@@ -199,7 +222,7 @@ import OrderAccordion from "./OrderAccordion.astro";
     border: 1px solid #D4596B;
     background: #F0CAC9;
   }
-  .size-button.clicked {
+  .size-button.active {
     border: 1px solid #D4596B;
     background: #F0CAC9;
   }
@@ -213,11 +236,11 @@ import OrderAccordion from "./OrderAccordion.astro";
     border-radius: 8px;
     font-weight: bold;
   }
-
-  .add-button.clicked {
+  .add-button.active {
     background: #D4596B;
     background-color: #D4596B;
   }
+
   .accordion-placeholder {
     margin-top: 30px;
     /* border: 1px dashed #aaa; */
