@@ -13,20 +13,23 @@ const navInfoLinks = ["Contact us", "FAQ"];
     </h3>
 
     <!-- Email signup -->
-    <div class="email_input flex flex-col sm:flex-row w-full sm:w-auto items-center justify-center mt-2">
+    <div id="emailData" class="email_input flex flex-col sm:flex-row w-full sm:w-auto items-center justify-center mt-2">
       <input 
         id="email-input"
         type="email" 
         placeholder="Email" 
         class="p-3 w-full sm:w-64 rounded-l-xl sm:rounded-l-xl sm:rounded-r-none bg-beige-50 border border-beige-50 text-gray-800 focus:outline-none mb-3 sm:mb-0" 
       />
-      <button class="bg-beige-50 text-[#013220] px-4 py-3 rounded-xl sm:rounded-l-none sm:rounded-r-xl hover:bg-beige-200 transition flex items-center justify-center w-full sm:w-auto">
+      <button id="emailButton" class="bg-beige-50 text-[#013220] px-4 py-3 rounded-xl sm:rounded-l-none sm:rounded-r-xl hover:bg-beige-200 transition flex items-center justify-center w-full sm:w-auto">
         <img src="src/assets/arrow.svg" alt="Submit"/>
       </button>
+
+      <!-- test deployment id: AKfycbz9ltTAvpnmI5_qLVb51STKVRICSgeYEuXYzamab6PS6SpfpMo4GYf3onjX3j_PJ1UyTw -->
+      <!-- test deployment url:  https://script.google.com/a/macros/uic.edu/s/AKfycbz9ltTAvpnmI5_qLVb51STKVRICSgeYEuXYzamab6PS6SpfpMo4GYf3onjX3j_PJ1UyTw/exec -->
     </div>
   </div>
 
-  <!-- Navigation links for food -->
+  <!-- Navigation links -->
   <div class="mt-10 flex flex-wrap justify-center gap-4 sm:gap-6 text-beige-50 text-sm">
     <a href="/cakes" class="hover:underline">🍰 Cakes</a>
     <a href="/customCakes" class="hover:underline">🎂 Custom cakes</a>
@@ -37,7 +40,6 @@ const navInfoLinks = ["Contact us", "FAQ"];
     <a href="/cookies" class="hover:underline">🍪 Assorted cookies</a>
   </div>
 
-  <!-- Navigation info links -->
   <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-6 text-beige-50 text-sm justify-center">
     <a href="#" class="hover:underline">Contact us</a>
     <a href="#" class="hover:underline">FAQ</a>
@@ -49,3 +51,51 @@ const navInfoLinks = ["Contact us", "FAQ"];
     background-image: url('arrow.svg');
   }
 </style>
+
+<script>
+  // Get elements safely with typing
+  const emailInput = document.getElementById("email-input") as HTMLInputElement;
+  const emailButton = document.getElementById("emailButton") as HTMLButtonElement;
+
+  emailInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      // Prevent default Enter key behavior (e.g., adding a new line in a textarea)
+      event.preventDefault(); 
+      // Manually submit the form 
+      emailButton.click();
+    }
+  });
+
+  // Only run if elements exist
+  if (emailButton && emailInput) {
+    emailButton.addEventListener("click", async () => {
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        alert("Please enter an email.");
+        return;
+      }
+      // if not a valid email address, then alert
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      try {
+        await fetch("https://script.google.com/a/macros/uic.edu/s/AKfycbz9ltTAvpnmI5_qLVb51STKVRICSgeYEuXYzamab6PS6SpfpMo4GYf3onjX3j_PJ1UyTw/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
+        });
+
+        alert("Email submitted!");
+        emailInput.value = "";
+      } catch (err) {
+        console.error(err);
+        alert("Error submitting email");
+      }
+    });
+  }
+</script>

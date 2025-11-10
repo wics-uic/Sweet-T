@@ -1,0 +1,260 @@
+---
+import cakeImage from "/src/assets/products-cake.png";
+import cupcakeImage from "/src/assets/products-cupcake.png";
+import pastelitosImage from "/src/assets/products-pastelitos.png";
+import cookieImage from "/src/assets/products-cookie.png";
+import flanImage from "/src/assets/products-flan.png";
+import { Image } from "astro:assets";
+---
+
+<!--Component Structure -->
+<section class="cart-section">
+    <h1>My Cart</h1>
+
+    <!-- Cart Items Container -->
+    <div class="cart-items-container">
+        <!-- Custom Cake Item -->
+        <div class="cart-item">
+            <div class="item-row">
+                <div class="item-info">
+                    <Image src={cakeImage} alt="Custom Cake" class="item-image" />
+                    <div class="item-details">
+                        <div class="item-name">Custom Cake</div>
+                        <div class="item-qty">Qty: 1</div>
+                        <div class="item-notes">Notes:</div>
+                        <div class="item-actions">
+                            <span class="action-link">Delete</span> | <span class="action-link">Edit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-total">Total: $65.00</div>
+            </div>
+        </div>
+
+        <!-- Custom Cupcake Item -->
+        <div class="cart-item">
+            <div class="item-row">
+                <div class="item-info">
+                    <Image src={cupcakeImage} alt="Custom Cupcakes" class="item-image" />
+                    <div class="item-details">
+                        <div class="item-name">Custom Cupcake</div>
+                        <div class="item-qty">Qty: 1</div>
+                        <div class="item-notes">Notes:</div>
+                        <div class="item-actions">
+                            <span class="action-link">Delete</span> | <span class="action-link">Edit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-total">Total: $42.00</div>
+            </div>
+        </div>
+
+        <!-- Custom Pastelitos Item -->
+        <div class="cart-item">
+            <div class="item-row">
+                <div class="item-info">
+                    <Image src={pastelitosImage} alt="Pastelitos" class="item-image" />
+                    <div class="item-details">
+                        <div class="item-name">Pastelitos</div>
+                        <div class="item-qty">Qty: 1</div>
+                        <div class="item-notes">Notes:</div>
+                        <div class="item-actions">
+                            <span class="action-link">Delete</span> | <span class="action-link">Edit</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-total">Total: $36.00</div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Summary</h2>
+
+    <div class="summary-section">
+        <div class="summary-row">
+            <span>Subtotal:</span>
+            <span>$143.00</span>
+        </div>
+
+        <div class="summary-row">
+            <span>Estimated Tax:</span>
+            <span>$5.00</span>
+        </div>
+
+        <hr />
+
+        <div class="summary-row total-row">
+            <span>Total</span>
+            <span>$148.00</span>
+        </div>
+
+        <button class="checkout-button">Checkout</button>
+    </div>
+
+    <div class="cart-footer">
+        <span>3 items</span>
+        <span>$143.00</span>
+    </div>
+</section>
+
+<!--Styling -->
+<style>
+    .cart-section{
+        background-color: #f0dec5;
+        color: #333;
+        padding:20px;
+        max-width:800px;
+        margin: 0 auto;
+    }
+
+    h1{
+        font-size:24px;
+        margin-bottom:20px;
+        color: #2c5530;
+    }
+
+    h2{
+        font-size: 20px;
+        margin:30px 0 15px 0;
+        color: #2c5530;
+    }
+
+    .cart-items-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .cart-item{
+        background-color: white;
+        border:1px solid #ddd;
+        border-radius:4px;
+        padding:15px;
+    }
+
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .item-info {
+        display: flex;
+        gap: 15px;
+        flex: 1;
+    }
+
+    .item-image{
+        width:80px;
+        height:80px;
+        object-fit:cover;
+        border-radius:4px;
+    }
+
+    .item-details {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .item-name{
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .item-qty, .item-notes {
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .item-total{
+        font-weight:bold;
+        font-size: 16px;
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .item-actions{
+        margin-top: 10px;
+    }
+
+    .action-link{
+        color:#2c5530;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .summary-section{
+        background-color: white;
+        border:1px solid #ddd;
+        border-radius: 4px;
+        padding:15px;
+        margin-bottom:20px;
+    }
+
+    .summary-row{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    hr{
+        border:none;
+        border-top: 1px solid #ddd;
+        margin:15px 0;
+    }
+
+    .total-row{
+        font-weight: bold;
+        font-size:18px;
+    }
+    
+    .checkout-button{
+        background-color: #2c5530;
+        color:white;
+        border: none;
+        border-radius: 4px;
+        padding: 12px;
+        width:100%;
+        font-size:16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .cart-footer{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+    }
+
+    .nav-bar-right .link{
+        padding: 8px 4px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    .nav-bar-right .link:hover{
+        background-color: rgba(4, 74,37,0.1);
+        text-decoration: underline;
+        text-decoration-color: #044A25;
+        text-underline-offset: 4px;
+    }
+
+    @media (max-width: 968px) {
+        .cart-layout {
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .summary-column {
+            flex: 1;
+            width: 100%;
+            position: static;
+        }
+    }
+
+</style>

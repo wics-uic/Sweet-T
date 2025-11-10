@@ -1,0 +1,111 @@
+---
+import userIcon from '../assets/nav-user.svg?url';
+import "../styles/global.css"
+---
+
+<div class="admin-nav-container flex">
+    <div class="header-content">
+        <!-- Navbar Title -->
+        <div class="title">
+            Sweet T Bakery
+        </div>
+        <!-- Account Button -->
+        <a href="/admin/account" class="account-btn">
+            <img src={userIcon} />
+        </a>
+    </div>
+    <!-- Orders, Custom Requests, Sales, Add Order buttons -->
+    <div class="nav-buttons">
+        <button class="nav-btn active">Orders</button>
+        <button class="nav-btn">Custom Requests</button>
+        <button class="nav-btn">Sales</button>
+        <button class="nav-btn">Add Order</button>
+    </div>
+</div>
+
+<!-- script for active button! -->
+<script>
+  const buttons = document.querySelectorAll('.nav-buttons .nav-btn');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+
+<style>
+.admin-nav-container {
+  font-family: var(--font-bricolage);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e5e7eb; /* line at bottom of navbar */
+  gap: 8px;
+}
+
+/* Title & account button */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Account button styling */
+.account-btn {
+  background-color: var(--color-green-100);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.account-btn img {
+  width: 16px;
+  height: 16px;
+  filter: invert(100%) brightness(200%);
+}
+
+/* Title styling */
+.title {
+  font-weight: 300;
+  color: var(--color-green-100);
+  font-size: 18px;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  border: 1px solid #d1d5db;
+  background-color: white;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-size: 14px;
+  color: black;
+  cursor: pointer;
+
+}
+
+.nav-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.nav-btn.active {
+  background-color: var(--color-green-100);
+  color: white;
+  border-color: var(--color-green-100);
+}
+
+</style>
+
+
