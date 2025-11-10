@@ -28,9 +28,9 @@ import OrderAccordion from "./OrderAccordion.astro";
     <!--ready tab -->
     <div id="ready" class="tab-content active">
       <div class="sizes">
-        <button class="size-button">5 inches</button>
-        <button class="size-button">8 inches</button>
-        <button class="size-button">10 inches</button>
+        <button class="size-button" id="btnPress1">5 inches</button>
+        <button class="size-button" id="btnPress2">8 inches</button>
+        <button class="size-button" id="btnPress3">10 inches</button>
       </div>
     </div>
 
@@ -83,6 +83,10 @@ import OrderAccordion from "./OrderAccordion.astro";
 
 
 
+  const btn = document.getElementById('btnPress1');
+  btn?.addEventListener('click', function() {
+    this.classList.toggle('clicked');
+  });
 </script>
 
 <!-- Styles -->
@@ -183,7 +187,7 @@ import OrderAccordion from "./OrderAccordion.astro";
   }
   .size-button {
     padding: 10px 20px;
-    border: 1px solid #c96b6b;
+    border: 1px solid #D4596B;
     border-radius: 8px;
     background: transparent;
     font-size: 15px;
@@ -191,6 +195,15 @@ import OrderAccordion from "./OrderAccordion.astro";
     transition: all 0.2s ease;
   }
 
+  .size-button:hover {
+    border: 1px solid #D4596B;
+    background: #F0CAC9;
+  }
+  .size-button.clicked {
+    border: 1px solid #D4596B;
+    background: #F0CAC9;
+  }
+  
   .add-button {
     margin-top: 20px;
     padding: 14px 0px;
@@ -201,6 +214,10 @@ import OrderAccordion from "./OrderAccordion.astro";
     font-weight: bold;
   }
 
+  .add-button.clicked {
+    background: #D4596B;
+    background-color: #D4596B;
+  }
   .accordion-placeholder {
     margin-top: 30px;
     /* border: 1px dashed #aaa; */
