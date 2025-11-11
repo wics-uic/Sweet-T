@@ -68,17 +68,17 @@
   .cart-sidebar {
     position: absolute;
     top: 0;
-    left: 0;
+    right: 0;
     height: 100%;
     width: 90%;
     max-width: 400px;
     background-color: #F4EDE6;
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     
     /* This is the key for the "slide" animation */
-    transform: translateX(-100%);
+    transform: translateX(100%);
     transition: transform 0.3s ease-out;
   }
 
@@ -94,7 +94,7 @@
     padding: 25px;
     font-weight: 600;
     color: #044A25;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
   }
   .cart-header img {
     width: 28px;
