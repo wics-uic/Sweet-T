@@ -6,9 +6,14 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cors from "cors";
+<<<<<<< HEAD
 import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 import exampleRoutes from './Route/exampleRoute.js';
+=======
+import exampleRoutes from './Route/exampleRoute.js'
+
+>>>>>>> 93a148734965f142839ee9ea3faa536fdc431d48
 
 const app = express();
 
@@ -20,6 +25,9 @@ app.use(cors({
     credentials: true // Enable credentials (cookies) to be sent
 }));
 dotenv.config();
+
+app.use('/api/cart/', exampleRoutes);
+
 
 const PORT = process.env.PORT || 8000;
 const MONGOURL = process.env.MONGO_URL;
