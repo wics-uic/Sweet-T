@@ -1,0 +1,137 @@
+<div class="cart-wrapper" id="cart-wrapper">
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <aside class="cart-sidebar">
+    <div class="cart-header">
+        <img src="src/assets/nav-basket.svg" alt="Shopping Bag"/>
+        <h2>Your Bag</h2>
+        <button id="close-cart-btn" class="close-btn" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-content">
+        <p>Your cart is currently empty.</p>
+        </div>
+    </aside>
+</div>
+
+<script>
+  // This script handles CLOSING the cart.
+  // The logic for OPENING the cart is in the page that uses this component.
+  document.addEventListener("DOMContentLoaded", () => {
+    const cartWrapper = document.getElementById("cart-wrapper");
+    const closeButton = document.getElementById("close-cart-btn");
+    const overlay = document.getElementById("cart-overlay");
+
+    function closeCart() {
+      cartWrapper.classList.remove("open");
+    }
+
+    // Add listeners to close the cart
+    if (closeButton) {
+      closeButton.addEventListener("click", closeCart);
+    }
+    if (overlay) {
+      overlay.addEventListener("click", closeCart);
+    }
+  });
+</script>
+
+<style>
+  .cart-wrapper {
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+  }
+
+  .cart-wrapper.open {
+    /* Made visible when 'open' class is added */
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .cart-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .cart-sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 90%;
+    max-width: 400px;
+    background-color: #F4EDE6;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    
+    /* This is the key for the "slide" animation */
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+  }
+
+  /* When the wrapper is open, slide the sidebar in */
+  .cart-wrapper.open .cart-sidebar {
+    transform: translateX(0);
+  }
+
+  .cart-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 25px;
+    font-weight: 600;
+    color: #044A25;
+    border-bottom: 1px solid black;
+  }
+  .cart-header img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cart-header h2 {
+    margin: 0;
+    font-size: 24px;
+  }
+  .cart-header .close-btn {
+    margin-left:auto;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px; 
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: 100;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    background-color: transparent;
+    border: 1.5px solid #044A25;
+    color: #044A25;
+
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .cart-content {
+    padding: 25px;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+</style>

@@ -2,6 +2,9 @@
 const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
 import OrderAccordion from "./OrderAccordion.astro";
 import tryOtherTreats from "./tryOtherTreats.astro";
+
+// ADDED 
+import CartSidebar from "../components/CartSidebar.astro";
 ---
 
 <section class="relative order-section z-[999] mb-[200px]">
@@ -117,6 +120,9 @@ import tryOtherTreats from "./tryOtherTreats.astro";
   </div>
 </section>
 
+<!-- ADDED -->
+<CartSidebar/> 
+
 <!-- JavaScript -->
 <script>
   // Carousel Code
@@ -159,6 +165,8 @@ import tryOtherTreats from "./tryOtherTreats.astro";
         frostingSpan.textContent = frostingMap[flavor];
       });
     });
+    // ADDED 
+    const addBtn = document.querySelector(".add-button");
 
     const sizeInfo = { 5: { price: "$45", serve: "Feeds around 6–8 people." }, 8: { price: "$65", serve: "Feeds around 10–12 people." }, 10: { price: "$85", serve: "Feeds around 16–18 people." } };
     function setupSizeButtons(sectionId, updatePrice = true) {
@@ -176,12 +184,24 @@ import tryOtherTreats from "./tryOtherTreats.astro";
           serveEl.textContent = serve;
           buttons.forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
+
+          // ADDED 
+          addBtn?.classList.add("ready-to-add");
         });
       });
     }
   setupSizeButtons("ready", true);
   setupSizeButtons("custom", false);
   
+  // ADDED  
+  const openCartButton = document.querySelector(".add-button");
+    const cartWrapper = document.getElementById("cart-wrapper");
+
+    if (openCartButton && cartWrapper) {
+      openCartButton.addEventListener("click", () => {
+        cartWrapper.classList.add("open");
+      });
+    }
   });
 
 </script>
@@ -305,6 +325,13 @@ import tryOtherTreats from "./tryOtherTreats.astro";
     font-weight: bold;
   }
 
+  /* ADDED */
+  .add-button.ready-to-add {
+  background-color: #D4596B; /* Your theme's active color */
+  color: white;
+  border-color: #D4596B;
+  cursor: pointer;
+}
   .accordion-placeholder {
     margin-top: 30px;
     /* border: 1px dashed #aaa; */
