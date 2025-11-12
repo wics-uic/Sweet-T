@@ -4,11 +4,13 @@ import Product from "../components/product.astro"
 import Layout from "../layouts/layout.astro"
 import InfoBar from "../components/InfoBar.astro";
 import Footer from "../components/footer.astro";
-
+import AnnouncementBar from "../components/AnnouncementBar.astro";
 import Testimonial from "../components/testimonialSection.astro";
-
+import Hero from "../components/hero.astro";
+import ProductSection from "../components/ProductSection.astro";
 import '../styles/global.css';
 import TestimonialSection from "../components/testimonialSection.astro";
+import HowItWorks from "../components/HowItWorks.astro";
 ---
 
 <html lang="en">
@@ -19,11 +21,13 @@ import TestimonialSection from "../components/testimonialSection.astro";
 		<meta name="generator" content={Astro.generator} />
 		<title>Sweet T</title>
 	</head>
+	<AnnouncementBar/>
 	<Layout>
-		
-		<NavBar />
+		<Hero/>
 		<InfoBar/>
+		<ProductSection/>
 		<TestimonialSection name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" url="src/assets/testimonial-1.jpg"/>
+		<HowItWorks/>
 		<Footer/>
 	</Layout>
 </html>
@@ -36,3 +40,5 @@ import TestimonialSection from "../components/testimonialSection.astro";
 		border: 2px solid black;
 	}
 </style>
+
+

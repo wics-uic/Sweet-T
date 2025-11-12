@@ -1,0 +1,127 @@
+---
+import { Image } from 'astro:assets';
+import orderIcon from '/src/assets/hiw-order.png';
+import updatesIcon from '/src/assets/hiw-updates.png';
+import wandIcon from '/src/assets/hiw-wand.png';
+---
+
+<section class="how-it-works-section">
+  <div class="how-it-works-container">
+    <h2 class="how-it-works-main-title">How it works.</h2>
+    
+    <div class="how-it-works-steps-grid">
+      
+      <div class="how-it-works-step">
+        <div class="how-it-works-step-header">
+          <div class="how-it-works-step-icon">
+            <Image src={orderIcon} alt="Order Icon" width={50} height={50} />
+          </div>
+          <h3 class="how-it-works-step-title">Order in minutes.</h3>
+        </div>
+        <p class="how-it-works-step-description">
+          Browse, customize, add to cart. For custom cakes, fill out our detailed form - we'll handle the rest.
+        </p>
+      </div>
+
+      <div class="how-it-works-step">
+        <div class="how-it-works-step-header">
+          <div class="how-it-works-step-icon">
+            <Image src={updatesIcon} alt="Updates Icon" width={50} height={50} />
+          </div>
+          <h3 class="how-it-works-step-title">Real-time updates</h3>
+        </div>
+        <p class="how-it-works-step-description">
+          Get texts when we start baking, when it's ready, and pickup reminders. No wondering, no hassle.
+        </p>
+      </div>
+
+      <div class="how-it-works-step">
+        <div class="how-it-works-step-header">
+          <div class="how-it-works-step-icon">
+            <Image src={wandIcon} alt="Show Icon" width={50} height={50} />
+          </div>
+          <h3 class="how-it-works-step-title">Steal the show</h3>
+        </div>
+        <p class="how-it-works-step-description">
+          You walk in with the cake box. The room goes quiet. You lift the lid. "Did you MAKE this?!" Let them think you did. We won't tell 😊
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-it-works-section {
+    padding: 4rem 0;
+    //background-color: --color-beige-50: #F4EDE6;;
+  }
+
+  .how-it-works-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .how-it-works-main-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 3rem;
+    color: #034A25;
+  }
+
+  .how-it-works-steps-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .how-it-works-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .how-it-works-step-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    justify-content: center;
+  }
+
+  .how-it-works-step-icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .how-it-works-step-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+
+  .how-it-works-step-description {
+    color: #6b7280;
+    /* font-size: 0.875rem; */
+    line-height: 1.5;
+    margin: 0;
+    max-width: 300px;
+    text-align: left;
+  }
+
+  @media (min-width: 768px) {
+    .how-it-works-steps-grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+    }
+    
+    .how-it-works-step-description {
+      max-width: 280px;
+    }
+  }
+</style>
