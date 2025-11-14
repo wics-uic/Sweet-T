@@ -1,3 +1,8 @@
+---
+
+
+
+---
 
 <div class="cart-wrapper" id="cart-wrapper">
   <div class="cart-overlay" id="cart-overlay"></div>
@@ -40,6 +45,13 @@
 </div>
 
 <script>
+
+  const data = [
+    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', quantity: 8, total: 16.0, filepath: "src/assets/login-background.jpg"},
+    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', quantity: 1, total: 0.0, filepath: "src/assets/login-background.jpg"},
+    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', quantity: 2, total: 12.0, filepath: "src/assets/login-background.jpg"}
+  ];
+
   // This script handles CLOSING the cart.
   // The logic for OPENING the cart is in the page that uses this component.
   document.addEventListener("DOMContentLoaded", () => {
