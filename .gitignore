@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # build output
 dist/
 # generated types
@@ -23,3 +24,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+=======
+node_modules
+>>>>>>> 962df8ff57c791dda45567b4fb50c86c9cb3c1b7
