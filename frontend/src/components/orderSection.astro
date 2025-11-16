@@ -2,6 +2,7 @@
 const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
 import OrderAccordion from "./OrderAccordion.astro";
 import tryOtherTreats from "./tryOtherTreats.astro";
+import Footer from "../components/footer.astro";
 ---
 
 <section class="relative order-section z-[999] mb-[200px]">
@@ -65,56 +66,135 @@ import tryOtherTreats from "./tryOtherTreats.astro";
       </div>
     </div>
 
-    <!--custom tab -->
-    <div id="custom" class="tab-content">
-      <div class="sizes">
-        <button class="size-button" data-size="5" >5 inches</button>
-        <button class="size-button" data-size="8" >8 inches</button>
-        <button class="size-button" data-size="10" >10 inches</button>
+ <!--custom tab -->
+<div id="custom" class="tab-content">
+  <!-- Customer Information Section -->
+  <div class="customer-info">
+    <h3>Customer Information</h3>
+    <div class="input-group">
+      <label>Name <span class="required">*</span></label>
+      <input type="text" placeholder="Enter your name" class="custom-input" required>
+    </div>
+    <div class="input-group">
+      <label>Email <span class="required">*</span></label>
+      <input type="email" placeholder="Enter your email" class="custom-input" required>
+    </div>
+    <div class="input-group">
+      <label>Phone Number <span class="required">*</span></label>
+      <input type="tel" placeholder="Enter your phone number" class="custom-input" required>
+    </div>
+  </div>
+
+  <!-- Event Details Section -->
+  <div class="event-details">
+    <h3>Event Details</h3>
+    <div class="event-grid">
+      <div class="input-group">
+        <label>Event Date <span class="required">*</span></label>
+        <input type="date" class="custom-input date-input" required>
       </div>
-
-      <p class="price">$75+</p>
-      <p class="serving-info">Feeds around 10–12 people.</p>
-
-      <div class="flavor">
-        <p>Flavor</p>
-        <div class="radioBtns">
-          <label><input type="radio" name="custom-flavor" value="vanilla" checked> Vanilla</label>
-          <label><input type="radio" name="custom-flavor" value="chocolate"> Chocolate</label>
-          <label><input type="radio" name="custom-flavor" value="carrot"> Carrot</label>
-          <label><input type="radio" name="custom-flavor" value="red velvet"> Red Velvet</label>
-        </div>
+      <div class="input-group">
+        <label>Event Type</label>
+        <select class="custom-input select-input">
+          <option value="">What's the occasion?</option>
+          <option value="wedding">Wedding</option>
+          <option value="birthday">Birthday</option>
+          <option value="anniversary">Anniversary</option>
+          <option value="corporate">Corporate Event</option>
+          <option value="other">Other</option>
+        </select>
       </div>
+    </div>
+  </div>
 
-      <div class="frosting">
-        <p>Frosting</p>
-        <div class="radioBtns">
-          <label><input type="radio" name="custom-frosting" value="vanilla" checked> Vanilla</label>
-          <label><input type="radio" name="custom-frosting" value="chocolate"> Chocolate</label>
-          <label><input type="radio" name="custom-frosting" value="cream cheese"> Cream Cheese</label>
-        </div>
-      </div>
-
-      <p>Write a message for the cake</p>
-      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
-
-      <div class="rush">
-        <label for="rushBtn">Rush order? +$40</label>
-        
-        <label class="switch">
-          <input type="checkbox"> 
-          <span class="slider round"></span>
+  <!-- Cake Specifications Section -->
+  <div class="cake-specs">
+    <h3>Cake Specifications</h3>
+    
+    <!-- Number of Servings -->
+    <div class="input-group">
+      <label>Number of servings <span class="required">*</span></label>
+      <div class="servings-radio">
+        <label class="radio-option">
+          <input type="radio" name="servings" value="20-30" required>
+          <span class="radio-custom"></span>
+          20-30 Guests
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="servings" value="30-50">
+          <span class="radio-custom"></span>
+          30-50 Guests
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="servings" value="50-75">
+          <span class="radio-custom"></span>
+          50-75 Guests
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="servings" value="75-100">
+          <span class="radio-custom"></span>
+          75-100 Guests
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="servings" value="100+">
+          <span class="radio-custom"></span>
+          100+ Guests
         </label>
       </div>
     </div>
 
-    <button class="add-button">Add to bag</button>
+    <!-- Cake Flavor -->
+    <div class="input-group">
+      <label>Cake Flavor <span class="required">*</span></label>
+      <input type="text" placeholder="Enter cake flavor preferences" class="custom-input" required>
+    </div>
 
-    <div class="accordion-placeholder">
-      <OrderAccordion/>
-      <!-- <tryOtherTreats /> -->
+    <!-- Describe Your Vision -->
+    <div class="input-group">
+      <label>Describe your vision <span class="required">*</span></label>
+      <textarea placeholder="Include colors, theme, style (elegant, whimsical, minimalist), and any specific elements you'd like incorporated." class="custom-textarea" required></textarea>
     </div>
   </div>
+
+  <!-- Inspiration Photos Section -->
+  <div class="inspiration-photos">
+    <h3>Inspiration Photos</h3>
+    <div class="input-group">
+      <label>Upload Photos (max 3) <span class="required">*</span></label>
+      <div class="upload-area">
+        <div class="upload-placeholder">
+          <p>Click to upload or drag and drop</p>
+          <p class="upload-hint">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+        </div>
+        <input type="file" multiple accept="image/*" class="file-input" id="inspirationUpload">
+      </div>
+      <div class="uploaded-files" id="uploadedFiles"></div>
+    </div>
+  </div>
+
+  <!-- Budget Section -->
+  <div class="budget-section">
+    <h3>Budget</h3>
+    <div class="input-group">
+      <label>Optional, but helps us provide accurate recommendations</label>
+      <select class="custom-input select-input">
+        <option value="">Select budget range</option>
+        <option value="50-100">$50 - $100</option>
+        <option value="100-200">$100 - $200</option>
+        <option value="200-300">$200 - $300</option>
+        <option value="300-500">$300 - $500</option>
+        <option value="500+">$500+</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="submit-request">Submit Request</button>
+
+  <div class="accordion-placeholder">
+    <OrderAccordion/>
+  </div>
+</div>
+
 </section>
 
 <!-- JavaScript -->
@@ -193,9 +273,10 @@ import tryOtherTreats from "./tryOtherTreats.astro";
     align-items: flex-start;
     justify-content: space-between;
     padding: 80px 100px;
-    min-height: 90vh;
+    min-height: auto;
     box-sizing: border-box;
     gap: 50px;
+    margin-bottom: 40px;
   }
 
   .img-carousel {
@@ -237,13 +318,14 @@ import tryOtherTreats from "./tryOtherTreats.astro";
 
   .checkout-container {
     flex: 1;
-    padding: 0 50px 40px; /* removed top padding so heading is flush with image top */
+    padding: 0 50px 40px; 
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     justify-content: flex-start;
     height: 80vh;
+    min-height: auto;
   }
   .checkout-container h2 {
     margin: 0;
@@ -411,4 +493,173 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/* Custom Tab Styles */
+.customer-info, .event-details, .cake-specs, .inspiration-photos, .budget-section {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.customer-info h3, .event-details h3, .cake-specs h3, .inspiration-photos h3, .budget-section h3 {
+  font-size: 18px;
+  color: var(--color-green-100);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+  font-size: 15px;
+}
+
+.required {
+  color: #D4596B;
+}
+
+/* Event Details Grid */
+.event-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* Servings Grid */
+.servings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.serving-option {
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.serving-option:hover {
+  border-color: var(--color-green-100);
+}
+
+.serving-option.active {
+  background-color: var(--color-green-100);
+  color: white;
+  border-color: var(--color-green-100);
+}
+
+/* Input Styles */
+.custom-input, .custom-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+  background-color: white;
+  transition: border-color 0.3s ease;
+}
+
+.custom-input:focus, .custom-textarea:focus {
+  outline: none;
+  border-color: var(--color-green-100);
+}
+
+.custom-textarea {
+  height: 120px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Upload Area Styles */
+.upload-area {
+  border: 2px dashed #ddd;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  position: relative;
+}
+
+.upload-area:hover {
+  border-color: var(--color-green-100);
+}
+
+.upload-placeholder p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: #999;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploaded-files {
+  margin-top: 15px;
+}
+
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.remove-file {
+  color: #D4596B;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Submit Button */
+.submit-request {
+  margin-top: 30px;
+  padding: 16px 0px;
+  width: 100%;
+  border: none;
+  background-color: #D4596B;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-request:hover {
+  background-color: #d46777;
+}
+
+
+
+
 </style>
