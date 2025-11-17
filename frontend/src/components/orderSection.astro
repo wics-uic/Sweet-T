@@ -4,11 +4,11 @@ import OrderAccordion from "./OrderAccordion.astro";
 import tryOtherTreats from "./tryOtherTreats.astro";
 ---
 
-<section class="order-section">
+<section class="relative order-section z-[999] mb-[200px]">
   <!-- left -->
   <div class="img-carousel">
     <div class="carousel">
-      <img id="carouselImage" src={url}  />
+      <img id="carouselImage" src={url} alt={item_name} />
     </div>
     <div class="circles">
       <button class="circle" onclick="showImage(0)" aria-label="first-image"></button>
@@ -53,7 +53,7 @@ import tryOtherTreats from "./tryOtherTreats.astro";
       </div>
 
       <p>Write a message for the cake</p>
-      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+      <textarea id="messageBoxReady" class="messageBox" placeholder="Type your message here..."></textarea>
 
       <div class="rush">
         <label for="rushBtn">Rush order? +$40</label>
@@ -96,7 +96,7 @@ import tryOtherTreats from "./tryOtherTreats.astro";
       </div>
 
       <p>Write a message for the cake</p>
-      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+      <textarea id="messageBoxCustom" class="messageBox" placeholder="Type your message here..."></textarea>
 
       <div class="rush">
         <label for="rushBtn">Rush order? +$40</label>
@@ -196,6 +196,8 @@ import tryOtherTreats from "./tryOtherTreats.astro";
     min-height: 90vh;
     box-sizing: border-box;
     gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .img-carousel {
@@ -280,6 +282,8 @@ import tryOtherTreats from "./tryOtherTreats.astro";
   .sizes {
     display: flex;
     gap: 14px;
+    flex-wrap: wrap;
+
   }
   .size-button {
     padding: 10px 20px;
@@ -294,8 +298,8 @@ import tryOtherTreats from "./tryOtherTreats.astro";
   .add-button {
     margin-top: 20px;
     padding: 14px 0px;
-    width: 100%
-    border: 1px black;
+    width: 100%;
+    border: 1px solid black;
     background-color: lightgray;
     border-radius: 8px;
     font-weight: bold;
@@ -331,18 +335,21 @@ import tryOtherTreats from "./tryOtherTreats.astro";
     font-size: 15px;
   }
 
-  #messageBox {
+  #messageBoxReady, #messageBoxCustom {
     background-color: #fff;
     border-radius: 8px;
     padding: 10px;
   }
 
-  .radioBtns {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 12px;
-    margin-top: 6px;
-    input[type="radio"]:checked { accent-color: #D4596B; }
+  .radioBtns { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 12px; 
+  margin-top: 6px; 
+  }
+
+  .radioBtns input[type="radio"]:checked { 
+    accent-color: #D4596B; 
   }
 
   .rush {
@@ -410,5 +417,67 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+@media (max-width: 768px) {
+  .order-section {
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 30px;
+}
+
+.img-carousel {
+  max-width: 100%;
+}
+
+#carouselImage {
+  height: auto;
+  max-height: 320px;
+}
+
+.checkout-container {
+  width: 100%;
+  padding: 0;
+  height: auto;
+}
+
+.checkout-container h2 {
+  font-size: 24px;
+  text-align: center;
+}
+
+.tab, .size-button, .price, .serving-info, .flavor p {
+  font-size: 16px;
+}
+
+.add-button {
+  font-size: 18px;
+}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .order-section {
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 60px;
+  gap: 40px;
+}
+
+.img-carousel {
+  max-width: 80%;
+}
+
+.checkout-container {
+  width: 90%;
+}
+
+.checkout-container h2 {
+  font-size: 28px;
+  text-align: center;
+}
+
+.add-button {
+  width: 100%;
+}
 }
 </style>

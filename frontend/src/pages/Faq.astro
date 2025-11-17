@@ -1,0 +1,172 @@
+---
+// FAQ Page Component
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ - Frequently Asked Questions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: sans-serif;
+      background-color: #e8e0d8;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #044A25;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .faq-section {
+      background-color: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .faq-question {
+      font-weight: bold;
+      color: #333;
+      font-size: 1.1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .faq-question::before {
+      content: "Q:";
+      color: pink;
+      margin-right: 0.5rem;
+      font-weight: bold;
+    }
+
+    .faq-answer {
+      color: #555;
+      padding-left: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-answer::before {
+      content: "A:";
+      color: #888;
+      margin-right: 0.5rem;
+      font-weight: bold;
+      margin-left: -1.75rem;
+      display: inline-block;
+      width: 1.75rem;
+    }
+
+    .back-button-container {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .back-button {
+      padding: 0.75rem 1.5rem;
+      background-color: pink;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      color: #333;
+    }
+
+    .back-button:hover {
+      background-color: #ffb3d9;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .faq-section {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Frequently Asked Questions</h1>
+
+    <div class="faq-section">
+      <div class="faq-question">How do I place an order?</div>
+      <div class="faq-answer">
+        You can place an order by browsing our products, adding items to your cart, 
+        and proceeding to checkout. Follow the on-screen instructions to complete your purchase.
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <div class="faq-question">What payment methods do you accept?</div>
+      <div class="faq-answer">
+        We accept all major credit cards, debit cards, PayPal, and other secure payment methods. 
+        All transactions are encrypted for your security.
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <div class="faq-question">How long does shipping take?</div>
+      <div class="faq-answer">
+        Standard shipping typically takes 5-7 business days. Express shipping options are 
+        available at checkout for faster delivery within 2-3 business days.
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <div class="faq-question">What is your return policy?</div>
+      <div class="faq-answer">
+        We offer a 30-day return policy for most items. Products must be unused and in 
+        original packaging. Please contact our customer service team to initiate a return.
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <div class="faq-question">How can I track my order?</div>
+      <div class="faq-answer">
+        Once your order ships, you'll receive a tracking number via email. You can use 
+        this number to track your package on our website or the carrier's tracking page.
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <div class="faq-question">Do you ship internationally?</div>
+      <div class="faq-answer">
+        Yes, we ship to most countries worldwide. Shipping costs and delivery times vary 
+        by location. International orders may be subject to customs fees.
+      </div>
+    </div>
+
+    <div class="back-button-container">
+      <a href="/" class="back-button">Back to Main Page</a>
+    </div>
+  </div>
+</body>
+</html>
