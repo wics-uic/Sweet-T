@@ -23,16 +23,29 @@ import '../styles/cartSidebar.css';
 <script is:client>
 // import { createHeadAndContent } from "astro/runtime/server/index.js";
 
+  const API_BASE_URL = "http://localhost:8000/api/cart";
+  const USER_ID = "691b29cd7ffa3d0800cf4ad8"; // hard-code user for now 
 
-  const data = [
-    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', customization: 'custom', quantity: 8, total: 16.0, filepath: "/login-background.jpg"},
-    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', customization: 'custom', quantity: 1, total: 0.0, filepath: "/landing-cake.png"},
-    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', customization: 'custom', quantity: 2, total: 12.0, filepath: "/testimonial-3.jpg"},
-    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', customization: 'custom', quantity: 8, total: 16.0, filepath: "/login-background.jpg"},
-    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', customization: 'custom', quantity: 1, total: 0.0, filepath: "/landing-cake.png"},
-    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', customization: 'custom', quantity: 2, total: 12.0, filepath: "/testimonial-3.jpg"}
-  
-  ];
+  const PRODUCT_CATALOG = {
+    "Cupcake": { 
+      price: 2.00, 
+      filepath: "/login-background.jpg", 
+      flavor: "Chocolate", // Default flavor if not in DB
+      frosting: "Vanilla" 
+    },
+    "Ready Made Cake": { 
+      price: 15.00, 
+      filepath: "/landing-cake.png", 
+      flavor: "Vanilla", 
+      frosting: "Vanilla" 
+    },
+    "Pastillos": { 
+      price: 6.00, 
+      filepath: "/testimonial-3.jpg", 
+      flavor: "Chocolate", 
+      frosting: "Chocolate" 
+    }
+  };
 
   // This script handles CLOSING the cart.
   // The logic for OPENING the cart is in the page that uses this component.
@@ -84,12 +97,75 @@ import '../styles/cartSidebar.css';
       `;
       return product;
     }
+    // async function deleteItem(productId) {
+    //   if (!confirm("Remove this item?")) return;
+
+    //   try {
+    //     const response = await fetch(`${API_BASE_URL}/deleteProduct/${productId}`, {
+    //       method: "DELETE",
+    //     });
+    //     if (!response.ok) {
+    //       throw new Error("Failed to delete item from cart");
+    //     }
+    //     // Refresh cart display
+    //     fetchAndRenderCart();
+    //   } catch (error) {
+    //     console.error("Error deleting item:", error);
+    //   }
+    // }
+    async function fetchAndRenderCart() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/fetch/${USER_ID}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch cart data");
+        }
+        const cartData = await response.json();
+
+        // Merge DB Data with Visual Catalog 
+        const processedProducts = cartData.products.map(item => {
+          // find details in catalog, or use defaults 
+          const catalogItem = PRODUCT_CATALOG[item.name] || {
+            price: 0.00,
+            filepath: "/testimonial-3.png",
+            flavor: "Unknown",
+            frosting: "Unknown"
+          };
+
+          return {
+            _id: item._id, // mongoDB id 
+            name: item.name,
+            quantity: item.quantity,
+            customization: item.customization,
+            // visual/calculated fields
+            filepath: catalogItem.filepath,
+            flavor: catalogItem.flavor,
+            frosting: catalogItem.frosting,
+            total: (catalogItem.price * item.quantity),
+          };
+        });
+        // render 
+        cartContent.replaceChildren(...processedProducts.map(createProduct));
+        // // Clear existing content
+        // cartContent.replaceChildren();
+
+        // // Render each product
+        // data.forEach(item => {
+        //   const productElement = createProduct(item);
+          
+        //   // Add delete functionality
+        //   const trashButton = productElement.querySelector(".trash");
+        //   trashButton.addEventListener("click", () => deleteItem(item.id));
+
+        //   cartContent.appendChild(productElement);
+        // });
+
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
+    }
 
     // Fetch and render the cart from API 
-    async function fetchAndRenderCart() {
-      if (!cartContent) return;
-    }
-    cartContent.replaceChildren(...data.map(createProduct));
+    fetchAndRenderCart();
 
   }); 
 </script>

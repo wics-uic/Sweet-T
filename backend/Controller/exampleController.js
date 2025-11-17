@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-import { Example } from "../Model/exampleModel.js"; 
-
-// Create a new Example
-export const createExample = async (req, res) => {
-    try {
-        // Create example with userId from cookie
-        const newExample = await Example.create({
-            userId: req.userId, // <- From cookie middleware
-        });
-
-        console.log(`Example created by user ${req.userId}:`, newExample._id);
-
-        res.status(201).json({
-            success: true,
-            message: 'Example created successfully',
-            example: newExample
-        });
-
-    } catch (error) {
-        console.error('Error creating example:', error);
-        res.status(500).json({
-            success: false,
-            message: 'Failed to create example',
-            error: error.message
-        });
-    }
-};
-=======
 // This is am empty file
 
 import Cart from "../Model/exampleModel.js";
@@ -85,6 +56,35 @@ export const fetch = async(req,res)=>{
         res.status(500).json({error: "Internal Server error."})
     }
 }
+/*
+GET API: fetch the JSON for a specific User's Cart (using userId) 
+*/ 
+export const fetchCartByUserId = async(req,res) => {
+    try {
+        const cartId  = req.params.id; // Get userId from the URL parameter
+
+        if (!cartId) {
+            return res.status(400).json({ error: "userId is required" });
+        }
+
+        // Find the cart that matches the userId
+        const cart = await Cart.findById(cartId); // deletes by userId value 
+
+        if (!cart) {
+            // This isn't an error, the user just doesn't have a cart yet.
+            // Sending a 404 (Not Found) is appropriate.
+            return res.status(404).json({ message: "Cart not found for this user" });
+        }
+
+        // Send the single cart object back
+        res.status(200).json(cart);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server error." });
+    }
+}
+
 
 /**
  * DELETE API: delete product in cart given its productId
@@ -167,4 +167,3 @@ export const deleteCart = async(req, res) => {
         res.status(500).json({error: "Internal Server error."});
     }
 }
->>>>>>> 93a148734965f142839ee9ea3faa536fdc431d48

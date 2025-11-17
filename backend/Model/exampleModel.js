@@ -1,18 +1,5 @@
 import mongoose from "mongoose";
 
-<<<<<<< HEAD
-const exampleSchema = new mongoose.Schema({
-    userId: {
-        type: String,
-        required: true,
-        index: true
-    }
-}, {
-    collection: 'Examples'
-});
-
-export const Example = mongoose.model('Example', exampleSchema);
-=======
 const cartSchema = new mongoose.Schema({
     userId: {
         // type:mongoose.Schema.Types.ObjectId,
@@ -51,4 +38,3 @@ const cartSchema = new mongoose.Schema({
 });
 
 export default mongoose.model("Cart", cartSchema, "Cart"); // carts
->>>>>>> 93a148734965f142839ee9ea3faa536fdc431d48
