@@ -1,6 +1,6 @@
 
 
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const ordersSchema = new mongoose.Schema({
   User_id: {
@@ -87,4 +87,4 @@ const ordersSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("Order", ordersSchema);
+export default mongoose.model("Order", ordersSchema);
