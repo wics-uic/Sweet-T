@@ -1,3 +1,8 @@
+---
+import CustomOrder from "./customOrderItem.astro"
+import orders from "./product-data/orders.ts";
+---
+
 <div class="min-h-screen font-sans font-[Inter]">
     <!-- header section -->
     <header class=" bg-white sticky top-0 z-50">
@@ -47,5 +52,9 @@
                 <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
                     <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-[#044A25] text-white">All</button>
                     <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Pending</button><button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Ready for Pickup</button>
-                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Complete</button></div><div class="space-y-3"><div data-slot="card" class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border p-4 hover:shadow-md transition-shadow cursor-pointer">
-                        <div class="flex items-start justify-between gap-4"><div class="flex-1 min-w-0">
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Complete</button></div>
+            <div class="space-y-3">
+                {orders.map((order) => ( 
+                    <CustomOrder name={order.name}, order={order.order}, date={order.date}, due={order.due}, status={order.status}/>
+                ))} 
+            </div>
