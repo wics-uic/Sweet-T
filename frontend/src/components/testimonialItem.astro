@@ -4,7 +4,7 @@ import TestimontalText from "./testimonialText.astro"
 import Images from "./testimonialImages.astro"
 ---
 
-<div class="flex flex-row p-3 bg-[#F0CAC9] w-[1168px] h-auto justify-between">
+<div class="flex flex-col md:flex-row bg-[#F0CAC9] w-full max-w-[1168px] mx-auto gap-6 md:gap-10 px-4 sm:px-6 md:px-10 lg:px-16 py-8">
    {order == "left" ? <TestimontalText name={name}, body={body}, url={url}, order="left"/>
   <Images pic={pic}/> : <Images pic={pic}/> <TestimontalText name={name}, body={body}, url={url}, order="right"/>
   } 
