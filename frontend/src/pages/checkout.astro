@@ -1,0 +1,436 @@
+---
+import Layout from "../layouts/layout.astro";
+import '../styles/global.css';
+import basket from '/src/assets/nav-basket.svg';
+import cakes from '/src/assets/landing-cake.png';
+
+// Sample cart data - Not sure how to update
+const cartItems = [
+  {
+    id: 1,
+    name: "Ready made cake",
+    flavor: "Vanilla",
+    frosting: "Vanilla buttercream frosting",
+    rushOrder: true,
+    price: 65.00,
+    quantity: 1,
+    image: cakes.src
+  }
+];
+
+const calculateSubtotal = () => {
+  return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+};
+
+const calculateTotalItems = () => {
+  return cartItems.reduce((total, item) => total + item.quantity, 0);
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Your Bag - Sweet T</title>
+  </head>
+  <Layout>
+    <div class="checkout-container">
+      <!-- Header -->
+      <div class="checkout-header">
+        <div class="header-left">
+          <div class="cart-icon-wrapper">
+            <img src={basket.src} alt="Shopping basket" class="cart-icon" width="40" height="40" />
+            <span class="cart-badge" id="cartBadge">{calculateTotalItems()}</span>
+          </div>
+          <h1>Your bag</h1>
+        </div>
+
+        <!--unsure how this works -->
+        <button class="close-button" aria-label="Close" onclick="window.history.back()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        
+      </div>
+
+      <!-- Cart Items -->
+      <div class="cart-items" id="cartItems">
+        {cartItems.map((item) => (
+            
+          <div class="cart-item" data-item-id={item.id}>
+           <img 
+              src={item.image}
+              alt={item.name}
+              class="item-image"
+            />
+            <div class="item-details">
+              <h2 class="item-title">{item.name}</h2>
+              <p class="item-flavor">{item.flavor}</p>
+              <p class="item-frosting">{item.frosting}</p>
+              {item.rushOrder && <p class="item-rush">Rush order</p>}
+              
+              <div class="item-footer">
+                <div class="quantity-controls">
+                  <button class="qty-button decrease-btn" data-item-id={item.id} aria-label="Decrease quantity">−</button>
+                 <span class="quantity" data-item-id={item.id}>{item.quantity}</span>
+                  <button class="qty-button increase-btn" data-item-id={item.id} aria-label="Increase quantity">+</button>
+                </div>
+                
+                <!--Image src unsure -->
+                <button class="delete-button" data-item-id={item.id} aria-label="Remove item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/>
+                  </svg>
+                </button>
+                
+                
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty Cart Message
+      <div class="empty-cart" id="emptyCart" style="display: none;">
+        <p>Your bag is empty</p>
+        <a href="/" class="continue-shopping">Continue shopping</a>
+      </div>-->
+
+      <!-- Checkout Footer -->
+      <div class="checkout-footer">
+        <div class="subtotal">
+          <span>Subtotal</span>
+          <span class="subtotal-amount" id="subtotalAmount">${calculateSubtotal().toFixed(2)}</span>
+        </div>
+        <button class="checkout-button" id="checkoutBtn">Go to checkout</button>
+      </div>
+    </div>
+  </Layout>
+</html>
+
+<style>
+  .checkout-container {
+    background-color: #f5e6d3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .checkout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .cart-icon-wrapper {
+    position: relative;
+  }
+
+  .cart-icon {
+    color: #0d5e3a;
+    width: 40px;
+    height: 40px;
+  }
+
+  .cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #0d5e3a;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  h1 {
+    color: #0d5e3a;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .close-button {
+    background: none;
+    border: 2px solid #333;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+   .close-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .cart-items {
+    flex: 1;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .cart-item {
+    display: flex;
+    gap: 20px;
+    background-color: transparent;
+  }
+
+  .item-image {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .item-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 8px 0;
+  }
+
+  .item-flavor,
+  .item-frosting {
+    font-size: 1rem;
+    color: #333;
+    margin: 4px 0;
+  }
+
+  .item-rush {
+    font-size: 1rem;
+    color: #333;
+    margin: 4px 0 auto 0;
+  }
+
+  .item-footer {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+  }
+
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    border: 2px solid #0d5e3a;
+    border-radius: 25px;
+    padding: 5px 10px;
+    gap: 15px;
+  }
+
+  .qty-button {
+    background: none;
+    border: none;
+    color: #0d5e3a;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+  }
+
+  .qty-button:hover {
+    opacity: 0.7;
+  }
+
+  .quantity {
+    color: #333;
+    font-size: 1rem;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .delete-button {
+    background: none;
+    border: none;
+    color: #0d5e3a;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .delete-button:hover {
+    opacity: 0.7;
+  }
+
+  .item-price {
+    margin-left: auto;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .checkout-footer {
+    background-color: #f5e6d3;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 15px;
+  }
+
+  .subtotal-amount {
+    font-size: 1.75rem;
+  }
+
+  .checkout-button {
+    width: 100%;
+    background-color: #c85b6f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .checkout-button:hover {
+    background-color: #b14a5d;
+  }
+
+  .checkout-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+</style>
+
+<script>
+  // Cart state management
+  let cart = [
+    {
+      id: 1,
+      name: "Ready made cake",
+      flavor: "Vanilla",
+      frosting: "Vanilla buttercream frosting",
+      rushOrder: true,
+      price: 65.00,
+      quantity: 1,
+      image: "/api/placeholder/140/140"
+    }
+  ];
+
+  // Update the UI
+  function updateCart() {
+    const subtotalElement = document.getElementById('subtotalAmount');
+    const cartBadge = document.getElementById('cartBadge');
+
+    // Calculate total quantity of all items
+    const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
+    // Update subtotal
+    const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+
+    // Update badge with total quantity
+    cartBadge.textContent = totalQuantity;
+  }
+
+  // Increase quantity
+  
+  document.querySelectorAll('.increase-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const itemId = parseInt(e.target.dataset.itemId);
+      const item = cart.find(i => i.id === itemId);
+      
+      if (item) {
+        item.quantity++;
+        const quantitySpan = document.querySelector(`.quantity[data-item-id="${itemId}"]`);
+        quantitySpan.textContent = item.quantity;
+        updateCart();
+      }
+    });
+  });
+
+  // Decrease quantity
+  document.querySelectorAll('.decrease-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const itemId = parseInt(e.target.dataset.itemId);
+      const item = cart.find(i => i.id === itemId);
+      
+      if (item && item.quantity > 1) {
+        item.quantity--;
+        const quantitySpan = document.querySelector(`.quantity[data-item-id="${itemId}"]`);
+        quantitySpan.textContent = item.quantity;
+        updateCart();
+      }
+    });
+  });
+
+  // Delete item
+  document.querySelectorAll('.delete-button').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      // Get the button element (in case the SVG or path was clicked)
+      const button = e.target.closest('.delete-button');
+      const itemId = parseInt(button.dataset.itemId);
+      
+      // Remove item from cart
+      cart = cart.filter(i => i.id !== itemId);
+      
+      // Remove the cart item from DOM
+      const cartItem = document.querySelector(`.cart-item[data-item-id="${itemId}"]`);
+      if (cartItem) {
+        cartItem.remove();
+      }
+      
+      // Check if cart is empty
+      if (cart.length === 0) {
+        const cartItemsContainer = document.getElementById('cartItems');
+        cartItemsContainer.innerHTML = '<div class="empty-cart"><p>Your bag is empty</p><a href="/" class="continue-shopping">Continue shopping</a></div>';
+        document.getElementById('checkoutBtn').disabled = true;
+      }
+      
+      updateCart();
+    });
+  });
+
+  // Checkout button
+  document.getElementById('checkoutBtn').addEventListener('click', () => {
+    // Store cart data for payment page
+    localStorage.setItem('checkoutCart', JSON.stringify(cart));
+    
+    // Redirect to payment processing page **
+    window.location.href = '/payment';
+  });
+
+  // Initialize cart display
+  updateCart();
+</script>
