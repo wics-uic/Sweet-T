@@ -3,61 +3,82 @@ import { Image } from 'astro:assets';
 import scrollBag from '/src/assets/scroll-bag.png';
 import scrollCake from '/src/assets/scroll-cake.png';
 import scrollHeart from '/src/assets/scroll-heart.png';
+
+const baseItems = [
+  {
+    icon: scrollBag,
+    alt: 'Pickup Icon',
+    text: 'Pickup in Chicago 9am–5pm daily',
+  },
+  {
+    icon: scrollCake,
+    alt: 'Fresh Cake',
+    text: 'Baked fresh for every order',
+  },
+  {
+    icon: scrollHeart,
+    alt: 'Heart Icon',
+    text: 'Made with love',
+  },
+];
+
+const COPIES = 10; 
+const repeatedItems = Array.from({ length: COPIES }, () => baseItems).flat();
 ---
 
-<div class="scroll-container">
-  <div class="scroll-content">
-    <div class="info-item">
-      <Image src={scrollBag} alt="Pickup Icon" />
-      <p>Pickup in Chicago 9am–5pm daily</p>
+<div class="marquee">
+  <div class="marquee-inner">
+    <div class="marquee-group">
+      {repeatedItems.map((item) => (
+        <div class="info-item">
+          <Image src={item.icon} alt={item.alt} />
+          <p>{item.text}</p>
+        </div>
+      ))}
     </div>
-    <div class="info-item">
-      <Image src={scrollCake} alt="Fresh Cake" />
-      <p>Baked fresh for every order</p>
-    </div>
-    <div class="info-item">
-      <Image src={scrollHeart} alt="Heart Icon" />
-      <p>Made with love</p>
-    </div>
-    <div class="info-item">
-      <Image src={scrollBag} alt="Pickup Icon" />
-      <p>Pickup in Chicago 9am–5pm daily</p>
-    </div>
-    <div class="info-item">
-      <Image src={scrollCake} alt="Fresh Cake" />
-      <p>Baked fresh for every order</p>
-    </div>
-    <div class="info-item">
-      <Image src={scrollHeart} alt="Heart Icon" />
-      <p>Made with love</p>
+
+    <div class="marquee-group" aria-hidden="true">
+      {repeatedItems.map((item) => (
+        <div class="info-item">
+          <Image src={item.icon} alt={item.alt} />
+          <p>{item.text}</p>
+        </div>
+      ))}
     </div>
   </div>
 </div>
 
 <style>
-  .scroll-container {
+  .marquee {
     width: 100%;
-    /* overflow: hidden; */
+    overflow: hidden;
     border-top: 2px solid #e6e6e6;
     border-bottom: 2px solid #e6e6e6;
-    background-color: #fff;
+    background-color: #ffffff;
   }
 
-  .scroll-content {
+  .marquee-inner {
     display: flex;
     width: max-content;
-    animation: scrollLoop 20s linear infinite;
+
+
+    animation: sweet-marquee 160s linear infinite;
   }
 
-  .scroll-container:hover .scroll-content {
+  .marquee:hover .marquee-inner {
     animation-play-state: paused;
   }
 
-  @keyframes scrollLoop {
+  .marquee-group {
+    display: flex;
+  }
+
+  @keyframes sweet-marquee {
     0% {
       transform: translateX(0);
     }
     100% {
+  
       transform: translateX(-50%);
     }
   }
@@ -65,15 +86,21 @@ import scrollHeart from '/src/assets/scroll-heart.png';
   .info-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     font-size: 14px;
-    color: #333;
-    padding: 10px 20px;
+    color: #333333;
+    padding: 8px 10px;
     white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+
+  .marquee-group .info-item:last-child {
+    padding-right: 0;
   }
 
   .info-item img {
-    width: 30px;
+    width: 28px;
     height: auto;
     opacity: 0.8;
   }
