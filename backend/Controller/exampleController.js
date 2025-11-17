@@ -154,13 +154,14 @@ export const deleteCart = async(req, res) => {
             return res.status(400).json({error: "userId is required"});
         }
         
-        const deletedCart = await Cart.findOneAndDelete(id); // deletes by card _id 
-
+        const deletedCart = await Cart.findByIdAndDelete(id); // deletes by card _id 
+        // const deletedCart = await Cart.findByIdAndDelete({_id:id}); // identical
+        
         if (!deletedCart) {
             return res.status(404).json({ message: "Cart not found" });
         }
 
-    res.status(200).json({ message: "Cart deleted successfully", cart: deletedCart });
+        res.status(200).json({ message: "Cart deleted successfully", cart: deletedCart });
   
     } catch(error) {
         console.error(error);

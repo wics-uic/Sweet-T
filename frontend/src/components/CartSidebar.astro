@@ -24,45 +24,40 @@ import '../styles/cartSidebar.css';
 // import { createHeadAndContent } from "astro/runtime/server/index.js";
 
   const API_BASE_URL = "http://localhost:8000/api/cart";
-  const USER_ID = "691b31d7668701ead821688e"; // hard-code user for now 
+  // const USER_ID = "691b38d0e4dcfa41c31b48fb"; // hard-code user for now 
+  const USER_ID = "691b3911e4dcfa41c31b490e"; // User2
 
   // This should ACTUALLY use the Product Model from the DB.
   // For now, I hard-coded the product catalog here for visual purposes.
   const PRODUCT_CATALOG = {
     "Cupcake": { 
       price: 2.00, 
-      filepath: "/login-background.jpg", 
-      flavor: "Chocolate", // Default flavor if not in DB
+      filepath: "/login-background.jpg", // Defaults if not in DB
+      flavor: "Chocolate", 
       frosting: "Vanilla" 
     },
-    "Ready Made Cake": { 
+    "Cake": { 
       price: 15.00, 
       filepath: "/landing-cake.png", 
       flavor: "Vanilla", 
       frosting: "Vanilla" 
     },
-    "Pastillos": { 
+    "Pastelito": { 
       price: 6.00, 
       filepath: "/testimonial-3.jpg", 
       flavor: "Chocolate", 
       frosting: "Chocolate" 
     },
-    "Pastelitos": {
-      price: 6.00,
+    "Cookie": {
+      price: 1.50,
       filepath: "/login-background.jpg",
       flavor: "Strawberry",
       frosting: "Strawberry"
     },
-    "Cookies": {
-      price: 1.50,
+    "Flan": {
+      price: 4.00,
       filepath: "/landing-cake.png",
       flavor: "Oatmeal Raisin",
-      frosting: "None"
-    },
-    "Flans": {
-      price: 4.00,
-      filepath: "/testimonial-3.jpg",
-      flavor: "Caramel",
       frosting: "None"
     }
   };
