@@ -6,52 +6,26 @@ import cupcakes from "/src/assets/products-cupcake.png";
 import pastelitos from "/src/assets/products-pastelitos.png";
 import cookies from "/src/assets/products-cookie.png";
 import flan from "/src/assets/products-flan.png";
+
+const res = await fetch("http://localhost:8000/api/get_categories");
+const res_json = await res.json();
+
 ---
 
 <section class="products-section">
   <h1>What celebration are we creating together?</h1>
 
   <div class="grid">
-	<div class = "product">
-		<Product
-		item_name="Cakes"
-		price="$65"
-		url="/src/assets/products-cake.png"
-		ready={true}
-		/>
-	</div>
-	<div class = "product">
-		<Product
-		item_name="Cupcakes"
-		price="$42/dozen"
-		url="/src/assets/products-cupcake.png"
-		ready={true}
-		/>
-	</div>
-	<div class="product">	
-		<Product
-		item_name="Flan"
-		price="$30/dozen"
-		url="/src/assets/products-flan.png"
-		ready={true}
-		/>
-	</div>
-	<div class = "product">
-		<Product
-		item_name="Pastelitos"
-		price="$30/dozen"
-		url="/src/assets/products-pastelitos.png"
-		ready={true}
-		/>
-	</div>
-	<div class = "product">
-		<Product
-		item_name="Cookies"
-		price="$30/dozen"
-		url="/src/assets/products-cookie.png"
-		ready={true}
-		/>
-	</div>
+	{res_json.map( item => (
+		<div class = "product">
+			<Product
+			item_name={item.name},
+			price={item.price_representation},
+			url={item.image_url},
+			ready={true}
+			/>
+		</div>
+	))}
   </div>
 </section>
 
