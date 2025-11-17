@@ -11,3 +11,4 @@ const exampleSchema = new mongoose.Schema({
 });
 
 export const Example = mongoose.model('Example', exampleSchema);
+

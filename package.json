@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/wics-uic/Sweet-T/issues"
   },
-  "homepage": "https://github.com/wics-uic/Sweet-T#readme"
+  "homepage": "https://github.com/wics-uic/Sweet-T#readme",
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.17"
+  }
 }
