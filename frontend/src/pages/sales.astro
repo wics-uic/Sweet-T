@@ -1,0 +1,168 @@
+---
+import Layout from "../layouts/layout.astro"
+const title = "Sales | Sweet T Bakery";
+---
+
+<Layout title={title}>
+  <main class="min-h-screen bg-slate-50 text-slate-900">
+    <!-- Top bar -->
+    <header class="w-full border-b border-slate-200 bg-white">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <!-- Left: logo + nav -->
+        <div class="flex items-center gap-8">
+          <div class="text-lg font-semibold text-slate-900">
+            Sweet T Bakery
+          </div>
+
+          <nav class="flex gap-2 text-sm font-medium">
+            <button
+              class="rounded-full px-4 py-2 text-slate-600 hover:bg-slate-100 transition"
+            >
+              Orders
+            </button>
+            <button
+              class="rounded-full px-4 py-2 text-slate-600 hover:bg-slate-100 transition"
+            >
+              Custom Requests
+            </button>
+            <button
+              class="rounded-full bg-emerald-900 px-4 py-2 text-white shadow-sm"
+            >
+              Sales
+            </button>
+          </nav>
+        </div>
+
+        <!-- Right: Add order + avatar -->
+        <div class="flex items-center gap-4">
+          <button
+            class="flex items-center gap-2 rounded-full bg-rose-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-600 transition"
+          >
+            <span class="text-lg leading-none">+</span>
+            <span>Add Order</span>
+          </button>
+
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-900 text-white"
+          >
+            <span class="text-lg">👤</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <section class="mx-auto max-w-6xl px-6 py-8">
+      <h1 class="text-2xl font-semibold text-slate-900">Sales</h1>
+      <p class="mt-1 text-sm text-slate-500">
+        Overview of your business performance
+      </p>
+
+      <!-- Card grid -->
+      <div class="mt-6 grid gap-6 md:grid-cols-2">
+        <!-- This week sales -->
+        <div
+          class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+        >
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                This Week
+              </p>
+              <p class="mt-4 text-5xl font-semibold text-emerald-900">
+                $1,245
+              </p>
+            </div>
+            <span class="text-2xl text-slate-300">$</span>
+          </div>
+          <p class="mt-6 text-sm font-medium text-emerald-600">
+            ↑ 12% from last week
+          </p>
+        </div>
+
+        <!-- This month sales -->
+        <div
+          class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+        >
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                This Month
+              </p>
+              <p class="mt-4 text-5xl font-semibold text-emerald-900">
+                $5,890
+              </p>
+            </div>
+            <span class="text-2xl text-slate-300">$</span>
+          </div>
+          <p class="mt-6 text-sm font-medium text-emerald-600">
+            ↑ 8% from last month
+          </p>
+        </div>
+
+        <!-- Orders this week -->
+        <div
+          class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+        >
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Orders This Week
+              </p>
+              <p class="mt-4 text-5xl font-semibold text-emerald-900">
+                24
+              </p>
+            </div>
+            <svg
+                class="h-6 w-6 text-slate-300"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                >
+                <!-- basket body -->
+                <rect x="3.5" y="10" width="17" height="9" rx="2" />
+                <!-- handle legs -->
+                <path d="M9 10L11 5" />
+                <path d="M15 10L13 5" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Orders this month -->
+        <div
+          class="flex flex-col justify-between rounded-2xl border border-slate-200 bg-white p-8 shadow-sm"
+        >
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Orders This Month
+              </p>
+              <p class="mt-4 text-5xl font-semibold text-emerald-900">
+                97
+              </p>
+            </div>
+            <svg
+                class="h-6 w-6 text-slate-300"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                >
+                <!-- bag outline -->
+                <path d="M7 9h10l-1 9H8L7 9z" />
+                <!-- bag top line -->
+                <path d="M7 9h10" />
+                <!-- handles -->
+                <path d="M10 9V7a2 2 0 0 1 4 0v2" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
