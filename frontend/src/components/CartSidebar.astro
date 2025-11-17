@@ -1,3 +1,7 @@
+---
+import '../styles/cartSidebar.css';
+---
+
 <div class="cart-wrapper" id="cart-wrapper">
   <div class="cart-overlay" id="cart-overlay"></div>
 
@@ -21,12 +25,12 @@
 
 
   const data = [
-    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', customization: 'custom', quantity: 8, total: 16.0, filepath: "src/assets/login-background.jpg"},
-    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', customization: 'custom', quantity: 1, total: 0.0, filepath: "src/assets/landing-cake.png"},
-    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', customization: 'custom', quantity: 2, total: 12.0, filepath: "src/assets/testimonial-3.jpg"},
-    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', customization: 'custom', quantity: 8, total: 16.0, filepath: "src/assets/login-background.jpg"},
-    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', customization: 'custom', quantity: 1, total: 0.0, filepath: "src/assets/landing-cake.png"},
-    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', customization: 'custom', quantity: 2, total: 12.0, filepath: "src/assets/testimonial-3.jpg"}
+    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', customization: 'custom', quantity: 8, total: 16.0, filepath: "/login-background.jpg"},
+    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', customization: 'custom', quantity: 1, total: 0.0, filepath: "/landing-cake.png"},
+    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', customization: 'custom', quantity: 2, total: 12.0, filepath: "/testimonial-3.jpg"},
+    {name: 'Cupcake', flavor: 'Chocolate', frosting: 'Vanilla frosting', customization: 'custom', quantity: 8, total: 16.0, filepath: "/login-background.jpg"},
+    {name: 'Ready Made Cake', flavor: 'Vanilla', frosting: 'Vanilla frosting', customization: 'custom', quantity: 1, total: 0.0, filepath: "/landing-cake.png"},
+    {name: 'Pastillos', flavor: 'Chocolate', frosting: 'Chocolate frosting', customization: 'custom', quantity: 2, total: 12.0, filepath: "/testimonial-3.jpg"}
   
   ];
 
@@ -50,6 +54,8 @@
     if (overlay) {
       overlay.addEventListener("click", closeCart);
     }
+
+    // API Implementation HERE 
 
     // Helper function to build product DOM 
     function createProduct(item) {
@@ -78,12 +84,17 @@
       `;
       return product;
     }
+
+    // Fetch and render the cart from API 
+    async function fetchAndRenderCart() {
+      if (!cartContent) return;
+    }
     cartContent.replaceChildren(...data.map(createProduct));
 
   }); 
 </script>
 
-<style is:global>
+<!-- <style is:global>
   .cart-wrapper {
     /* Hidden by default */
     position: fixed;
@@ -276,4 +287,4 @@
   .trash img {
     width: 35px;
   }
-</style>
+</style> -->
