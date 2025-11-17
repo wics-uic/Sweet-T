@@ -1,12 +1,16 @@
 ---
 import NavBar from "../components/navbar.astro"
 import Layout from "../layouts/layout.astro"
+import CheckoutModal from "../components/Checkout.astro"
 ---
 
 <html lang="en">
 	<Layout>
-		<NavBar />
-		<h1 class = "header"> Cart . . .</h1>
+		<div class="ml-[50px] mr-[50px] p-[15px]">
+			<h1 class="header">Cart</h1>
+		<CheckoutModal/>
+		</div>
+		
 	</Layout>
 
 	<style>

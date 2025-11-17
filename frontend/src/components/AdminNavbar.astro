@@ -1,0 +1,147 @@
+---
+import userIcon from '../assets/nav-user.svg?url';
+import "../styles/global.css"
+---
+
+<div class="admin-nav-container flex bg-white">
+    <div class="header-content">
+        <!-- Navbar Title -->
+        <div class="title">
+            Sweet T Bakery
+        </div>
+        <!-- Account Button -->
+        <a href="/admin/account" class="account-btn">
+          <img src={userIcon} />
+        </a>
+      </div>
+    <!-- Orders, Custom Requests, Sales, Add Order buttons -->
+    <div class="nav-buttons">
+      <div class="tabs">
+        <button class="nav-btn active">Orders</button>
+        <button class="nav-btn">Custom Requests</button>
+        <button class="nav-btn">Sales</button>
+      </div>
+      <a href="/admin/add-order" class="add-order-btn">
+        <span class="plus">+</span>
+        <span>Add Order</span>
+      </a>
+    </div>
+  </div>
+
+
+<!-- script for active button! -->
+<script>
+  const buttons = document.querySelectorAll('.nav-buttons .nav-btn');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+
+
+<style>
+.admin-nav-container {
+  font-family: var(--font-bricolage);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+  border-bottom: 1px solid #e5e7eb; /* line at bottom of navbar */
+  gap: 8px;
+}
+
+/* Title & account button */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Account button styling */
+.account-btn {
+  background-color: var(--color-green-100);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.account-btn img {
+  width: 18px;
+  height: 18px;
+  filter: invert(100%) brightness(200%);
+}
+
+/* Title styling */
+.title {
+  font-weight: 300;
+  color: var(--color-green-100);
+  font-size: 18px;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-btn {
+  border: 1px solid #d1d5db;
+  background-color: white;
+  border-radius: 9999px;
+  padding: 8px 20px;
+  font-size: 14px;
+  cursor: pointer;
+
+}
+
+.nav-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.nav-btn.active {
+  background-color: var(--color-green-100);
+  color: white;
+  border-color: var(--color-green-100);
+}
+
+.add-order-btn {
+  background-color: #d5586b;    
+  color: white;
+  border-radius: 9999px;
+  padding: 13px 18px;
+  font-size: 18px;
+  font-weight: 180;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.add-order-btn:hover {
+  background-color: #cf4b5c;
+}
+
+.add-order-btn .plus {
+  font-size: 55px;
+  font-weight: 1;
+  line-height: 0;
+  transform: translateY(-2px)
+}
+
+</style>
+
+

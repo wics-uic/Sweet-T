@@ -9,7 +9,7 @@ import Footer from "../components/footer.astro";
   <!-- left -->
   <div class="img-carousel">
     <div class="carousel">
-      <img id="carouselImage" src={url}  />
+      <img id="carouselImage" src={url} alt={item_name} />
     </div>
     <div class="circles">
       <button class="circle" onclick="showImage(0)" aria-label="first-image"></button>
@@ -54,7 +54,7 @@ import Footer from "../components/footer.astro";
       </div>
 
       <p>Write a message for the cake</p>
-      <textarea id="messageBox" placeholder="Type your message here..."></textarea>
+      <textarea id="messageBoxReady" class="messageBox" placeholder="Type your message here..."></textarea>
 
       <div class="rush">
         <label for="rushBtn">Rush order? +$40</label>
@@ -362,6 +362,8 @@ import Footer from "../components/footer.astro";
   .sizes {
     display: flex;
     gap: 14px;
+    flex-wrap: wrap;
+
   }
   .size-button {
     padding: 10px 20px;
@@ -376,8 +378,8 @@ import Footer from "../components/footer.astro";
   .add-button {
     margin-top: 20px;
     padding: 14px 0px;
-    width: 100%
-    border: 1px black;
+    width: 100%;
+    border: 1px solid black;
     background-color: lightgray;
     border-radius: 8px;
     font-weight: bold;
@@ -413,18 +415,21 @@ import Footer from "../components/footer.astro";
     font-size: 15px;
   }
 
-  #messageBox {
+  #messageBoxReady, #messageBoxCustom {
     background-color: #fff;
     border-radius: 8px;
     padding: 10px;
   }
 
-  .radioBtns {
-    display: flex;
-    flex-wrap: wrap; 
-    gap: 12px;
-    margin-top: 6px;
-    input[type="radio"]:checked { accent-color: #D4596B; }
+  .radioBtns { 
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 12px; 
+  margin-top: 6px; 
+  }
+
+  .radioBtns input[type="radio"]:checked { 
+    accent-color: #D4596B; 
   }
 
   .rush {
