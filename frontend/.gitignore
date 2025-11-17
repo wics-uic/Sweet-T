@@ -12,6 +12,12 @@ build/
 .next/
 .astro/
 
+frontend/package-lock.json
+frontend/package.json
+
+package-lock.json
+package.json
+
 # logs
 npm-debug.log*
 yarn-debug.log*
