@@ -1,0 +1,83 @@
+<div class="flex flex-row h-screen">
+   <!-- transparent background -->
+   <div class="h-screen w-2/5 bg-[url(../assets/login-background.jpg)] z-1 opacity-10 absolute"></div>
+
+   <!-- linear gradient over background -->
+   <div class="flex flex-col justify-center items-center h-screen w-2/5 bg-linear-to-b from-[#044A25] to-[#7FA89A] bg-blend-overlay z-0">
+        <!-- welcome message -->
+        <div class="flex flex-col font-sans font-[Inter] text-white z-2 gap-[12px]">
+            <h1 class="text-[12px] sm:text-[16px]">Sweet T Bakery</h1>
+            <p class="text-[15px] sm:text-[20px]">Admin Dashboard</p>
+            <p class="text-[12px] sm:text-[16px]">Welcome back! Let's bake some magic today.</p>
+        </div>
+   </div>
+
+   <!-- login area -->
+   <div class="flex flex-col justify-center items-center h-screen w-3/5 bg-[#F9FAFB] font-sans font-[Inter]">
+        <!-- card container for login portion -->
+        <div class="flex flex-col border border-[#0000001A] shadow-lg bg-white w-[220px] sm:w-[420px] h-[400px] sm:h-[557px] rounded-[14px] p-[12px] sm:p-[24px]">
+            <!-- card header -->
+            <div class="flex flex-col gap-[5px] sm:gap-[10px] h-[114px] mb-[16px] sm:mb-[0px]">
+                <p class="text-[16px] sm:text-[24px] font-[510] text-[#0A0A0A]">Sign In</p>
+                <p class="text-[12px] sm:text-[16px] text-[#717182]">Access your dashboard</p>
+            </div>
+            <!-- card content -->
+            <div class ="flex flex-col gap-[10px] sm:gap-[20px]">
+                <!-- email container -->
+                <div class="flex flex-col gap-[8px]">
+                    <p class="text-[14px] sm:text-[16px] text-[#0A0A0A] font-[505]">Email</p>
+                    <div class="flex flex-row items-center justify-center gap-[8px] w-[200px] sm:w-[370px] h-[36px] sm:h-[48px] bg-[#F3F3F5] rounded-[8px]">
+                        <img class="ml-[12px] h-[15px] w-[15px] sm:h-[20px] sm:w-[20px]" src="../src/assets/mail.svg"/>
+                        <input class="w-[330px] text-[#717182] text-[12px] sm:text-[16px]" type="email" placeholder="Enter your email">
+                    </div>
+                </div>
+                <!-- password container -->
+                 <div class="flex flex-col gap-[8px]">
+                    <p class="text-[14px] sm:text-[16px] text-[#0A0A0A] font-[505]">Password</p>
+                    <div class="flex flex-row items-center justify-center gap-[8px] w-[200px] sm:w-[370px] h-[36px] sm:h-[48px] bg-[#F3F3F5] rounded-[8px]">
+                        <img class="ml-[16px] h-[15px] w-[15px] sm:h-[20px] sm:w-[20px]" src="../src/assets/lock.svg"/>
+                        <input class="w-[330px] text-[#717182] text-[12px] sm:text-[16px]" type="password" placeholder="Enter your password" id="passwordField">
+                        <input class="w-[15px] h-[15px] sm:w-[20px] sm:h-[20px] mr-[12px]"type="image" src ="../src/assets/eye.svg" id="toggle" onclick="togglePassword()">
+                    </div>
+                 </div>
+                 <!-- checkbox part -->
+                 <div class="flex flex-row gap-[8px] justify-start items-center">
+                    <input class="h-[16px] w-[16px] bg-[#F3F3F5] border border-[#0000001A] rounded-[4px] shadow-sm" type="checkbox">
+                    <p class="text-[#364153] text-[14px]">Keep me signed in</p>
+                 </div>
+                 <!-- sign in button -->
+                 <button class="flex flex-col justify-content items-center h-[48px] p-[14px] bg-[#044A25] rounded-[8px] mb-[11px] cursor-pointer" type="button">
+                    <p class="text-white text-[14px]">Sign In</p>
+                </button>
+                 <!-- forgot password -->
+                 <a class="self-center text-[#044A25] pb-[24px]" href="url">Forgot password?</a>
+            </div>
+            <!-- contact section -->
+            <div class="h-[49px] flex flex-row justify-center items-end self-center w-[370px] gap-[2px] border-t border-[#0000001A]">
+                <p class="text-[12px] text-[#6A7282]">Need help?</p>
+                <a class="text-[#044A25] font-[505]" href="url">Contact support</a>
+            </div>
+        </div>
+   </div>
+</div>
+
+<style>
+    input:focus {
+        outline: none;
+    }
+</style>
+
+<script>
+    const inp = document.getElementById('passwordField') as HTMLInputElement | null;
+    const btn = document.getElementById('toggle') as HTMLButtonElement | null;
+
+    if (inp && btn) {
+        btn.addEventListener('click', () => {
+            if (inp.type === 'password') {
+                inp.type = 'text';
+            } else {
+                inp.type = 'password';
+            }
+        });
+    }
+</script>
