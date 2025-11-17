@@ -24,8 +24,10 @@ import '../styles/cartSidebar.css';
 // import { createHeadAndContent } from "astro/runtime/server/index.js";
 
   const API_BASE_URL = "http://localhost:8000/api/cart";
-  const USER_ID = "691b29cd7ffa3d0800cf4ad8"; // hard-code user for now 
+  const USER_ID = "691b31d7668701ead821688e"; // hard-code user for now 
 
+  // This should ACTUALLY use the Product Model from the DB.
+  // For now, I hard-coded the product catalog here for visual purposes.
   const PRODUCT_CATALOG = {
     "Cupcake": { 
       price: 2.00, 
@@ -44,8 +46,35 @@ import '../styles/cartSidebar.css';
       filepath: "/testimonial-3.jpg", 
       flavor: "Chocolate", 
       frosting: "Chocolate" 
+    },
+    "Pastelitos": {
+      price: 6.00,
+      filepath: "/login-background.jpg",
+      flavor: "Strawberry",
+      frosting: "Strawberry"
+    },
+    "Cookies": {
+      price: 1.50,
+      filepath: "/landing-cake.png",
+      flavor: "Oatmeal Raisin",
+      frosting: "None"
+    },
+    "Flans": {
+      price: 4.00,
+      filepath: "/testimonial-3.jpg",
+      flavor: "Caramel",
+      frosting: "None"
     }
   };
+  // EXAMPLE: no catalog (future implementation)
+  // const processedProducts = cartData.products.map(item => {
+  //   return {
+  //       name: item.productDetails.name, // Coming from DB
+  //       filepath: item.productDetails.filepath, // Coming from DB
+  //       price: item.productDetails.price, // Coming from DB
+  //       total: (item.productDetails.price * item.quantity)
+  //   };
+  // });
 
   // This script handles CLOSING the cart.
   // The logic for OPENING the cart is in the page that uses this component.
@@ -55,6 +84,23 @@ import '../styles/cartSidebar.css';
     const overlay = document.getElementById("cart-overlay");
     // add content (temporary)
     const cartContent = document.querySelector(".cart-content");
+
+    // NO SCROLL (disables scroll for the entire window, not including the sidebar)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          if (cartWrapper.classList.contains("open")) {
+            document.body.classList.add("no-scroll");
+          } else {
+            document.body.classList.remove("no-scroll");
+          }
+        }
+      });
+    });
+    if (cartWrapper) {
+      observer.observe(cartWrapper, { attributes: true });
+    }
+
 
     function closeCart() {
       cartWrapper.classList.remove("open");
@@ -97,22 +143,22 @@ import '../styles/cartSidebar.css';
       `;
       return product;
     }
-    // async function deleteItem(productId) {
-    //   if (!confirm("Remove this item?")) return;
+    async function deleteItem(productId) {
+      if (!confirm("Remove this item?")) return;
 
-    //   try {
-    //     const response = await fetch(`${API_BASE_URL}/deleteProduct/${productId}`, {
-    //       method: "DELETE",
-    //     });
-    //     if (!response.ok) {
-    //       throw new Error("Failed to delete item from cart");
-    //     }
-    //     // Refresh cart display
-    //     fetchAndRenderCart();
-    //   } catch (error) {
-    //     console.error("Error deleting item:", error);
-    //   }
-    // }
+      try {
+        const response = await fetch(`${API_BASE_URL}/deleteProduct/${productId}`, {
+          method: "DELETE",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to delete item from cart");
+        }
+        // Refresh cart display
+        fetchAndRenderCart();
+      } catch (error) {
+        console.error("Error deleting item:", error);
+      }
+    }
     async function fetchAndRenderCart() {
       try {
         const response = await fetch(`${API_BASE_URL}/fetch/${USER_ID}`);
@@ -135,7 +181,7 @@ import '../styles/cartSidebar.css';
             _id: item._id, // mongoDB id 
             name: item.name,
             quantity: item.quantity,
-            customization: item.customization,
+            customization: item.customizations,
             // visual/calculated fields
             filepath: catalogItem.filepath,
             flavor: catalogItem.flavor,

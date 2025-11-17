@@ -1,4 +1,7 @@
-
+body.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
 .cart-wrapper {
   /* Hidden by default */
   position: fixed;
