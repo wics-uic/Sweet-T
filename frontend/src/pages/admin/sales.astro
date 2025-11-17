@@ -1,15 +1,18 @@
 ---
-import Layout from "../../layouts/layout.astro"
+import adminLayout from "../../layouts/adminLayout.astro"
 const title = "Sales | Sweet T Bakery";
+import AdminNavbar from '../../components/AdminNavbar.astro';
+import TopProducts from '../../components/salesTopProducts.astro';
 ---
 
-<Layout title={title}>
-  <main class="min-h-screen bg-slate-50 text-slate-900">
+<adminLayout>
+    <AdminNavbar />
+      <main class="min-h-screen bg-slate-50 text-slate-900">
     <!-- Top bar -->
-    <header class="w-full border-b border-slate-200 bg-white">
-      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+    <!-- <header class="w-full border-b border-slate-200 bg-white">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4"> -->
         <!-- Left: logo + nav -->
-        <div class="flex items-center gap-8">
+        <!-- <div class="flex items-center gap-8">
           <div class="text-lg font-semibold text-slate-900">
             Sweet T Bakery
           </div>
@@ -31,10 +34,10 @@ const title = "Sales | Sweet T Bakery";
               Sales
             </button>
           </nav>
-        </div>
+        </div> -->
 
         <!-- Right: Add order + avatar -->
-        <div class="flex items-center gap-4">
+        <!-- <div class="flex items-center gap-4">
           <button
             class="flex items-center gap-2 rounded-full bg-rose-500 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-rose-600 transition"
           >
@@ -47,9 +50,9 @@ const title = "Sales | Sweet T Bakery";
           >
             <span class="text-lg">👤</span>
           </div>
-        </div>
-      </div>
-    </header>
+        </div> -->
+      <!-- </div>
+    </header> -->
 
     <!-- Main content -->
     <section class="mx-auto max-w-6xl px-6 py-8">
@@ -163,6 +166,9 @@ const title = "Sales | Sweet T Bakery";
           </div>
         </div>
       </div>
+      
     </section>
+    <TopProducts/>
   </main>
-</Layout>
+    
+</adminLayout>

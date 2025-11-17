@@ -3,7 +3,7 @@ import userIcon from '../assets/nav-user.svg?url';
 import "../styles/global.css"
 ---
 
-<div class="admin-nav-container flex">
+<div class="admin-nav-container flex bg-white">
     <div class="header-content">
         <!-- Navbar Title -->
         <div class="title">
@@ -11,17 +11,23 @@ import "../styles/global.css"
         </div>
         <!-- Account Button -->
         <a href="/admin/account" class="account-btn">
-            <img src={userIcon} />
+          <img src={userIcon} />
         </a>
-    </div>
+      </div>
     <!-- Orders, Custom Requests, Sales, Add Order buttons -->
     <div class="nav-buttons">
+      <div class="tabs">
         <button class="nav-btn active">Orders</button>
         <button class="nav-btn">Custom Requests</button>
         <button class="nav-btn">Sales</button>
-        <button class="nav-btn">Add Order</button>
+      </div>
+      <a href="/admin/add-order" class="add-order-btn">
+        <span class="plus">+</span>
+        <span>Add Order</span>
+      </a>
     </div>
-</div>
+  </div>
+
 
 <!-- script for active button! -->
 <script>
@@ -56,19 +62,16 @@ import "../styles/global.css"
 .account-btn {
   background-color: var(--color-green-100);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0;
-  border: none;
-  cursor: pointer;
 }
 
 .account-btn img {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   filter: invert(100%) brightness(200%);
 }
 
@@ -79,8 +82,14 @@ import "../styles/global.css"
   font-size: 18px;
 }
 
-/* Navigation buttons */
 .nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.tabs {
   display: flex;
   gap: 8px;
 }
@@ -91,7 +100,6 @@ import "../styles/global.css"
   border-radius: 9999px;
   padding: 8px 20px;
   font-size: 14px;
-  color: black;
   cursor: pointer;
 
 }
@@ -104,6 +112,34 @@ import "../styles/global.css"
   background-color: var(--color-green-100);
   color: white;
   border-color: var(--color-green-100);
+}
+
+.add-order-btn {
+  background-color: #d5586b;    
+  color: white;
+  border-radius: 9999px;
+  padding: 13px 18px;
+  font-size: 18px;
+  font-weight: 180;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.add-order-btn:hover {
+  background-color: #cf4b5c;
+}
+
+.add-order-btn .plus {
+  font-size: 55px;
+  font-weight: 1;
+  line-height: 0;
+  transform: translateY(-2px)
 }
 
 </style>

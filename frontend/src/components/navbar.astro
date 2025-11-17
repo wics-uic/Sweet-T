@@ -1,13 +1,25 @@
 ---
-// const navLinks = ["Home", "Cakes", "Cupcakes", "Pastelitos", "Cookies", "Flans"];
-// const navLinksRightSide = ["Cart", "Login"];
-
-const navLinks = [ {name: "Cakes", path: "/cakes"}, {name: "Cupcakes", path: "/cupcakes"}, {name: "Pastelitos", path: "/pastelitos"}, {name: "Cookies", path: "/cookies"}, {name: "Flans", path: "/flans"} ];
-const navLinksRightSide = [ {name: "Cart", path: "/cart", image: "src/assets/nav-basket.svg"}, {name: "Login", path: "/login", image: "src/assets/nav-user.svg"} ];
+const navLinks = [ 
+  {name: "Cakes", path: "/cakes"}, 
+  {name: "Cupcakes", path: "/cupcakes"}, 
+  {name: "Pastelitos", path: "/pastelitos"}, 
+  {name: "Cookies", path: "/cookies"}, 
+  {name: "Flans", path: "/flans"} 
+];
+const navLinksRightSide = [ 
+  {name: "Cart", path: "/cart", image: "src/assets/nav-basket.svg"}, 
+  {name: "Login", path: "/login", image: "src/assets/nav-user.svg"} 
+];
 ---
 
-<div class="nav-bar flex justify-center">
-  <div class="nav-bar-left absolute left-[70px]">
+<div class="nav-bar flex justify-center relative">
+  <button id = "menu-button" class = "md:hidden absolute right-5 top-5 flex flex-col gap-1">
+    <span class = "block w-8 h-0.5 bg-black"></span>
+    <span class = "block w-8 h-0.5 bg-black"></span>
+    <span class = "block w-8 h-0.5 bg-black"></span>
+  </button>
+
+  <div class="nav-bar-left absolute left-[70px] hidden md:flex">
     <ul>
       {navLinks.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}  
     </ul>
@@ -17,11 +29,24 @@ const navLinksRightSide = [ {name: "Cart", path: "/cart", image: "src/assets/nav
     <a class="logo" href="/"><img src="src/assets/Sweet_T.svg"/></a>
   </div>
 
-  <div class="nav-bar-right absolute right-[70px]">
+  <div class="nav-bar-right absolute right-[70px] hidden md:flex">
     <ul>
       {navLinksRightSide.map((link) => <li><a class="link" href={link.path}><img src={link.image} height="32px" width="32px"/></a></li>)}  
     </ul>
   </div>
+</div>
+
+<!-- code for phone -->
+<div id="mobile-menu" class="hidden md:hidden absolute right-5 top-20 bg-white px-6 py-4 shadow-lg rounded-lg w-[180px]">
+    <ul class="flex flex-col gap-4">
+    {navLinks.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}
+  </ul>
+
+  <ul class="icon-row flex justify-center gap-6 mt-4">
+    {navLinksRightSide.map((link) =>
+      <li><a href={link.path}><img src={link.image} width="28" height="28"/></a></li>
+    )}
+  </ul>
 </div>
 
 <style>
@@ -75,6 +100,24 @@ const navLinksRightSide = [ {name: "Cart", path: "/cart", image: "src/assets/nav
     margin: 0;
   }
 
+  /* hide left & right nav on phone */
+  @media (max-width: 768px) {
+    .nav-bar-left, .nav-bar-right {
+      display: none;
+    }
+  }
+
+  #mobile-menu ul {
+  flex-direction: column !important;
+  gap: 15px !important;
+  }
+
+  #mobile-menu .icon-row {
+    flex-direction: row !important; 
+    justify-content: center !important;
+    gap: 25px !important;
+    margin-top: 10px;
+  }
 </style>
 
 <script>
@@ -89,4 +132,15 @@ const navLinksRightSide = [ {name: "Cart", path: "/cart", image: "src/assets/nav
 
 //     });
 //   }
+const button = document.getElementById("menu-button");
+const menu = document.getElementById("mobile-menu");
+
+button.addEventListener("click", function() {
+  if (menu.classList.contains("hidden")) {
+    menu.classList.remove("hidden");
+  } else {
+    menu.classList.add("hidden");
+  }
+});
+
 </script>
