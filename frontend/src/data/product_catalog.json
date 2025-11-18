@@ -1,0 +1,27 @@
+[
+  {
+    "id": "prod_001",
+    "name": "Guava Pastelitos",
+    "price": 1.50
+  },
+  {
+    "id": "prod_002",
+    "name": "Custom Birthday Cake",
+    "price": 90.00
+  },
+  {
+    "id": "prod_003",
+    "name": "Tres Leches Cake",
+    "price": 35.00
+  },
+  {
+    "id": "prod_004",
+    "name": "Cupcake",
+    "price": 3.00
+  },
+  {
+    "id": "prod_005",
+    "name": "Chocolate Chip Cookie",
+    "price": 2.00
+  }
+]
