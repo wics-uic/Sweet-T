@@ -1,0 +1,233 @@
+---
+import AdminNavbar from "../../components/AdminNavbar.astro";
+import AdminLayout from "../../layouts/adminLayout.astro";
+---
+
+<AdminLayout>
+  <div class="add-order-container">
+    <h1 class="page-title">Create New Order</h1>
+
+    <div class="form-section">
+      <label class="label">Product Type</label>
+
+      <select id="productType" class="input-select">
+        <option value="">Choose a product...</option>
+        <option value="Cake">Cake</option>
+        <option value="Cupcakes">Cupcakes</option>
+        <option value="Pastelitos">Pastelitos</option>
+        <option value="Cookies">Cookies</option>
+        <option value="Flan">Flan</option>
+      </select>
+    </div>
+
+    <div class="form-section" id="sizeOrQtySection" style="display:none;">
+      <label class="label" id="sizeOrQtyLabel"></label>
+      <div class="radio-group" id="sizeOrQtyOptions"></div>
+    </div>
+
+    <div class="form-section" id="flavorSection" style="display:none;">
+      <label class="label">Flavor</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="flavor" value="Vanilla" /> Vanilla</label>
+        <label class="radio-item"><input type="radio" name="flavor" value="Chocolate" /> Chocolate</label>
+        <label class="radio-item"><input type="radio" name="flavor" value="Red Velvet" /> Red Velvet</label>
+        <label class="radio-item"><input type="radio" name="flavor" value="Carrot" /> Carrot</label>
+      </div>
+    </div>
+
+    <div class="form-section" id="frostingSection" style="display:none;">
+      <label class="label">Frosting</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="frosting" value="Vanilla" /> Vanilla</label>
+        <label class="radio-item"><input type="radio" name="frosting" value="Chocolate" /> Chocolate</label>
+        <label class="radio-item"><input type="radio" name="frosting" value="Red Velvet" /> Red Velvet</label>
+        <label class="radio-item"><input type="radio" name="frosting" value="Carrot" /> Carrot</label>
+      </div>
+    </div>
+
+    <div class="form-section" id="notesSection" style="display:none;">
+      <label class="label" id="notesLabel">Notes</label>
+      <textarea id="notesInput" class="notes-box" placeholder="Notes"></textarea>
+    </div>
+
+    <button id="submitBtn" class="submit-btn" disabled>
+      Submit Order
+    </button>
+  </div>
+
+  <script>
+    const productType = document.getElementById("productType");
+
+    const sizeOrQtySection = document.getElementById("sizeOrQtySection");
+    const sizeOrQtyLabel = document.getElementById("sizeOrQtyLabel");
+    const sizeOrQtyOptions = document.getElementById("sizeOrQtyOptions");
+
+    const flavorSection = document.getElementById("flavorSection");
+    const frostingSection = document.getElementById("frostingSection");
+
+    const notesSection = document.getElementById("notesSection");
+    const notesLabel = document.getElementById("notesLabel");
+    const submitBtn = document.getElementById("submitBtn");
+
+    function options(type) {
+      sizeOrQtySection.style.display = "none";
+      flavorSection.style.display = "none";
+      frostingSection.style.display = "none";
+      notesSection.style.display = "none";
+
+      sizeOrQtyOptions.innerHTML = "";
+      if (!type) {
+        return;
+      } 
+
+      flavorSection.style.display = "block";
+
+      if (type === "Cake") {
+        sizeOrQtySection.style.display = "block";
+        sizeOrQtyLabel.textContent = "Cake Size (inches)";
+
+        ["5", "8", "10"].forEach(size => {
+          sizeOrQtyOptions.innerHTML += `<label class="radio-item"> <input type="radio" name="sizeOrQty" value="${size}" /> ${size} </label>`;
+        });
+
+        frostingSection.style.display = "block";
+        notesSection.style.display = "block";
+        notesLabel.textContent = "Notes and specific colors";
+
+      } else if (type === "Cupcakes") {
+        sizeOrQtySection.style.display = "block";
+        sizeOrQtyLabel.textContent = "Quantity";
+
+        [1, 2, 6, 12].forEach(qty => {
+          sizeOrQtyOptions.innerHTML += ` <label class="radio-item"> <input type="radio" name="sizeOrQty" value="${qty}" /> ${qty} </label>`;
+        });
+
+        frostingSection.style.display = "block";
+        notesSection.style.display = "block";
+        notesLabel.textContent = "Notes and specific colors";
+
+      } else if (type === "Pastelitos" || type === "Flan") {
+        sizeOrQtySection.style.display = "block";
+        sizeOrQtyLabel.textContent = "Quantity";
+
+        [1, 2, 6, 12].forEach(qty => {
+          sizeOrQtyOptions.innerHTML += `<label class="radio-item"> <input type="radio" name="sizeOrQty" value="${qty}" /> ${qty} </label>`;
+        });
+
+        notesSection.style.display = "block";
+        notesLabel.textContent = "Notes";
+
+      } else if (type === "Cookies") {
+        sizeOrQtySection.style.display = "block";
+        sizeOrQtyLabel.textContent = "Quantity";
+
+        [1, 2, 6, 12].forEach(qty => {
+          sizeOrQtyOptions.innerHTML += `<label class="radio-item"> <input type="radio" name="sizeOrQty" value="${qty}" /> ${qty} </label>`;
+        });
+
+        frostingSection.style.display = "block";
+        notesSection.style.display = "block";
+        notesLabel.textContent = "Notes";
+      }
+    }
+
+    function validateForm() {
+      const type = productType.value;
+      if (!type){
+        return (submitBtn.disabled = true);
+      } 
+
+      const sizeOrQty = document.querySelector('input[name="sizeOrQty"]:checked');
+      const flavor = document.querySelector('input[name="flavor"]:checked');
+
+      let frosting = true;
+      if (frostingSection.style.display !== "none") {
+        frosting = document.querySelector('input[name="frosting"]:checked');
+      }
+
+      if (type && sizeOrQty && flavor && frosting) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    }
+
+    productType.addEventListener("change", () => {
+      options(productType.value);
+      validateForm();
+    });
+
+    document.addEventListener("change", validateForm);
+
+    submitBtn.addEventListener("click", () => {
+      alert("Order submitted!");
+      window.location.href = "/admin/dashboard";
+    });
+  </script>
+
+  <style>
+    .add-order-container {
+      font-family: var(--font-bricolage);
+      padding: 32px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-title {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 24px;
+    }
+
+    .form-section {
+      margin-bottom: 28px;
+    }
+
+    .label {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .input-select {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 16px;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      gap: 8px;
+    }
+
+    .notes-box {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 12px;
+      padding: 12px;
+      border: 1px solid var(--color-gray-50); 
+      font-size: 16px;
+      background-color: white;
+    }
+
+    .submit-btn {
+      background-color: #d5586b;
+      color: white;
+      border-radius: 9999px;
+      padding: 14px 26px;
+      font-size: 18px;
+    }
+  </style>
+</AdminLayout>
