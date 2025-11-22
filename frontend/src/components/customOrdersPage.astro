@@ -1,0 +1,60 @@
+---
+import CustomOrder from "./customOrderItem.astro"
+import orders from "./product-data/orders.ts";
+---
+
+<div class="min-h-screen font-sans font-[Inter]">
+    <!-- header section -->
+    <!-- <header class=" bg-white sticky top-0 z-50">
+        <div class="px-4 py-4 md:px-6">
+            <div class="flex items-center justify-between mb-4">
+                <h1 class="text-[#044A25]">Sweet T Bakery</h1>
+                <span data-slot="avatar" class="relative flex size-10 shrink-0 overflow-hidden rounded-full h-10 w-10">
+                    <span data-slot="avatar-fallback" class="flex size-full items-center justify-center rounded-full bg-[#044A25] text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user h-5 w-5" aria-hidden="true">
+                            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </span>
+                </span>
+            </div>
+            <nav class="flex items-center justify-between gap-4">
+                <div class="flex gap-2 overflow-x-auto">
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors bg-[#044A25] text-white">Orders</button>
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Custom Requests</button>
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Sales</button>
+                </div>
+                <button class="bg-[#d4596b] text-white px-4 py-2 rounded-full flex items-center gap-2 whitespace-nowrap hover:bg-[#c14a5d] transition-colors shrink-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-5 w-5" aria-hidden="true">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5v14"></path>
+                    </svg>
+                    <span>Add Order</span>
+                </button>
+            </nav>
+        </div>
+    </header> -->
+    <!-- orders section -->
+    <div class="min-h-screen bg-[#f9fafb]">
+        <div class="px-4 py-6 md:px-6 max-w-6xl mx-auto">
+            <div class="mb-4">
+                <h2 class="mb-1">Orders</h2>
+                <p class="text-gray-600">12 active orders</p>
+            </div>
+            <div class="mb-4">
+                <div role="search" class="relative flex items-center w-full bg-white rounded-lg transition-all border border-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search absolute left-3 h-5 w-5 text-gray-500 pointer-events-none" aria-hidden="true">
+                        <path d="m21 21-4.34-4.34"></path>
+                        <circle cx="11" cy="11" r="8"></circle>
+                    </svg>
+                    <input type="text" placeholder="Search orders by customer name, product, or order number..." aria-label="Search orders by customer name, product, or order number" class="w-full h-12 pl-10 pr-10 text-base bg-transparent border-none outline-none placeholder:text-gray-400" value=""></div>
+                </div>
+                <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-[#044A25] text-white">All</button>
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Pending</button><button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Ready for Pickup</button>
+                    <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Complete</button></div>
+            <div class="space-y-3">
+                {orders.map((order) => ( 
+                    <CustomOrder name={order.name}, order={order.order}, date={order.date}, due={order.due}, status={order.status}/>
+                ))} 
+            </div>

@@ -1,17 +1,17 @@
 ---
 const {name = "default",body="default", url="default", order="left"} = Astro.props;
 ---
-<div class="font-[Bricolage_Grotesque] flex flex-col justify-evenly w-[552px] ">
+<div class="font-[Bricolage_Grotesque] flex flex-col justify-evenly w-full md:w-[552px] gap-4">
     {order == "left" ?
-        <h2 class="flex justify-start font-bold text-[50px]">{name}</h2>
-            <p class="text-left font-medium text-[26px]">{body}</p>
+        <h2 class="flex justify-start font-bold text-[28px] sm:text-[32px] md:text-[44px] lg:text-[50px]">{name}</h2>
+            <p class="text-left font-medium text-[16px] sm:text-[18px] md:text-[22px] lg:text-[26]">{body}</p>
         <div class="flex justify-start">
-            <button onclick={url} class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px]">Shop all treats</button>
+            <a href="/cakes" class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px] text-center"> Shop all treats </a>
         </div> :
-        <h2 class="flex justify-end font-bold text-[50px]">{name}</h2>
-            <p class="text-right font-medium text-[26px]">{body}</p>
+        <h2 class="flex justify-end font-bold text-[28px] sm:text-[32px] md:text-[44px] lg:text-[50px]">{name}</h2>
+            <p class="text-right font-medium text-[16px] sm:text-[18px] md:text-[22px] lg:text-[26]">{body}</p>
         <div class="flex justify-end">
-            <button onclick={url} class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px]">Shop all treats</button>
+            <a href="/cakes" class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px] text-center"> Shop all treats </a>
         </div>
 
     }
