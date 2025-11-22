@@ -2,10 +2,13 @@
 import AdminLayout from "../../layouts/adminLayout.astro"
 import CustomOrders from "../../components/customOrdersPage.astro"
 import AdminNavbar from "../../components/AdminNavbar.astro"
+
+const res = await fetch("http://localhost:8000/api/orders/getAllOrders");
+const orders = await res.json();
 ---
 <AdminLayout>
     <AdminNavbar/>
-    <CustomOrders/>
+    <CustomOrders orders={orders}/>
 </AdminLayout>
 
 <style>

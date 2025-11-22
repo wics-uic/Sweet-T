@@ -1,6 +1,9 @@
 ---
-import CustomOrder from "./customOrderItem.astro"
-import orders from "./product-data/orders.ts";
+// import CustomOrder from "./customOrderItem.astro"
+// import orders from "./product-data/orders.ts";
+
+const { orders } = Astro.props;
+import CustomOrder from "./customOrderItem.astro";
 ---
 
 <div class="min-h-screen font-sans font-[Inter]">
@@ -54,7 +57,40 @@ import orders from "./product-data/orders.ts";
                     <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Pending</button><button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Ready for Pickup</button>
                     <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Complete</button></div>
             <div class="space-y-3">
-                {orders.map((order) => ( 
-                    <CustomOrder name={order.name}, order={order.order}, date={order.date}, due={order.due}, status={order.status}/>
-                ))} 
+                {orders.map((order: any) => { 
+                    const today = new Date();
+                    const tomorrow = new Date();
+                    tomorrow.setDate(today.getDate() + 1);
+                    const objectDate = new Date(order.createdAt);
+
+                    const isSameDay = (a: Date, b: Date) =>
+                        a.getDate() === b.getDate() &&
+                        a.getMonth() === b.getMonth() &&
+                        a.getFullYear() === b.getFullYear();
+
+                    // let dueFlag = "";
+                    // let dueFlag = order.pickupTime || "NO PICKUP TIME";
+                    // if (isSameDay(objectDate, today)) {
+                    let dueFlag = "Due today";
+                    // } else if (isSameDay(objectDate, tomorrow)) {
+                    // dueFlag = "Due tomorrow";
+                    // } 
+                    
+                    return ( 
+                    
+                    <CustomOrder 
+                    name={order.name}
+                    order={order.ProductsOrdered ? JSON.stringify(order.ProductsOrdered) : ""} 
+                    date={order.createdAt}
+                    due={dueFlag}
+                    status={order.Order_complete ? "Ready for Pickup" : "Pending"} />
+
+                    // <CustomOrder name={order.name}
+                    // order={order.order}
+                    // date={order.date} due={order.due}
+                    // status={order.status}
+                    // />
+                
+                );})
+                } 
             </div>
