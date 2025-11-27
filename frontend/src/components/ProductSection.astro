@@ -1,6 +1,7 @@
 ---
-import Product from "./product.astro";
-
+import ProductItem from "./product.astro";
+import Products from "./product-data/products.ts";
+import type {Product} from "./product-data/products.ts";
 import cakes from "/src/assets/products-cake.png";
 import cupcakes from "/src/assets/products-cupcake.png";
 import pastelitos from "/src/assets/products-pastelitos.png";
@@ -11,52 +12,42 @@ import flan from "/src/assets/products-flan.png";
 <section class="products-section">
   <h1>What celebration are we creating together?</h1>
 
-  <div class="grid">
-	<div class = "product">
-		<Product
-		item_name="Cakes"
-		price="$65"
-		url="/src/assets/products-cake.png"
-		ready={true}
-		/>
-	</div>
-	<div class = "product">
-		<Product
-		item_name="Cupcakes"
-		price="$42/dozen"
-		url="/src/assets/products-cupcake.png"
-		ready={true}
-		/>
-	</div>
-	<div class="product">	
-		<Product
-		item_name="Flan"
-		price="$30/dozen"
-		url="/src/assets/products-flan.png"
-		ready={true}
-		/>
-	</div>
-	<div class = "product">
-		<Product
-		item_name="Pastelitos"
-		price="$30/dozen"
-		url="/src/assets/products-pastelitos.png"
-		ready={true}
-		/>
-	</div>
-	<div class = "product">
-		<Product
-		item_name="Cookies"
-		price="$30/dozen"
-		url="/src/assets/products-cookie.png"
-		ready={true}
-		/>
-	</div>
+  <div class="grid grid-top">
+    {Products.slice(0, 2).map((product, i) => (
+      <div class="product" id={`product-${i}`}>
+        <ProductItem
+          item_name={product.name}
+          price={product.price}
+          url={product.imagePath}
+          ready={product.ready}
+          link={product.link}
+        />
+      </div>
+    ))}
+  </div>
+
+  <div class="grid grid-bottom">
+    {Products.slice(2).map((product, i) => (
+      <div class="product" id={`product-${i + 2}`}>
+        <ProductItem
+          item_name={product.name}
+          price={product.price}
+          url={product.imagePath}
+          ready={product.ready}
+          link={product.link}
+        />
+      </div>
+    ))}
   </div>
 </section>
 
+
 <style>
-	.products-section {
+:root {
+  --card-w: clamp(240px, 28vw, 320px);
+}
+
+.products-section {
   padding: 2rem;
 }
 
@@ -67,99 +58,37 @@ import flan from "/src/assets/products-flan.png";
   margin-bottom: 2rem;
 }
 
-/* Tunable card width */
-:root {
-  --card-w: clamp(240px, 42vw, 340px);
-}
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, var(--card-w))); /* 2 centered columns */
-  justify-content: center;   /* centers the two columns as a block */
-  column-gap: 0;             /* no gap between items */
-  row-gap: 0;
-  margin: 0 auto 2rem;       /* centers the grid in the section */
-  max-width: calc(var(--card-w) * 2); /* keeps sides from touching screen edges */
+  margin: 0 auto 2rem;
+  width: 100%;
+  max-width: calc(var(--card-w) * 3); 
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+}
+
+
+.grid-top {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
+.grid-bottom {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .product {
-  width: var(--card-w);       /* shrinks the cards */
+  width: 100%; 
 }
 
-/* Mobile: single, centered column */
-@media (max-width: 480px) {
-  :root { --card-w: min(92vw, 340px); }  /* gentle side margins on small screens */
-  .grid {
+@media (max-width: 768px) {
+  .grid-top,
+  .grid-bottom {
     grid-template-columns: 1fr;
-    max-width: var(--card-w);
-  }
-  .product {
-    width: 100%;
+    max-width: min(92vw, 340px); 
   }
 }
 
 
 </style>
-
-<!-- <style>
-  .products-section {
-    padding: 2rem;
-  }
-
-  .products-section h1 {
-    font-size: 2.5rem;
-    font-weight: 550;
-    color: #034a25;
-    margin-bottom: 2rem;
-  }
-
-  .grid {
-	display: grid;
-	gap: 1.5rem;
-	grid-template-columns: repeat(3, minmax(300px, 1fr));
-	margin-bottom: 2rem;
-	justify-items: center;
-  }
-
-  /* Horizontal scroll for mobile */
-  @media (max-width: 480px) {
-    .grid {
-		
-		display: flex;
-		flex-direction: row;
-		overflow-x: auto;
-		gap: 0px;
-		scroll-snap-type: x mandatory;
-		-webkit-overflow-scrolling: touch;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-
-    .grid::-webkit-scrollbar {
-    	display: none;
-    }
-
-    .grid {
-    	-ms-overflow-style: none;
-    	scrollbar-width: none;
-    }
-
-    .product {
-		flex: 0 0 auto;
-		scroll-snap-align: start;
-
-    }
-
-    .product-image {
-		max-height: 50vh;
-		border-radius: 0px;
-    }
-
-    .product-name {
-		font-size: 3rem;
-    }
-
-    .product-price {
-		font-size: 0.85rem;
-    }
-  }
-</style> -->

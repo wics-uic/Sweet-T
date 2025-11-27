@@ -3,11 +3,11 @@ const {pic="src/assets/testimonial-1.jpg"} = Astro.props
 ---
 
 
-<div class="flex flex-row pt-10 w-[552px] h-[313px]">
-    <div class="flex pb-[45px] pt-[9px] pl-[9px] pr-[9px] bg-white -rotate-15 w-[260px] h-[255px] mr-[30px] shadow-2xl/25">
-      <img src={pic} class= "w-fit object-cover"/>    
+<div class="flex flex-row ">
+    <div class="min-w-[200px] max-w-[200px] min-h-[220px] max-h-[220px] flex bg-white -rotate-15 shadow-xl">
+      <img src={pic} class= "w-[100%] h-[100%] border-white border-10 min-w-[200px] max-w-[200px] min-h-[200px] max-h-[200px] object-cover"/>    
     </div>
-    <div class="flex pb-[45px] pt-[9px] pl-[9px] pr-[9px] bg-white rotate-15 w-[260px] h-[255px] shadow-2xl/25">
-      <img src={pic} class="w-fit object-cover"/>
+    <div class="min-w-[200px] max-w-[220px] min-h-[200px] max-h-[220px] flex bg-white rotate-15 shadow-xl">
+      <img src={pic} class="w-[100%] h-[100%] border-white border-10 min-w-[200px] max-w-[200px] min-h-[200px] max-h-[200px] object-cover"/>
     </div>
 </div>

@@ -9,14 +9,16 @@ export type Product = {
   name: string;
   imagePath: string;   
   price: string;
+  ready: boolean;
+  link: string;
 };
 
 const team: Product[] = [
-  { name: 'Cake', imagePath: cake, price: "65" },
-  { name: 'Cookie', imagePath: cookie, price: "42/dozen" },
-  { name: 'Cupcake', imagePath: cupcake, price: "36/dozen" },
-  { name: 'Flan', imagePath: flan, price: "36/dozen" },
-  { name: 'Pastelitos', imagePath: pastelitos, price: "30/dozen" },
+  { name: 'Cake', imagePath: cake, price: "65", ready: true, link:"cakes" },
+  { name: 'Cookies', imagePath: cookie, price: "42/dozen", ready: false, link:"cookies"},
+  { name: 'Cupcake', imagePath: cupcake, price: "36/dozen", ready: true, link:"cupcakes" },
+  { name: 'Flan', imagePath: flan, price: "36/dozen", ready: false, link:"flans" },
+  { name: 'Pastelitos', imagePath: pastelitos, price: "30/dozen", ready: false, link:"pastelitos" },
   
 ];
 
