@@ -85,14 +85,19 @@ const accordionData = [
   ))}
 </div>
 
-<script type="module">
-  document.querySelectorAll('.accordion-header').forEach(header => {
-    header.addEventListener('click', () => {
-      const item = header.parentElement;
-      const arrow = header.querySelector('.arrow');
-
-      item.classList.toggle('active');
-      arrow.classList.toggle('open');
+<script>
+  if (typeof window !== 'undefined') {
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.accordion-header').forEach((header) => {
+        header.addEventListener('click', () => {
+          const item = header.parentElement;
+          const arrow = header.querySelector('.arrow');
+          item.classList.toggle('active');
+          arrow.classList.toggle('open');
+        });
+      });
     });
-  });
+  }
 </script>
+
+
