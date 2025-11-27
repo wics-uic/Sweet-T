@@ -37,7 +37,7 @@ const calculateSubtotal = () => {
 };
 
 const calculateTax = () => {
-  return 5.00; // Fixed tax for now
+  return 5.00;
 };
 
 const calculateTotal = () => {
@@ -49,24 +49,12 @@ const calculateTotalItems = () => {
 };
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Cart - Sweet T</title>
-  </head>
   <Layout>
     <div class="cart-page">
       <h1 class="page-title">Cart</h1>
       
       <div class="cart-container">
-        <!-- Left Side - Cart Items -->
         <div class="cart-section">
-          <div class="section-header">
-            <h2>My Cart</h2>
-          </div>
           
           <div class="cart-items" id="cartItems">
             {cartItems.map((item) => (
@@ -96,7 +84,6 @@ const calculateTotalItems = () => {
           </div>
         </div>
 
-        <!-- Right Side - Summary -->
         <div class="summary-section">
           <div class="section-header">
             <h2>Summary</h2>
@@ -126,11 +113,10 @@ const calculateTotalItems = () => {
       </div>
     </div>
   </Layout>
-</html>
 
 <style>
   .cart-page {
-    background-color: #f5e6d3;
+    /* background-color: #f5e6d3; */
     min-height: 100vh;
     padding: 40px 60px;
   }
@@ -151,9 +137,9 @@ const calculateTotalItems = () => {
 
   /* Left Section - Cart Items */
   .cart-section {
-    background-color: #e8dcc4;
+    /* background-color: #e8dcc4; */
     border-radius: 8px;
-    padding: 30px;
+    /* padding: 30px; */
   }
 
   .section-header {
@@ -271,9 +257,9 @@ const calculateTotalItems = () => {
 
   /* Right Section - Summary */
   .summary-section {
-    background-color: #e8dcc4;
+    /* background-color: #e8dcc4; */
     border-radius: 8px;
-    padding: 30px;
+    /* padding: 30px; */
     height: fit-content;
     position: sticky;
     top: 20px;
