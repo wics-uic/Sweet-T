@@ -27,7 +27,7 @@ let randomTests = shuffledTests.slice(0, 3)
 <div class="flex flex-col border  border-[#D4596B] rounded-[32px] bg-[#F0CAC9] items-center gap-[32px] w-full max-w-[1200px] mx-auto pt-[40px] pb-[40px] p-6 md:p-[12px] lg:px-[24px]">
     <!--i had no idea that the index argument was a thing, this is magic -->
     {randomTests.map((test, i) => ( 
-        <TestimonialItem name={test.name}, body={test.message}, pic="src/assets/testimonial-1.jpg", order={i % 2 == 0 ? "right" : "left"}/>
+        <TestimonialItem name={test.name}, body={test.message}, pic={test.picture}, order={i % 2 == 0 ? "right" : "left"}/>
     ))}
     <!-- 
     <TestimonialItem name="Josh P." body="My mom cried. It tasted just like her neighborhood bakery in Little Italy!" pic="src/assets/testimonial-1.jpg", order="right"/>
