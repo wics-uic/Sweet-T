@@ -1,6 +1,7 @@
 ---
 import CustomOrder from "./customOrderItem.astro"
-import orders from "./product-data/sales_calculations.ts";
+import type { Order } from "./product-data/sales_calculations.ts";
+import Orders from "./product-data/custom_orders.ts";
 ---
 
 <div class="min-h-screen font-sans font-[Inter]">
@@ -54,7 +55,7 @@ import orders from "./product-data/sales_calculations.ts";
                     <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Pending</button><button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Ready for Pickup</button>
                     <button class="px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]">Complete</button></div>
             <div class="space-y-3">
-                {orders.map((order) => ( 
-                    <CustomOrder name={order.name}, order={order.order}, date={order.date}, due={order.due}, status={order.status}/>
+                {Orders.map((orderItem) => ( 
+                    <CustomOrder key={orderItem.id} name={orderItem.name} order={orderItem.order} date={orderItem.date} due={orderItem.due} status={orderItem.status}/>
                 ))} 
             </div>
