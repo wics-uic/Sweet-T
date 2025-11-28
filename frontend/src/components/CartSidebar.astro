@@ -190,7 +190,7 @@ import '../styles/cartSidebar.css';
             total: (realPrice * item.quantity),
           };
         });
-        
+
         // Clear and Render 
         cartContent.replaceChildren(...processedProducts.map(createProduct));
       } catch (error) {
@@ -204,6 +204,21 @@ import '../styles/cartSidebar.css';
         await fetch(`${API_BASE_URL}/delete/${productId}`, {
           method: "DELETE",
           credentials: "include" // include cookies;
+        });
+        fetchAndRenderCart();
+      } catch(error) {
+        console.error(error);
+      }
+    }
+    window.updateCartItem = async function(productId, action) {
+      try {
+        await fetch(`${API_BASE_URL}/update/${productId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include", // include cookies
+          body: JSON.stringify({ action }) // 'increase' or 'deacrease'
         });
         fetchAndRenderCart();
       } catch(error) {
@@ -226,9 +241,9 @@ import '../styles/cartSidebar.css';
         <div class="bottom-bar">
           <div class="left-group">
             <div class="quantity-bar">
-              <button>-</button>
+              <button onclick="window.updateCartItem('${item._id}', 'decrease')">-</button>
               <p>${item.quantity}</p>
-              <button>+</button>
+              <button onclick="window.updateCartItem('${item._id}', 'increase')">+</button>
             </div>
             <button class="trash" onclick="window.deleteCartItem('${item._id}')">
                 <img src="src/assets/trash.svg" alt="Remove">

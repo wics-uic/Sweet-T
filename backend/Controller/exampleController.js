@@ -112,3 +112,39 @@ export const clearCart = async(req, res) => {
         res.status(500).json({error: "Internal Server error."});
     }
 }
+
+/**
+ * PUT API: Update product quantity (-/+)
+ */
+export const updateProductQuantity = async(req, res) => {
+    try {
+        const userId = req.userId;
+        const productId = req.params.id;
+        const { action } = req.body;
+
+        const cart = await Cart.findOne({ userId });
+        if (!cart) {    
+            return res.status(404).json({ message: "Cart not found" }); 
+        }
+        const product = cart.products.id(productId);
+        if (!product) {
+            return res.status(404).json({ message: "Product not found in cart" });
+        }
+
+        if (action === "increase") {
+            product.quantity += 1;
+        } else if (action === "decrease") {
+            if (product.quantity > 1) {
+                product.quantity -= 1;
+            } else {
+                return res.status(200).json(cart);
+            }
+        }
+
+        await cart.save();
+        res.status(200).json(cart);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server error." });
+    }
+}
