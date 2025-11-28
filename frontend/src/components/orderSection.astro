@@ -1,6 +1,7 @@
 ---
 const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
 import OrderAccordion from "./OrderAccordion.astro";
+const isCustom = item_name === "Cake" || item_name === "Cupcake"
 ---
 
 <section class="relative order-section z-[999] mb-[200px]">
@@ -19,23 +20,24 @@ import OrderAccordion from "./OrderAccordion.astro";
 
   <!-- right -->
   <div class="checkout-container">
-    <h2>Ready made & custom {item_name}</h2>
+    <h2>{item_name == "Cake" || item_name == "Cupcake" ? item_name + " and Custom " + item_name + "s" : item_name}</h2>
     <!--tabs -->
     <div class="tabs">
       <button class="tab active" onclick="switchTab(event, 'ready')">Ready made</button>
-      <button class="tab" onclick="switchTab(event, 'custom')">Custom</button>
+      {isCustom && <button class="tab" onclick="switchTab(event, 'custom')">Custom</button>}
     </div>
     <!--ready tab -->
     <div id="ready" class="tab-content active">
-      <div class="sizes">
+      {isCustom && <div class="sizes">
         <button class="size-button" data-size="5" >5 inches</button>
         <button class="size-button" data-size="8" >8 inches</button>
         <button class="size-button" data-size="10" >10 inches</button>
-      </div>
+      </div>}
 
-      <p class="price">$65</p>
+      <p class="price">${price}</p>
       <p class="serving-info">Feeds around 10–12 people.</p>
 
+      {isCustom && 
       <div class= "flavor">
         <p>Flavor</p>
         <div class="radioBtns">
@@ -44,14 +46,15 @@ import OrderAccordion from "./OrderAccordion.astro";
           <label><input type="radio" name="ready-flavor" value="carrot"> Carrot</label>
           <label><input type="radio" name="ready-flavor" value="red velvet"> Red Velvet</label>
         </div>
-      </div>
+      </div> }
 
+      {isCustom && 
       <div id="frosting" class="frosting">
         <p>Frosting</p>
         <p class = "autoFrost">We’ll pair this with a <span id="auto-frosting">vanilla buttercream</span> frosting.</p>
-      </div>
+      </div>}
 
-      <p>Write a message for the cake</p>
+      <p>Write a message for the {item_name === "Cupcake" ? item_name.toLowerCase() + "s" : item_name.toLowerCase() }</p>
       <textarea id="messageBoxReady" class="messageBox" placeholder="Type your message here..."></textarea>
 
       <div class="rush">
@@ -65,13 +68,13 @@ import OrderAccordion from "./OrderAccordion.astro";
       
       <button class="submit-request">Add to bag</button>
 
-      <OrderAccordion/>
+      {/* <OrderAccordion/> */}
 
 
     </div>
 
  <!--custom tab -->
-<div id="custom" class="tab-content">
+{ isCustom && <div id="custom" class="tab-content">
   <!-- Customer Information Section -->
   <div class="customer-info">
     <h3>Customer Information</h3>
@@ -194,10 +197,12 @@ import OrderAccordion from "./OrderAccordion.astro";
 
   <button class="submit-request">Submit Request</button>
 
-  <div class="accordion-placeholder">
+  
+</div> }
+
+<div class="accordion-placeholder">
     <OrderAccordion/>
   </div>
-</div>
 
 </section>
 
@@ -328,7 +333,7 @@ import OrderAccordion from "./OrderAccordion.astro";
     flex-direction: column;
     gap: 20px;
     justify-content: flex-start;
-    height: 80vh;
+    // height: 80vh;
     min-height: auto;
   }
   .checkout-container h2 {

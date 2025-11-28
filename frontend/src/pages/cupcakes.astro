@@ -1,15 +1,16 @@
 ---
-import NavBar from "../components/navbar.astro"
-import Product from "../components/product.astro"
 import ProductLayout from "../layouts/productLayout.astro"
 import OrderSection from "../components/orderSection.astro";
+import Product from "../components/product-data/products.ts";
+
+const cupcake = Product.at(2);
 ---
 
 <ProductLayout>
   <OrderSection
-    item_name="cupcakes"
-    price="45"
-    url="src/assets/products-cupcake.png"
+    item_name={cupcake?.name}
+    price={cupcake?.price}
+    url={cupcake?.imagePath}
   />
 </ProductLayout>
 

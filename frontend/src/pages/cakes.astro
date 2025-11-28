@@ -1,31 +1,19 @@
 ---
-import NavBar from "../components/navbar.astro";
-import Product from "../components/product.astro";
 import ProductLayout from "../layouts/productLayout.astro";
 import OrderSection from "../components/orderSection.astro";
+import Product from "../components/product-data/products.ts";
 
-// const {item_name="Item Name", price="$0", url="src/assets/products-cake.png"} = Astro.props;
+const cake = Product.at(0);
 ---
+
 
 <ProductLayout>
   <OrderSection
-    item_name="Cake"
-    price="45"
-    url="src/assets/products-cake.png"
+    item_name={cake?.name}
+    price={cake?.price}
+    url={cake?.imagePath}
   />
 </ProductLayout>
-
-<!-- <ProductLayout>
-  <div class="w-full flex flex-col items-center">
-    <h1 class="header">Shop our Cakes!</h1>
-    <Product
-      url="src/assets/products-cake.png"
-      item_name="cakes"
-      price="$20/dozen"
-    />
-  </div>
-  <NavBar />
-</ProductLayout> -->
 
 <style>
   .header {

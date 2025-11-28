@@ -1,15 +1,16 @@
 ---
-import NavBar from "../components/navbar.astro"
-import Product from "../components/product.astro"
 import ProductLayout from "../layouts/productLayout.astro"
 import OrderSection from "../components/orderSection.astro";
+import Product from "../components/product-data/products.ts";
+
+const pastelitos = Product.at(4);
 ---
 
 <ProductLayout>
   <OrderSection
-    item_name="pastelitos"
-    price="45"
-    url="src/assets/products-pastelitos.png"
+    item_name={pastelitos?.name}
+    price={pastelitos?.price}
+    url={pastelitos?.imagePath}
   />
 </ProductLayout>
 
@@ -21,15 +22,3 @@ import OrderSection from "../components/orderSection.astro";
 			font-size: 3rem;
 		}
 	</style>
-
-<!-- <html lang="en">
-	<ProductLayout>
-		<NavBar />
-		 <div class="w-full flex flex-col items-center">
-		<h1 class = "header"> Shop our Cookies!</h1>
-		<Product url="src/assets/products-cookie.png" item_name="cookies" price="$20/dozen"/>
-	</div>
-	</ProductLayout>
-
-	
-</html> -->
