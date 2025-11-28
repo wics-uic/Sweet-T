@@ -24,52 +24,45 @@ import '../styles/cartSidebar.css';
 // import { createHeadAndContent } from "astro/runtime/server/index.js";
 
   const API_BASE_URL = "http://localhost:8000/api/cart";
+  
   // const USER_ID = "691b38d0e4dcfa41c31b48fb"; // hard-code user for now 
-  const USER_ID = "691b3911e4dcfa41c31b490e"; // User2
+  // const USER_ID = "691b3911e4dcfa41c31b490e"; // User2
 
   // This should ACTUALLY use the Product Model from the DB.
   // For now, I hard-coded the product catalog here for visual purposes.
   const PRODUCT_CATALOG = {
     "Cupcake": { 
-      price: 2.00, 
-      filepath: "/login-background.jpg", // Defaults if not in DB
-      flavor: "Chocolate", 
-      frosting: "Vanilla" 
+      // price: 2.00, 
+      filepath: "/products-cupcake.png", // Defaults if not in DB
+      // flavor: "Chocolate", 
+      // frosting: "Vanilla" 
     },
     "Cake": { 
-      price: 15.00, 
+      // price: 15.00, 
       filepath: "/landing-cake.png", 
-      flavor: "Vanilla", 
-      frosting: "Vanilla" 
+      // flavor: "Vanilla", 
+      // frosting: "Vanilla" 
     },
     "Pastelito": { 
-      price: 6.00, 
-      filepath: "/testimonial-3.jpg", 
-      flavor: "Chocolate", 
-      frosting: "Chocolate" 
+      // price: 6.00, 
+      filepath: "/products-pastelitos.png", 
+      // flavor: "Chocolate", 
+      // frosting: "Chocolate" 
     },
     "Cookie": {
-      price: 1.50,
-      filepath: "/login-background.jpg",
-      flavor: "Strawberry",
-      frosting: "Strawberry"
+      // price: 1.50,
+      filepath: "/products-cookie.png",
+      // flavor: "Strawberry",
+      // frosting: "Strawberry"
     },
     "Flan": {
-      price: 4.00,
-      filepath: "/landing-cake.png",
-      flavor: "Oatmeal Raisin",
-      frosting: "None"
+      // price: 4.00,
+      filepath: "/products-flan.png",
+      // flavor: "Oatmeal Raisin",
+      // frosting: "None"
     }
   };
-  // EXAMPLE: no catalog (future implementation)
-  // const processedProducts = cartData.products.map(item => {
-  //   return {
-  //       name: item.productDetails.name, // Coming from DB
-  //       filepath: item.productDetails.filepath, // Coming from DB
-  //       price: item.productDetails.price, // Coming from DB
-  //       total: (item.productDetails.price * item.quantity)
-  //   };
-  // });
+
 
   // This script handles CLOSING the cart.
   // The logic for OPENING the cart is in the page that uses this component.
@@ -79,6 +72,22 @@ import '../styles/cartSidebar.css';
     const overlay = document.getElementById("cart-overlay");
     // add content (temporary)
     const cartContent = document.querySelector(".cart-content");
+
+
+    // PARSE the customization String 
+    function parseCustomizationString(customString) {
+      if (!customString) return{};
+      const details = {};
+      const parts = customString.split('|');
+      parts.forEach(part => {
+        const [key, ...valueParts] = part.split(': ');
+        const value = valueParts.join(': '); // in case value has ':'
+        if (key && value) {
+          details[key.trim()] = value.trim();
+        }
+      });
+      return details;
+    }
 
     // NO SCROLL (disables scroll for the entire window, not including the sidebar)
     const observer = new MutationObserver((mutations) => {
@@ -111,6 +120,97 @@ import '../styles/cartSidebar.css';
 
     // API Implementation HERE 
 
+       
+    async function fetchAndRenderCart() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/fetch`, {
+          method: "GET", 
+          credentials: "include" // include cookies
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch");
+        const cartData = await response.json();
+
+        // Handle in the case of an empty cart safely 
+        const products = (cartData && cartData.products) ? cartData.products : [];
+
+        if (products.length === 0) {
+          cartContent.innerHTML = `<p style="text-align:cetner; padding:20px;">Your bag is empty.</p>`
+          return;
+        }
+        
+        // Merge DB Data with Visual Catalog 
+        const processedProducts = cartData.products.map(item => {
+          const rawName = item.name || "";
+          const normalizedName = rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
+
+          // find details in catalog, or use defaults 
+          const catalogItem = PRODUCT_CATALOG[normalizedName] || PRODUCT_CATALOG[rawName] || {
+            // price: 0.00,
+            filepath: "/testimonial-3.png",
+            flavor: "Unknown",
+            frosting: "Unknown"
+          };
+
+          const userChoices = parseCustomizationString(item.customizations);
+          const finalFlavor = userChoices["Flavor"] || catalogItem.flavor;
+          const finalFrosting = userChoices["Frosting"] || catalogItem.frosting;
+          // const displayDetails = Object.entries(userChoices)
+          //   .filter(([key]) => key !== "Flavor" && key !== "Frosting")
+          //   .map(([key, value]) => `${key}: ${value}`)
+          //   .join(' | ');
+
+          const realPrice = item.price || 0;
+
+          // ------------------------------
+          const detailsToShow = [];
+
+          if (userChoices["Size"]) {
+            detailsToShow.push(`Size: ${userChoices["Size"]}`);
+          }
+          if (userChoices["Rush"]) {
+            detailsToShow.push(`Rush: ${userChoices["Rush"]}`);
+          }
+          if (userChoices["Message"]) {
+            // Your DB already saves it as "Message text", so we just display it
+            detailsToShow.push(`Message: ${userChoices["Message"]}`);
+          }
+          const displayDetails = detailsToShow.join(' | ');
+          // ------------------------------
+         
+          return {
+            _id: item._id, // mongoDB id 
+            name: normalizedName,
+            quantity: item.quantity,
+            // customization: item.customizations,
+            filepath: catalogItem.filepath, // calculated fields 
+            flavor: finalFlavor,
+            frosting: finalFrosting,
+            customizationDisplay: displayDetails,
+            total: (realPrice * item.quantity),
+          };
+        });
+        
+        // Clear and Render 
+        cartContent.replaceChildren(...processedProducts.map(createProduct));
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+        cartContent.innerHTML = '<p style="text-align:center; padding:20px;">Error loading cart.</p>';
+      }
+    }
+    window.deleteCartItem = async function(productId) {
+      if (!confirm("Remove this item?")) return;
+      try {
+        await fetch(`${API_BASE_URL}/delete/${productId}`, {
+          method: "DELETE",
+          credentials: "include" // include cookies;
+        });
+        fetchAndRenderCart();
+      } catch(error) {
+        console.error(error);
+      }
+    }
+
     // Helper function to build product DOM 
     function createProduct(item) {
       const product = document.createElement("div");
@@ -122,7 +222,7 @@ import '../styles/cartSidebar.css';
         <h3 class="product-name">${item.name}</h3>
         <p class="flavor">${item.flavor}</p>
         <p class="frosting">${item.frosting}</p>
-        <p>${item.customization}</p>
+        <p>${item.customizationDisplay}</p>
         <div class="bottom-bar">
           <div class="left-group">
             <div class="quantity-bar">
@@ -130,7 +230,9 @@ import '../styles/cartSidebar.css';
               <p>${item.quantity}</p>
               <button>+</button>
             </div>
-            <button class="trash"><img src="src/assets/trash.svg" alt="Remove"></button>
+            <button class="trash" onclick="window.deleteCartItem('${item._id}')">
+                <img src="src/assets/trash.svg" alt="Remove">
+            </button>
           </div>
           <p class="total">$${item.total.toFixed(2)}</p>
         </div>
@@ -138,76 +240,10 @@ import '../styles/cartSidebar.css';
       `;
       return product;
     }
-    async function deleteItem(productId) {
-      if (!confirm("Remove this item?")) return;
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/deleteProduct/${productId}`, {
-          method: "DELETE",
-        });
-        if (!response.ok) {
-          throw new Error("Failed to delete item from cart");
-        }
-        // Refresh cart display
-        fetchAndRenderCart();
-      } catch (error) {
-        console.error("Error deleting item:", error);
-      }
-    }
-    async function fetchAndRenderCart() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/fetch/${USER_ID}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch cart data");
-        }
-        const cartData = await response.json();
-
-        // Merge DB Data with Visual Catalog 
-        const processedProducts = cartData.products.map(item => {
-          // find details in catalog, or use defaults 
-          const catalogItem = PRODUCT_CATALOG[item.name] || {
-            price: 0.00,
-            filepath: "/testimonial-3.png",
-            flavor: "Unknown",
-            frosting: "Unknown"
-          };
-
-          return {
-            _id: item._id, // mongoDB id 
-            name: item.name,
-            quantity: item.quantity,
-            customization: item.customizations,
-            // visual/calculated fields
-            filepath: catalogItem.filepath,
-            flavor: catalogItem.flavor,
-            frosting: catalogItem.frosting,
-            total: (catalogItem.price * item.quantity),
-          };
-        });
-        // render 
-        cartContent.replaceChildren(...processedProducts.map(createProduct));
-        // // Clear existing content
-        // cartContent.replaceChildren();
-
-        // // Render each product
-        // data.forEach(item => {
-        //   const productElement = createProduct(item);
-          
-        //   // Add delete functionality
-        //   const trashButton = productElement.querySelector(".trash");
-        //   trashButton.addEventListener("click", () => deleteItem(item.id));
-
-        //   cartContent.appendChild(productElement);
-        // });
-
-      } catch (error) {
-        console.error("Error fetching cart data:", error);
-      }
-    }
 
     // Fetch and render the cart from API 
     fetchAndRenderCart();
-
+    document.addEventListener('cartUpdated', fetchAndRenderCart);
   }); 
 </script>
 

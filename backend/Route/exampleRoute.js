@@ -2,20 +2,17 @@
 import express from "express";
 
 import {
-    fetch,
-    fetchCartByUserId,
-    addProductToCart, 
+    fetchUserCart,
+    addProductToCart,
     deleteProduct,
-    deleteCart,
+    clearCart,
 } from "../Controller/exampleController.js";
 
 const route = express.Router();
 
-route.get("/fetch", fetch); // grab payload from "add to bag" button
-route.get("/fetch/:id", fetchCartByUserId);
-route.post("/create", addProductToCart);
-route.delete("/deleteProduct/:id", deleteProduct);
-route.delete("/deleteCart/:id", deleteCart);
-
+route.get("/fetch", fetchUserCart);
+route.post("/add", addProductToCart);
+route.delete("/delete/:id", deleteProduct);
+route.delete("/clear", clearCart);
 
 export default route;

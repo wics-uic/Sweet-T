@@ -23,7 +23,7 @@ dotenv.config();
 // ADDED
 app.use(express.json());
 
-app.use('/api/cart/', exampleRoutes);
+// app.use('/api/cart/', exampleRoutes); // locate to Line 114
 
 
 const PORT = process.env.PORT || 8000;
@@ -87,7 +87,8 @@ const userCookieMiddleware = (req, res, next) => {
         res.cookie('userId', userId, {
             maxAge: FULL_TIME,
             httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production',
+            // secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: 'lax'
         });
         
@@ -110,6 +111,7 @@ const userCookieMiddleware = (req, res, next) => {
 
 // Apply cookie middleware to all routes
 app.use(userCookieMiddleware);
+app.use('/api/cart', exampleRoutes); // moved here so we properly use cookies 
 
 // Login Route - ADMIN ONLY
 app.post('/api/login', async (req, res) => {

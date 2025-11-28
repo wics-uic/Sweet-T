@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 
 const cartSchema = new mongoose.Schema({
     userId: {
-        // type:mongoose.Schema.Types.ObjectId,
         type:String,
-        // ref:"User",
         required:true
     },
     products: [{
@@ -21,6 +19,11 @@ const cartSchema = new mongoose.Schema({
         customizations: {
             type:String,
             required:false
+        },
+        price: {
+            type:Number,
+            required:true,
+            default:0
         }
         // Method 2: denormalized 
         // name: String,

@@ -3,15 +3,15 @@
 import Cart from "../Model/exampleModel.js";
 
 /*
-POST API: add product to the cart everytime use presses "add to bag" button
-If cart doesn't exists, create a new cart 
+POST API: Add product to the User's cart 
 */
 export const addProductToCart = async(req, res)=>{
     try {
-        // console.log("Decoded user:", req.user);// implemented later 
-        // const userId = req.user.userId;// for user session ID (userId = verifyToken)
+        const userId = req.userId; // assuming userId is set in req by authentication middleware
+        const { name, quantity, customizations, price } = req.body;
 
-        const { userId,name, quantity, customizations } = req.body;
+        console.log("Debug - UserID:", userId); // Add this to check if it prints!
+        console.log("Debug - Body:", req.body);
 
         // 1. Check if cart exists 
         let cart = await Cart.findOne({ userId });
@@ -20,7 +20,7 @@ export const addProductToCart = async(req, res)=>{
             // 2. Create new Cart 
             cart = new Cart({
                 userId, 
-                products: [{ name, quantity, customizations }]
+                products: [{ name, quantity, customizations, price }]
             });
         } else {
             // 3. Check if product already exists 
@@ -30,7 +30,7 @@ export const addProductToCart = async(req, res)=>{
                 // 4. Update quantity
                 existingProduct.quantity += quantity;
             } else {
-                cart.products.push({name, quantity, customizations});
+                cart.products.push({name, quantity, customizations, price});
             }
         }
         await cart.save();
@@ -39,58 +39,33 @@ export const addProductToCart = async(req, res)=>{
         console.error(error);
         res.status(500).json({error: "Internal Server error."})
     }
-
 }
 
 /*
-GET API: fetch the JSON for the entire Cart (carts) 
+GET API: Fetch the specific User's Cart 
 */ 
-export const fetch = async(req,res)=>{
+export const fetchUserCart = async(req,res)=>{
     try{
-        const cart = await Cart.find({});
-        if (cart.length === 0) {
-            res.status(400).json({message: "product not found"});
+        const userId = req.userId;
+        
+        const cart = await Cart.findOne({ userId });
+
+        if (!cart) {
+            return res.status(200).json({ products: []});
         }
         res.status(200).json(cart);
     }catch(error){
         res.status(500).json({error: "Internal Server error."})
     }
 }
-/*
-GET API: fetch the JSON for a specific User's Cart (using userId) 
-*/ 
-export const fetchCartByUserId = async(req,res) => {
-    try {
-        const cartId  = req.params.id; // Get userId from the URL parameter
-
-        if (!cartId) {
-            return res.status(400).json({ error: "userId is required" });
-        }
-
-        // Find the cart that matches the userId
-        const cart = await Cart.findById(cartId); // deletes by userId value 
-
-        if (!cart) {
-            // This isn't an error, the user just doesn't have a cart yet.
-            // Sending a 404 (Not Found) is appropriate.
-            return res.status(404).json({ message: "Cart not found for this user" });
-        }
-
-        // Send the single cart object back
-        res.status(200).json(cart);
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server error." });
-    }
-}
 
 
 /**
- * DELETE API: delete product in cart given its productId
+ * DELETE API: Delete a specific product from the User's cart 
  */
 export const deleteProduct = async(req, res) => {
     try {
+        const userId = req.userId;
         const productId = req.params.id;
 
         if (!productId) {
@@ -117,16 +92,13 @@ export const deleteProduct = async(req, res) => {
 }
 
 /**
- * DELETE API: delete cart based off of userId (user name)
+ * DELETE API: Clear the entire cart for the current user 
  */
-export const deleteCartByUserId = async(req, res) => {
+export const clearCart = async(req, res) => {
     try {
-        const userId = req.params.id;
+        const userId = req.userId;
 
-        if (!userId) {
-            return res.status(400).json({error: "userId is required"});
-        }
-        
+        // Delete the cart that matches the cookie ID (userId)
         const deletedCart = await Cart.findOneAndDelete({userId}); // deletes by userId value 
 
         if (!deletedCart) {
@@ -134,34 +106,6 @@ export const deleteCartByUserId = async(req, res) => {
         }
 
     res.status(200).json({ message: "Cart deleted successfully", cart: deletedCart });
-  
-    } catch(error) {
-        console.error(error);
-        res.status(500).json({error: "Internal Server error."});
-    }
-}
-
-/**
- * DELETE API: delete cart based off of _id (session)
- * Note: The actual ID will not matter, because as long as its _id (for the session) 
- * it will update the "most recent?" cart
- */
-export const deleteCart = async(req, res) => {
-    try {
-        const id = req.params.id;
-
-        if (!id) {
-            return res.status(400).json({error: "userId is required"});
-        }
-        
-        const deletedCart = await Cart.findByIdAndDelete(id); // deletes by card _id 
-        // const deletedCart = await Cart.findByIdAndDelete({_id:id}); // identical
-        
-        if (!deletedCart) {
-            return res.status(404).json({ message: "Cart not found" });
-        }
-
-        res.status(200).json({ message: "Cart deleted successfully", cart: deletedCart });
   
     } catch(error) {
         console.error(error);
