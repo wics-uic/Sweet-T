@@ -73,7 +73,7 @@ console.log("DUE RECEIVED:", due);
                 const orderId = newBtn.getAttribute('data-order-id');
                 if (!orderId) return;
 
-                if (!confirm("Are you sure you want to mark this order as complete?")) {
+                if (!confirm("Are you sure?")) {
                     return;
                 }
 
