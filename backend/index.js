@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 import exampleRoutes from './Route/exampleRoute.js';
 import checkoutRoutes from './Route/checkoutRoute.js';
+import sweetCategoriesRoutes from "./Route/sweetCategoriesRoute.js";
 
 const app = express();
 
@@ -201,6 +202,7 @@ app.get('/api/test-user', (req, res) => {
 // Call the exampleRoutes API here url: http://localhost:8000/api/{all api's are added here}
 app.use('/api', exampleRoutes);
 app.use('/api/orders', checkoutRoutes);
+app.use('/api', sweetCategoriesRoutes);
 
 // Connect to MongoDB
 mongoose.connect(MONGOURL).then(async () => {

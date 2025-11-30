@@ -7,34 +7,23 @@ import cupcakes from "/src/assets/products-cupcake.png";
 import pastelitos from "/src/assets/products-pastelitos.png";
 import cookies from "/src/assets/products-cookie.png";
 import flan from "/src/assets/products-flan.png";
+
+const res = await fetch("http://localhost:8000/api/get_categories");
+const res_json = await res.json();
+
 ---
 
 <section class="products-section">
   <h1>What celebration are we creating together?</h1>
 
-  <div class="grid grid-top">
-    {Products.slice(0, 2).map((product, i) => (
-      <div class="product" id={`product-${i}`}>
+  <div class="grid">
+    {res_json.map( item => (
+      <div class="product">
         <ProductItem
-          item_name={product.name}
-          price={product.price}
-          url={product.imagePath}
-          ready={product.ready}
-          link={product.link}
-        />
-      </div>
-    ))}
-  </div>
-
-  <div class="grid grid-bottom">
-    {Products.slice(2).map((product, i) => (
-      <div class="product" id={`product-${i + 2}`}>
-        <ProductItem
-          item_name={product.name}
-          price={product.price}
-          url={product.imagePath}
-          ready={product.ready}
-          link={product.link}
+          item_name={item.name}
+          price={item.price_representation}
+          url={item.image_url}
+          ready={true}
         />
       </div>
     ))}
