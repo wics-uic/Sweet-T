@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import NavBar from "../components/navbar.astro";
+import CartSidebar from "../components/CartSidebar.astro";
 ---
 
 <!doctype html>
@@ -19,6 +20,7 @@ import NavBar from "../components/navbar.astro";
     <div class="justify-center flex flex-col align-middle">
         <slot />
     </div>
+    <CartSidebar />
   </body>
 </html>
 

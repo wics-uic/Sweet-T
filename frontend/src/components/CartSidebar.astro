@@ -16,6 +16,15 @@ import '../styles/cartSidebar.css';
       <!-- print the list using api -->
        <!-- for now, we use JS  -->
     </div>
+
+    <!-- ADDED: Footer with Subtotal and Checkout -->
+    <div class="cart-footer">
+      <div class="subtotal-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <a href="/checkout" class="checkout-btn">Go to checkout</a>
+    </div>
   </aside>
 
 </div>
@@ -193,6 +202,14 @@ import '../styles/cartSidebar.css';
 
         // Clear and Render 
         cartContent.replaceChildren(...processedProducts.map(createProduct));
+        
+        // ADDED: Update Subtotal
+        const totalAmount = processedProducts.reduce((acc, item) => acc + item.total, 0);
+        const subtotalEl = document.getElementById("cart-subtotal");
+        if (subtotalEl) {
+          subtotalEl.textContent = `$${totalAmount.toFixed(2)}`;
+        }
+
       } catch (error) {
         console.error("Error fetching cart data:", error);
         cartContent.innerHTML = '<p style="text-align:center; padding:20px;">Error loading cart.</p>';
@@ -262,7 +279,7 @@ import '../styles/cartSidebar.css';
   }); 
 </script>
 
-<!-- <style is:global>
+<style is:global>
   .cart-wrapper {
     /* Hidden by default */
     position: fixed;
@@ -384,7 +401,7 @@ import '../styles/cartSidebar.css';
     flex-grow: 1;
     overflow-y: auto;
     -ms-overflow-style:none;
-    max-height: calc(100% - 80px); /* header stays visible */
+    max-height: calc(100% - 180px); /* header + footer space */
   }
   .cart-content::-webkit-scrollbar {
     display: none;
@@ -455,4 +472,44 @@ import '../styles/cartSidebar.css';
   .trash img {
     width: 35px;
   }
-</style> -->
+
+  /* ADDED: Footer Styles */
+  .cart-footer {
+    padding: 20px 25px;
+    border-top: 1px dashed #ccc; /* dashed line as per image */
+    background-color: #F4EDE6;
+    /* position: absolute; */
+    bottom: 0;
+    width: 100%;
+  }
+
+  .subtotal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    color: black;
+  }
+
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #D4596B !important; /* Force color */
+    color: white !important;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+
+  .checkout-btn:hover {
+    background-color: #b84656 !important;
+  }
+</style>
