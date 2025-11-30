@@ -87,22 +87,45 @@ export const completeOrder = async (req, res) => {
             });
         }
 
-        const updatedOrder = await Orders.findByIdAndUpdate(
-            orderId,
-            { $set: { Order_complete: true } },
-            { new: true }
-        );
+        const order = await Orders.findById(orderId);
 
-        if (!updatedOrder) {
+        if (!order) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found"
             });
         }
 
+        let update = {};
+        let message = "";
+
+        // State Transition Logic
+        if (!order.Order_complete) {
+            // Pending -> Ready for Pickup
+            update = { Order_complete: true };
+            message = "Order marked as Ready for Pickup";
+        } else if (order.Order_complete && !order.isPickedUp) {
+            // Ready for Pickup -> Complete
+            update = { isPickedUp: true };
+            message = "Order marked as Complete (Picked Up)";
+        } else {
+            // Already Complete
+            return res.status(200).json({
+                success: true,
+                message: "Order is already complete",
+                order: order
+            });
+        }
+
+        const updatedOrder = await Orders.findByIdAndUpdate(
+            orderId,
+            { $set: update },
+            { new: true }
+        );
+
         res.status(200).json({
             success: true,
-            message: "Order marked as complete successfully",
+            message: message,
             order: updatedOrder
         });
 

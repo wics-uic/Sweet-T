@@ -29,22 +29,18 @@ console.log("DUE RECEIVED:", due);
             <p class="text-gray-600 text-sm mb-3">{order}</p>
             <div class="flex flex-wrap items-center gap-2">
                 <span class="text-sm">{date}</span>
-                {due == "Due tomorrow" || due == "Due today" ? <span data-slot="badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit gap-1 bg-rose-100 text-rose-800 border-rose-200 text-xs">{due}</span> : <div></div>}
+                {due == "Due tomorrow" || due == "Due today" ? <span data-slot="due-badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit gap-1 bg-rose-100 text-rose-800 border-rose-200 text-xs">{due}</span> : <div></div>}
             </div>
         </div>
         <!-- ready for pickup part -->
         <div class="flex items-center gap-2 flex-shrink-0">
-            {()=> {
-                if (status == "Ready for Pickup") {
-                    return(<span data-slot="badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit gap-1 bg-[#044A25] text-white border-[#044A25] text-xs">{status}</span>)
-                } 
-                else if (status == "Pending"){
-                    return(<span data-slot="badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit bg-amber-100 text-amber-800 border-amber-200 text-xs">{status}</span>)
-                }
-                else {
-                    return(<span data-slot="badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit bg-gray-100 text-gray-600 border-gray-200 text-xs">{status}</span>)
-                }
-            }}
+            {status == "Ready for Pickup" ? (
+                <span data-slot="status-badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit gap-1 bg-[#044A25] text-white border-[#044A25] text-xs">{status}</span>
+            ) : status == "Pending" ? (
+                <span data-slot="status-badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit bg-amber-100 text-amber-800 border-amber-200 text-xs">{status}</span>
+            ) : (
+                <span data-slot="status-badge" class="inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium w-fit bg-gray-100 text-gray-600 border-gray-200 text-xs">{status}</span>
+            )}
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right h-5 w-5 text-gray-400" aria-hidden="true">
                 <path d="m9 18 6-6-6-6"></path>
             </svg>

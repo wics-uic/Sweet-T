@@ -64,6 +64,10 @@ const orderSchema = new mongoose.Schema({
     Order_complete: {
         type: Boolean,
         default: false
+    },
+    isPickedUp: {
+        type: Boolean,
+        default: false
     }
 }, {
     collection: "Orders",

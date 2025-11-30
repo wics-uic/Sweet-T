@@ -87,12 +87,11 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
 
               // Determine Status
               let statusStr = "Pending";
-              if (order.Order_complete) {
+              if (order.isPickedUp) {
                   statusStr = "Complete";
+              } else if (order.Order_complete) {
+                  statusStr = "Ready for Pickup";
               } else {
-                  // Logic for "Ready for Pickup" could go here if we had a field for it
-                  // For now, default to Pending or check pickup time?
-                  // Let's just use Pending for incomplete orders as per current model
                   statusStr = "Pending";
               }
 
@@ -138,7 +137,7 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
               !el.classList.contains('bg-rose-100') && 
               !el.classList.contains('inline-flex')
             )?.textContent || '';
-            const statusElement = element.querySelector('[data-slot="badge"]');
+            const statusElement = element.querySelector('[data-slot="status-badge"]');
             const status = statusElement ? statusElement.textContent : '';
             
             orders.push({
@@ -146,10 +145,11 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
               name,
               order: orderText,
               date,
-              status
+              status: status.trim() // Ensure no whitespace
             });
           });
           
+          console.log("Scraped Orders:", orders);
           return orders;
         }
         
