@@ -6,10 +6,10 @@ const orderSchema = new mongoose.Schema({
         required: true,
         index: true
     },
-    // ProductsOrdered: {
-    //     type: Object,
-    //     required: true
-    // },
+    ProductsOrdered: {
+        type: Array,
+        required: true
+    },
     email: {
         type: String,
         required: true

@@ -58,15 +58,55 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
           </div>
 
           <div class="space-y-3" id="orders-container">
-            {Orders.map((order) => ( 
-              <CustomOrder 
-                name={order.name} 
-                order={order.order} 
-                date={order.date} 
-                due={order.due} 
-                status={order.status}
-              />
-            ))}
+            {Orders.map((order) => {
+              // Format ProductsOrdered into a string summary
+              const orderSummary = order.ProductsOrdered && Array.isArray(order.ProductsOrdered)
+                ? order.ProductsOrdered.map(p => `${p.quantity} ${p.name}`).join(", ")
+                : "No items";
+
+              // Format Date
+              const dateObj = new Date(order.createdAt);
+              const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + " • " + dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+              // Format Due Date (Pickup Time)
+              let dueStr = "No date";
+              if (order.pickupTime) {
+                  const pickupDate = new Date(order.pickupTime);
+                  const today = new Date();
+                  const tomorrow = new Date(today);
+                  tomorrow.setDate(tomorrow.getDate() + 1);
+
+                  if (pickupDate.toDateString() === today.toDateString()) {
+                      dueStr = "Due today";
+                  } else if (pickupDate.toDateString() === tomorrow.toDateString()) {
+                      dueStr = "Due tomorrow";
+                  } else {
+                      dueStr = pickupDate.toLocaleDateString();
+                  }
+              }
+
+              // Determine Status
+              let statusStr = "Pending";
+              if (order.Order_complete) {
+                  statusStr = "Complete";
+              } else {
+                  // Logic for "Ready for Pickup" could go here if we had a field for it
+                  // For now, default to Pending or check pickup time?
+                  // Let's just use Pending for incomplete orders as per current model
+                  statusStr = "Pending";
+              }
+
+              return (
+                <CustomOrder 
+                  id={order._id}
+                  name={order.name} 
+                  order={orderSummary} 
+                  date={dateStr} 
+                  due={dueStr} 
+                  status={statusStr}
+                />
+              );
+            })}
           </div>
         </div>
       </div>

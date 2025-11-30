@@ -78,8 +78,8 @@ import Layout from "../layouts/layout.astro";
               <input type="text" id="expirationDate" name="expirationDate" required placeholder="MM/YY">
             </div>
             <div class="form-group">
-              <label for="cvv">CVV</label>
-              <input type="text" id="cvv" name="cvv" required placeholder="123">
+              <label for="CVV">CVV</label>
+              <input type="text" id="CVV" name="CVV" required placeholder="123">
             </div>
           </div>
 
@@ -112,6 +112,7 @@ import Layout from "../layouts/layout.astro";
 
 <script>
   const API_BASE_URL = "http://localhost:8000/api/cart";
+  const ORDER_API_URL = "http://localhost:8000/api/orders";
   
   // Reuse catalog logic for images (simplified version of CartSidebar logic)
   const PRODUCT_CATALOG = {
@@ -122,6 +123,8 @@ import Layout from "../layouts/layout.astro";
     "Flan": { filepath: "/products-flan.png" }
   };
 
+  let currentCartItems = [];
+
   async function fetchCart() {
     try {
       const response = await fetch(`${API_BASE_URL}/fetch`, {
@@ -130,7 +133,8 @@ import Layout from "../layouts/layout.astro";
       });
       if (!response.ok) throw new Error("Failed to fetch cart");
       const data = await response.json();
-      renderCart(data.products || []);
+      currentCartItems = data.products || [];
+      renderCart(currentCartItems);
     } catch (error) {
       console.error(error);
       document.getElementById("checkout-cart-items").innerHTML = "<p>Error loading cart.</p>";
@@ -183,11 +187,48 @@ import Layout from "../layouts/layout.astro";
 
   document.addEventListener("DOMContentLoaded", fetchCart);
 
-  // Form Submission Placeholder
-  document.getElementById("checkout-form").addEventListener("submit", (e) => {
+  // Form Submission
+  document.getElementById("checkout-form").addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert("Order placed! (This is a demo)");
-    // Here you would send the form data + cart data to your backend
+    
+    if (currentCartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const formData = new FormData(e.target);
+    const orderData = Object.fromEntries(formData.entries());
+    
+    // Add cart items to the payload
+    const payload = {
+        ...orderData,
+        ProductsOrdered: currentCartItems
+    };
+
+    try {
+        const response = await fetch(`${ORDER_API_URL}/createOrder`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload),
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            alert("Order placed successfully!");
+            // Optionally clear cart here if backend doesn't do it automatically
+            // Redirect to home or success page
+            window.location.href = "/";
+        } else {
+            throw new Error(result.message || "Failed to place order");
+        }
+    } catch (error) {
+        console.error("Order submission error:", error);
+        alert("Error placing order: " + error.message);
+    }
   });
 </script>
 

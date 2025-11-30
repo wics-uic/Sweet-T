@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cors from "cors";
 import productDetailsRoute from "./Route/productDetailsRoute.js";
-import ordersRoute from "./Route/ordersRoute.js";
+// import ordersRoute from "./Route/ordersRoute.js";
 import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 import exampleRoutes from './Route/exampleRoute.js';
@@ -64,7 +64,7 @@ async function initializeAdmin() {
 
         // Remove customer user if exists (cleanup)
         await User.deleteOne({ email: 'customer@gmail.com' });
-        
+
     } catch (error) {
         console.error('Error initializing admin:', error);
     }
@@ -87,23 +87,23 @@ const userCookieMiddleware = (req, res, next) => {
 
     if (!userId || isExpired) {
         userId = uuidv4(); // Generate new userid
-        
+
         // Set both the userId and timestamp cookies
         res.cookie('userId', userId, {
             maxAge: FULL_TIME,
-            httpOnly: true, 
+            httpOnly: true,
             // secure: process.env.NODE_ENV === 'production',
             secure: false,
             sameSite: 'lax'
         });
-        
+
         res.cookie('userIdTimestamp', now.toString(), {
             maxAge: FULL_TIME,
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax'
         });
-        
+
         console.log('New user cookie generated:', userId, 'at', new Date(now).toLocaleTimeString());
     } else {
         console.log('Existing user:', userId, '(age:', Math.floor((now - parseInt(cookieTimestamp)) / 1000), 'seconds)');
@@ -127,27 +127,27 @@ app.post('/api/login', async (req, res) => {
 
         // Validate input
         if (!email || !password) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Email and password are required' 
+            return res.status(400).json({
+                success: false,
+                message: 'Email and password are required'
             });
         }
 
         // ONLY ALLOW ADMIN LOGIN
         if (email.toLowerCase() !== 'admin@gmail.com') {
             console.log('Login rejected - not admin email:', email);
-            return res.status(403).json({ 
-                success: false, 
-                message: 'Access denied. Admin only.' 
+            return res.status(403).json({
+                success: false,
+                message: 'Access denied. Admin only.'
             });
         }
 
         // Find admin user only
         const user = await User.findOne({ email: 'admin@gmail.com' });
         if (!user) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Admin account not found' 
+            return res.status(401).json({
+                success: false,
+                message: 'Admin account not found'
             });
         }
 
@@ -155,9 +155,9 @@ app.post('/api/login', async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             console.log('Invalid password for admin');
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Invalid credentials' 
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid credentials'
             });
         }
 
@@ -183,9 +183,9 @@ app.post('/api/login', async (req, res) => {
 
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Server error' 
+        res.status(500).json({
+            success: false,
+            message: 'Server error'
         });
     }
 });
@@ -206,10 +206,10 @@ app.use('/api/orders', checkoutRoutes);
 mongoose.connect(MONGOURL).then(async () => {
     console.log("Database connected successfully.");
     console.log("Database URL:", MONGOURL);
-    
+
     // Initialize admin user only
     await initializeAdmin();
-        
+
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
         console.log(`Admin email: admin@gmail.com pass: admin123`);
@@ -222,5 +222,5 @@ mongoose.connect(MONGOURL).then(async () => {
 
 // Load routes
 app.use("/api/productDetails", productDetailsRoute)
-app.use("/api/orders", ordersRoute)
+// app.use("/api/orders", ordersRoute)
 // app.get("/", (req, res) => res.send("Hello, backend is alive"));

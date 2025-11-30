@@ -1,7 +1,7 @@
 ---
 // const {name = "User",order="This is a default order", date="Mon, Jan 1 • 11:59pm",due="Due today", status="Ready for Pickup"} = Astro.props;
 // const { orders } = Astro.props;
-const { name, order, date, due, status } = Astro.props;
+const { id, name, order, date, due, status } = Astro.props;
 // import CustomOrder from "./CustomOrder.astro";
 console.log("DUE RECEIVED:", due);
 ---
@@ -13,10 +13,18 @@ console.log("DUE RECEIVED:", due);
             <!-- order details -->
             <div class="flex items-start justify-between gap-2 mb-1">
                 <h3 class="truncate">{name}</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-4 w-4 text-[#044A25] flex-shrink-0" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="m9 12 2 2 4-4"></path>
-                </svg>
+                <!-- Checkmark Button -->
+                <button 
+                    class="complete-order-btn p-1 hover:bg-green-50 rounded-full transition-colors" 
+                    data-order-id={id}
+                    title="Mark as Complete"
+                    aria-label="Mark order as complete"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-6 w-6 text-[#044A25] flex-shrink-0" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="m9 12 2 2 4-4"></path>
+                    </svg>
+                </button>
             </div>     
             <p class="text-gray-600 text-sm mb-3">{order}</p>
             <div class="flex flex-wrap items-center gap-2">
@@ -43,3 +51,60 @@ console.log("DUE RECEIVED:", due);
         </div>
     </div>
 </div>
+
+<script>
+    const API_URL = "http://localhost:8000/api/orders/completeOrder";
+
+    // Use event delegation or attach to all buttons
+    // Since this component is repeated, the script runs once per component instance if inline, 
+    // or we can use a global listener. 
+    // Astro scripts with no attributes run once per page load if bundled, but here it's inside the component.
+    // Better to attach listeners to all buttons found on the page.
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const buttons = document.querySelectorAll('.complete-order-btn');
+        
+        buttons.forEach(btn => {
+            // Remove existing listeners to avoid duplicates if any re-renders happen (unlikely in static Astro)
+            // But good practice.
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
+            
+            newBtn.addEventListener('click', async (e) => {
+                e.stopPropagation(); // Prevent card click
+                e.preventDefault();
+
+                const orderId = newBtn.getAttribute('data-order-id');
+                if (!orderId) return;
+
+                if (!confirm("Are you sure you want to mark this order as complete?")) {
+                    return;
+                }
+
+                try {
+                    const response = await fetch(API_URL, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ orderId }),
+                        credentials: "include"
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
+                        alert("Order marked as complete!");
+                        // Reload to update UI
+                        window.location.reload();
+                    } else {
+                        alert("Failed to complete order: " + (result.message || "Unknown error"));
+                    }
+                } catch (error) {
+                    console.error("Error completing order:", error);
+                    alert("Error completing order. Check console.");
+                }
+            });
+        });
+    });
+</script>
