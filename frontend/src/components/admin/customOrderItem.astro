@@ -1,5 +1,9 @@
 ---
-const {name = "User",order="This is a default order", date="Mon, Jan 1 • 11:59pm",due="Due today", status="Ready for Pickup"} = Astro.props;
+// const {name = "User",order="This is a default order", date="Mon, Jan 1 • 11:59pm",due="Due today", status="Ready for Pickup"} = Astro.props;
+// const { orders } = Astro.props;
+const { name, order, date, due, status } = Astro.props;
+// import CustomOrder from "./CustomOrder.astro";
+console.log("DUE RECEIVED:", due);
 ---
 
 <div class="flex flex-col gap-6 rounded-xl border border-[#e5e5e5] p-4 hover:shadow-md transition-shadow cursor-pointer" data-slot="card" >

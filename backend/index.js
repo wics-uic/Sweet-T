@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cors from "cors";
+import productDetailsRoute from "./Route/productDetailsRoute.js";
+import ordersRoute from "./Route/ordersRoute.js";
 import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 import exampleRoutes from './Route/exampleRoute.js';
@@ -216,3 +218,9 @@ mongoose.connect(MONGOURL).then(async () => {
     console.error("MongoDB connection error:", error);
     process.exit(1);
 });
+
+
+// Load routes
+app.use("/api/productDetails", productDetailsRoute)
+app.use("/api/orders", ordersRoute)
+// app.get("/", (req, res) => res.send("Hello, backend is alive"));
