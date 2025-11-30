@@ -16,14 +16,29 @@ const res_json = await res.json();
 <section class="products-section">
   <h1>What celebration are we creating together?</h1>
 
-  <div class="grid">
-    {res_json.map( item => (
-      <div class="product">
+  <div class="grid grid-top">
+    {Products.slice(0, 2).map((product, i) => (
+      <div class="product" id={`product-${i}`}>
         <ProductItem
-          item_name={item.name}
-          price={item.price_representation}
-          url={item.image_url}
-          ready={true}
+          item_name={product.name}
+          price={product.price}
+          url={product.imagePath}
+          ready={product.ready}
+          link={product.link}
+        />
+      </div>
+    ))}
+  </div>
+
+  <div class="grid grid-bottom">
+    {Products.slice(2).map((product, i) => (
+      <div class="product" id={`product-${i + 2}`}>
+        <ProductItem
+          item_name={product.name}
+          price={product.price}
+          url={product.imagePath}
+          ready={product.ready}
+          link={product.link}
         />
       </div>
     ))}
