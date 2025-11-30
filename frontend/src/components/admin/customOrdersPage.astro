@@ -4,7 +4,7 @@ import CustomOrder from "./customOrderItem.astro"
 import type { Order } from "../product-data/sales_calculations.ts";
 // import Orders from "../product-data/custom_orders.ts";
 const { orders = [] } = Astro.props;
-const Orders = orders; // Map prop to local variable used in template
+const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variable used in template, ensure array
 ---
 
 <html>
