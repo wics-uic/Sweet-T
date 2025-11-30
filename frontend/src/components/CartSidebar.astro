@@ -145,6 +145,10 @@ import '../styles/cartSidebar.css';
 
         if (products.length === 0) {
           cartContent.innerHTML = `<p style="text-align:cetner; padding:20px;">Your bag is empty.</p>`
+          const subtotalEl = document.getElementById("cart-subtotal");
+          if (subtotalEl) {
+            subtotalEl.textContent = "$0.00";
+          }
           return;
         }
         
