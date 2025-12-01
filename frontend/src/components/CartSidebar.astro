@@ -1,0 +1,519 @@
+---
+import '../styles/cartSidebar.css';
+---
+
+<div class="cart-wrapper" id="cart-wrapper">
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <aside class="cart-sidebar">
+    <div class="cart-header">
+      <img src="src/assets/nav-basket.svg" alt="Shopping Bag"/>
+      <h2>Your Bag</h2>
+      <button id="close-cart-btn" class="close-btn" aria-label="Close cart">&times;</button>
+    </div>
+
+    <div class="cart-content">
+      <!-- print the list using api -->
+       <!-- for now, we use JS  -->
+    </div>
+
+    <!-- ADDED: Footer with Subtotal and Checkout -->
+    <div class="cart-footer">
+      <div class="subtotal-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <a href="/checkout" class="checkout-btn">Go to checkout</a>
+    </div>
+  </aside>
+
+</div>
+
+<script is:client>
+// import { createHeadAndContent } from "astro/runtime/server/index.js";
+
+  const API_BASE_URL = "http://localhost:8000/api/cart";
+  
+  // const USER_ID = "691b38d0e4dcfa41c31b48fb"; // hard-code user for now 
+  // const USER_ID = "691b3911e4dcfa41c31b490e"; // User2
+
+  // This should ACTUALLY use the Product Model from the DB.
+  // For now, I hard-coded the product catalog here for visual purposes.
+  const PRODUCT_CATALOG = {
+    "Cupcake": { 
+      // price: 2.00, 
+      filepath: "/products-cupcake.png", // Defaults if not in DB
+      // flavor: "Chocolate", 
+      // frosting: "Vanilla" 
+    },
+    "Cake": { 
+      // price: 15.00, 
+      filepath: "/landing-cake.png", 
+      // flavor: "Vanilla", 
+      // frosting: "Vanilla" 
+    },
+    "Pastelito": { 
+      // price: 6.00, 
+      filepath: "/products-pastelitos.png", 
+      // flavor: "Chocolate", 
+      // frosting: "Chocolate" 
+    },
+    "Cookie": {
+      // price: 1.50,
+      filepath: "/products-cookie.png",
+      // flavor: "Strawberry",
+      // frosting: "Strawberry"
+    },
+    "Flan": {
+      // price: 4.00,
+      filepath: "/products-flan.png",
+      // flavor: "Oatmeal Raisin",
+      // frosting: "None"
+    }
+  };
+
+
+  // This script handles CLOSING the cart.
+  // The logic for OPENING the cart is in the page that uses this component.
+  document.addEventListener("DOMContentLoaded", () => {
+    const cartWrapper = document.getElementById("cart-wrapper");
+    const closeButton = document.getElementById("close-cart-btn");
+    const overlay = document.getElementById("cart-overlay");
+    // add content (temporary)
+    const cartContent = document.querySelector(".cart-content");
+
+
+    // PARSE the customization String 
+    function parseCustomizationString(customString) {
+      if (!customString) return{};
+      const details = {};
+      const parts = customString.split('|');
+      parts.forEach(part => {
+        const [key, ...valueParts] = part.split(': ');
+        const value = valueParts.join(': '); // in case value has ':'
+        if (key && value) {
+          details[key.trim()] = value.trim();
+        }
+      });
+      return details;
+    }
+
+    // NO SCROLL (disables scroll for the entire window, not including the sidebar)
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          if (cartWrapper.classList.contains("open")) {
+            document.body.classList.add("no-scroll");
+          } else {
+            document.body.classList.remove("no-scroll");
+          }
+        }
+      });
+    });
+    if (cartWrapper) {
+      observer.observe(cartWrapper, { attributes: true });
+    }
+
+
+    function closeCart() {
+      cartWrapper.classList.remove("open");
+    }
+
+    // Add listeners to close the cart
+    if (closeButton) {
+      closeButton.addEventListener("click", closeCart);
+    }
+    if (overlay) {
+      overlay.addEventListener("click", closeCart);
+    }
+
+    // API Implementation HERE 
+
+       
+    async function fetchAndRenderCart() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/fetch`, {
+          method: "GET", 
+          credentials: "include" // include cookies
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch");
+        const cartData = await response.json();
+
+        // Handle in the case of an empty cart safely 
+        const products = (cartData && cartData.products) ? cartData.products : [];
+
+        if (products.length === 0) {
+          cartContent.innerHTML = `<p style="text-align:cetner; padding:20px;">Your bag is empty.</p>`
+          const subtotalEl = document.getElementById("cart-subtotal");
+          if (subtotalEl) {
+            subtotalEl.textContent = "$0.00";
+          }
+          return;
+        }
+        
+        // Merge DB Data with Visual Catalog 
+        const processedProducts = cartData.products.map(item => {
+          const rawName = item.name || "";
+          const normalizedName = rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
+
+          // find details in catalog, or use defaults 
+          const catalogItem = PRODUCT_CATALOG[normalizedName] || PRODUCT_CATALOG[rawName] || {
+            // price: 0.00,
+            filepath: "/testimonial-3.png",
+            flavor: "Unknown",
+            frosting: "Unknown"
+          };
+
+          const userChoices = parseCustomizationString(item.customizations);
+          const finalFlavor = userChoices["Flavor"] || catalogItem.flavor;
+          const finalFrosting = userChoices["Frosting"] || catalogItem.frosting;
+          // const displayDetails = Object.entries(userChoices)
+          //   .filter(([key]) => key !== "Flavor" && key !== "Frosting")
+          //   .map(([key, value]) => `${key}: ${value}`)
+          //   .join(' | ');
+
+          const realPrice = item.price || 0;
+
+          // ------------------------------
+          const detailsToShow = [];
+
+          if (userChoices["Size"]) {
+            detailsToShow.push(`Size: ${userChoices["Size"]}`);
+          }
+          if (userChoices["Rush"]) {
+            detailsToShow.push(`Rush: ${userChoices["Rush"]}`);
+          }
+          if (userChoices["Message"]) {
+            // Your DB already saves it as "Message text", so we just display it
+            detailsToShow.push(`Message: ${userChoices["Message"]}`);
+          }
+          const displayDetails = detailsToShow.join(' | ');
+          // ------------------------------
+         
+          return {
+            _id: item._id, // mongoDB id 
+            name: normalizedName,
+            quantity: item.quantity,
+            // customization: item.customizations,
+            filepath: catalogItem.filepath, // calculated fields 
+            flavor: finalFlavor,
+            frosting: finalFrosting,
+            customizationDisplay: displayDetails,
+            total: (realPrice * item.quantity),
+          };
+        });
+
+        // Clear and Render 
+        cartContent.replaceChildren(...processedProducts.map(createProduct));
+        
+        // ADDED: Update Subtotal
+        const totalAmount = processedProducts.reduce((acc, item) => acc + item.total, 0);
+        const subtotalEl = document.getElementById("cart-subtotal");
+        if (subtotalEl) {
+          subtotalEl.textContent = `$${totalAmount.toFixed(2)}`;
+        }
+
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+        cartContent.innerHTML = '<p style="text-align:center; padding:20px;">Error loading cart.</p>';
+      }
+    }
+    window.deleteCartItem = async function(productId) {
+      if (!confirm("Remove this item?")) return;
+      try {
+        await fetch(`${API_BASE_URL}/delete/${productId}`, {
+          method: "DELETE",
+          credentials: "include" // include cookies;
+        });
+        fetchAndRenderCart();
+      } catch(error) {
+        console.error(error);
+      }
+    }
+    window.updateCartItem = async function(productId, action) {
+      try {
+        await fetch(`${API_BASE_URL}/update/${productId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include", // include cookies
+          body: JSON.stringify({ action }) // 'increase' or 'deacrease'
+        });
+        fetchAndRenderCart();
+      } catch(error) {
+        console.error(error);
+      }
+    }
+
+    // Helper function to build product DOM 
+    function createProduct(item) {
+      const product = document.createElement("div");
+      product.className = "product";
+
+      product.innerHTML = `
+      <img src="${item.filepath}" alt="${item.name}">
+      <div class="content">
+        <h3 class="product-name">${item.name}</h3>
+        <p class="flavor">${item.flavor}</p>
+        <p class="frosting">${item.frosting}</p>
+        <p>${item.customizationDisplay}</p>
+        <div class="bottom-bar">
+          <div class="left-group">
+            <div class="quantity-bar">
+              <button onclick="window.updateCartItem('${item._id}', 'decrease')">-</button>
+              <p>${item.quantity}</p>
+              <button onclick="window.updateCartItem('${item._id}', 'increase')">+</button>
+            </div>
+            <button class="trash" onclick="window.deleteCartItem('${item._id}')">
+                <img src="src/assets/trash.svg" alt="Remove">
+            </button>
+          </div>
+          <p class="total">$${item.total.toFixed(2)}</p>
+        </div>
+      </div>
+      `;
+      return product;
+    }
+
+    // Fetch and render the cart from API 
+    fetchAndRenderCart();
+    document.addEventListener('cartUpdated', fetchAndRenderCart);
+  }); 
+</script>
+
+<style is:global>
+  .cart-wrapper {
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s ease, opacity 0.3s ease;
+  }
+
+  .cart-wrapper.open {
+    /* Made visible when 'open' class is added */
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .cart-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+
+  .cart-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 90%;
+    max-width: 415px;
+    background-color: #F4EDE6;
+    box-shadow: -4px 0 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    
+    /* This is the key for the "slide" animation */
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+  }
+
+  /* When the wrapper is open, slide the sidebar in */
+  .cart-wrapper.open .cart-sidebar {
+    transform: translateX(0);
+  }
+
+  .cart-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 25px;
+    font-weight: 600;
+    color: #044A25;
+    /* border-bottom: 1px solid black; */
+  }
+  .cart-header img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .cart-header h2 {
+    margin: 0;
+    font-size: xx-large;
+  }
+  .cart-header .close-btn {
+    margin-left:auto;
+  }
+
+  .close-btn {
+    width: 32px;
+    height: 32px; 
+    border-radius: 50%;
+    font-size: 36px;
+    font-weight: 100;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    background-color: transparent;
+    border: 1.5px solid #044A25;
+    color: #044A25;
+
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  @media print {
+    .cart-sidebar {
+      position: static;   /* remove fixed positioning */
+      transform: none;    /* no slide animation */
+      box-shadow: none;
+      width: 100%;        /* full width for printing */
+      max-width: none;
+    }
+
+    .cart-content {
+      overflow: visible;  /* show all items */
+      max-height: none;   /* remove height restriction */
+    }
+
+    .cart-overlay {
+      display: none;      /* don’t print overlay */
+    }
+
+    .close-btn {
+      display: none;      /* hide close button in print */
+    }
+  }
+
+  .cart-content {
+    padding: 0px 25px;
+    flex-grow: 1;
+    overflow-y: auto;
+    -ms-overflow-style:none;
+    max-height: calc(100% - 180px); /* header + footer space */
+  }
+  .cart-content::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    gap:20px;
+    padding: 15px;
+    padding-left: 5px;
+
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  }
+  
+  .product-name {
+    color: black;
+  }
+  
+  .content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .product img {
+    width: 100px;
+    max-width: 50%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 7px;
+  }
+  h3 {
+    color: #044A25;
+    font-weight: 600;
+    font-size: x-large;
+  }
+  .bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .left-group {
+    padding-top: 2px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .quantity-bar {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    background-color: white;
+    border-radius: 15px;
+    padding: 1px 12px;
+    border-width: 1px;
+    border-color: #044A25;
+  }
+
+  .trash img {
+    width: 35px;
+  }
+
+  /* ADDED: Footer Styles */
+  .cart-footer {
+    padding: 20px 25px;
+    border-top: 1px dashed #ccc; /* dashed line as per image */
+    background-color: #F4EDE6;
+    /* position: absolute; */
+    bottom: 0;
+    width: 100%;
+  }
+
+  .subtotal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+    font-weight: 700;
+    color: black;
+  }
+
+  .checkout-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: #D4596B !important; /* Force color */
+    color: white !important;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+    cursor: pointer;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
+
+  .checkout-btn:hover {
+    background-color: #b84656 !important;
+  }
+</style>

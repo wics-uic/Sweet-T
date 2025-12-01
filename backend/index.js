@@ -6,9 +6,13 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cors from "cors";
+import productDetailsRoute from "./Route/productDetailsRoute.js";
+// import ordersRoute from "./Route/ordersRoute.js";
 import cookieParser from "cookie-parser";
 import { v4 as uuidv4 } from "uuid";
 import exampleRoutes from './Route/exampleRoute.js';
+import checkoutRoutes from './Route/checkoutRoute.js';
+import sweetCategoriesRoutes from "./Route/sweetCategoriesRoute.js";
 
 const app = express();
 
@@ -19,7 +23,14 @@ app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:4321', // Frontend URL
     credentials: true // Enable credentials (cookies) to be sent
 }));
+
+
 dotenv.config();
+// ADDED
+app.use(express.json());
+
+// app.use('/api/cart/', exampleRoutes); // locate to Line 114
+
 
 const PORT = process.env.PORT || 8000;
 const MONGOURL = process.env.MONGO_URL;
@@ -54,7 +65,7 @@ async function initializeAdmin() {
 
         // Remove customer user if exists (cleanup)
         await User.deleteOne({ email: 'customer@gmail.com' });
-        
+
     } catch (error) {
         console.error('Error initializing admin:', error);
     }
@@ -77,22 +88,23 @@ const userCookieMiddleware = (req, res, next) => {
 
     if (!userId || isExpired) {
         userId = uuidv4(); // Generate new userid
-        
+
         // Set both the userId and timestamp cookies
         res.cookie('userId', userId, {
             maxAge: FULL_TIME,
-            httpOnly: true, 
-            secure: process.env.NODE_ENV === 'production',
+            httpOnly: true,
+            // secure: process.env.NODE_ENV === 'production',
+            secure: false,
             sameSite: 'lax'
         });
-        
+
         res.cookie('userIdTimestamp', now.toString(), {
             maxAge: FULL_TIME,
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax'
         });
-        
+
         console.log('New user cookie generated:', userId, 'at', new Date(now).toLocaleTimeString());
     } else {
         console.log('Existing user:', userId, '(age:', Math.floor((now - parseInt(cookieTimestamp)) / 1000), 'seconds)');
@@ -105,6 +117,7 @@ const userCookieMiddleware = (req, res, next) => {
 
 // Apply cookie middleware to all routes
 app.use(userCookieMiddleware);
+app.use('/api/cart', exampleRoutes); // moved here so we properly use cookies 
 
 // Login Route - ADMIN ONLY
 app.post('/api/login', async (req, res) => {
@@ -115,27 +128,27 @@ app.post('/api/login', async (req, res) => {
 
         // Validate input
         if (!email || !password) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Email and password are required' 
+            return res.status(400).json({
+                success: false,
+                message: 'Email and password are required'
             });
         }
 
         // ONLY ALLOW ADMIN LOGIN
         if (email.toLowerCase() !== 'admin@gmail.com') {
             console.log('Login rejected - not admin email:', email);
-            return res.status(403).json({ 
-                success: false, 
-                message: 'Access denied. Admin only.' 
+            return res.status(403).json({
+                success: false,
+                message: 'Access denied. Admin only.'
             });
         }
 
         // Find admin user only
         const user = await User.findOne({ email: 'admin@gmail.com' });
         if (!user) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Admin account not found' 
+            return res.status(401).json({
+                success: false,
+                message: 'Admin account not found'
             });
         }
 
@@ -143,9 +156,9 @@ app.post('/api/login', async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
             console.log('Invalid password for admin');
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Invalid credentials' 
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid credentials'
             });
         }
 
@@ -171,9 +184,9 @@ app.post('/api/login', async (req, res) => {
 
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Server error' 
+        res.status(500).json({
+            success: false,
+            message: 'Server error'
         });
     }
 });
@@ -188,15 +201,17 @@ app.get('/api/test-user', (req, res) => {
 
 // Call the exampleRoutes API here url: http://localhost:8000/api/{all api's are added here}
 app.use('/api', exampleRoutes);
+app.use('/api/orders', checkoutRoutes);
+app.use('/api', sweetCategoriesRoutes);
 
 // Connect to MongoDB
 mongoose.connect(MONGOURL).then(async () => {
     console.log("Database connected successfully.");
     console.log("Database URL:", MONGOURL);
-    
+
     // Initialize admin user only
     await initializeAdmin();
-        
+
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
         console.log(`Admin email: admin@gmail.com pass: admin123`);
@@ -205,3 +220,9 @@ mongoose.connect(MONGOURL).then(async () => {
     console.error("MongoDB connection error:", error);
     process.exit(1);
 });
+
+
+// Load routes
+app.use("/api/productDetails", productDetailsRoute)
+// app.use("/api/orders", ordersRoute)
+// app.get("/", (req, res) => res.send("Hello, backend is alive"));

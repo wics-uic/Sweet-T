@@ -1,12 +1,10 @@
 ---
 // customOrderPage.astro
-import CustomOrder from "./orderItem.astro"
-import Orders from "./admin-data/orders.ts";
-
-const {custom=false} = Astro.props
-const filteredOrders = custom
-  ? Orders.filter((order) => order.type === "custom")
-  : Orders;
+import CustomOrder from "./customOrderItem.astro"
+import type { Order } from "../product-data/sales_calculations.ts";
+// import Orders from "../product-data/custom_orders.ts";
+const { orders = [] } = Astro.props;
+const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variable used in template, ensure array
 ---
 
 <html>
@@ -60,30 +58,54 @@ const filteredOrders = custom
           </div>
 
           <div class="space-y-3" id="orders-container">
-            {custom
-            ? Orders
-                .filter((order) => order.type === "custom")
-                .map((order) => (
-                  <CustomOrder
-                    key={order.id}
-                    name={order.name}
-                    order={order.order}
-                    date={order.date}
-                    due={order.due}
-                    status={order.status}
-                  />
-                ))
-            : Orders.map((order) => (
-                <CustomOrder
-                  key={order.id}
-                  name={order.name}
-                  order={order.order}
-                  date={order.date}
-                  due={order.due}
-                  status={order.status}
-                />
-              ))}
+            {Orders.map((order) => {
+              // Format ProductsOrdered into a string summary
+              const orderSummary = order.ProductsOrdered && Array.isArray(order.ProductsOrdered)
+                ? order.ProductsOrdered.map(p => `${p.quantity} ${p.name}`).join(", ")
+                : "No items";
 
+              // Format Date
+              const dateObj = new Date(order.createdAt);
+              const dateStr = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + " • " + dateObj.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+              // Format Due Date (Pickup Time)
+              let dueStr = "No date";
+              if (order.pickupTime) {
+                  const pickupDate = new Date(order.pickupTime);
+                  const today = new Date();
+                  const tomorrow = new Date(today);
+                  tomorrow.setDate(tomorrow.getDate() + 1);
+
+                  if (pickupDate.toDateString() === today.toDateString()) {
+                      dueStr = "Due today";
+                  } else if (pickupDate.toDateString() === tomorrow.toDateString()) {
+                      dueStr = "Due tomorrow";
+                  } else {
+                      dueStr = pickupDate.toLocaleDateString();
+                  }
+              }
+
+              // Determine Status
+              let statusStr = "Pending";
+              if (order.isPickedUp) {
+                  statusStr = "Complete";
+              } else if (order.Order_complete) {
+                  statusStr = "Ready for Pickup";
+              } else {
+                  statusStr = "Pending";
+              }
+
+              return (
+                <CustomOrder 
+                  id={order._id}
+                  name={order.name} 
+                  order={orderSummary} 
+                  date={dateStr} 
+                  due={dueStr} 
+                  status={statusStr}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
@@ -115,7 +137,7 @@ const filteredOrders = custom
               !el.classList.contains('bg-rose-100') && 
               !el.classList.contains('inline-flex')
             )?.textContent || '';
-            const statusElement = element.querySelector('[data-slot="badge"]');
+            const statusElement = element.querySelector('[data-slot="status-badge"]');
             const status = statusElement ? statusElement.textContent : '';
             
             orders.push({
@@ -123,10 +145,11 @@ const filteredOrders = custom
               name,
               order: orderText,
               date,
-              status
+              status: status.trim() // Ensure no whitespace
             });
           });
           
+          console.log("Scraped Orders:", orders);
           return orders;
         }
         

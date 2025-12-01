@@ -1,0 +1,380 @@
+---
+import Layout from "../layouts/layout.astro";
+---
+
+<Layout>
+  <div class="checkout-page">
+    <h1>Checkout</h1>
+
+    <div class="checkout-container">
+      <!-- Left Column: Form -->
+      <div class="form-section">
+        <h2>Shipping & Payment</h2>
+        <form id="checkout-form">
+          <!-- Contact Info -->
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" required placeholder="(555) 555-5555">
+          </div>
+
+          <!-- Address -->
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" required placeholder="123 Main St">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input type="text" id="country" name="country" required>
+            </div>
+            <div class="form-group">
+              <label for="zipCode">Zip Code</label>
+              <input type="text" id="zipCode" name="zipCode" required>
+            </div>
+          </div>
+
+          <!-- Pickup -->
+          <div class="form-group">
+            <label for="pickupTime">Pickup Time</label>
+            <input type="datetime-local" id="pickupTime" name="pickupTime" required>
+          </div>
+
+          <!-- Payment -->
+          <h3>Payment Details</h3>
+          <div class="form-group">
+            <label for="cardType">Card Type</label>
+            <select id="cardType" name="cardType">
+              <option value="visa">Visa</option>
+              <option value="mastercard">MasterCard</option>
+              <option value="amex">Amex</option>
+              <option value="discover">Discover</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="credCardNum">Card Number</label>
+            <input type="text" id="credCardNum" name="credCardNum" required placeholder="0000 0000 0000 0000">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="expirationDate">Expiration Date</label>
+              <input type="text" id="expirationDate" name="expirationDate" required placeholder="MM/YY">
+            </div>
+            <div class="form-group">
+              <label for="CVV">CVV</label>
+              <input type="text" id="CVV" name="CVV" required placeholder="123">
+            </div>
+          </div>
+
+          <button type="submit" class="place-order-btn">Place Order</button>
+        </form>
+      </div>
+
+      <!-- Right Column: Cart Summary -->
+      <div class="summary-section">
+        <h2>Order Summary</h2>
+        <div id="checkout-cart-items" class="cart-items">
+          <!-- Items will be injected here via JS -->
+          <p>Loading cart...</p>
+        </div>
+        
+        <div class="summary-totals">
+          <div class="total-row">
+            <span>Subtotal</span>
+            <span id="checkout-subtotal">$0.00</span>
+          </div>
+          <div class="total-row final">
+            <span>Total</span>
+            <span id="checkout-total">$0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const API_BASE_URL = "http://localhost:8000/api/cart";
+  const ORDER_API_URL = "http://localhost:8000/api/orders";
+  
+  // Reuse catalog logic for images (simplified version of CartSidebar logic)
+  const PRODUCT_CATALOG = {
+    "Cupcake": { filepath: "/products-cupcake.png" },
+    "Cake": { filepath: "/landing-cake.png" },
+    "Pastelito": { filepath: "/products-pastelitos.png" },
+    "Cookie": { filepath: "/products-cookie.png" },
+    "Flan": { filepath: "/products-flan.png" }
+  };
+
+  let currentCartItems = [];
+
+  async function fetchCart() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/fetch`, {
+        method: "GET", 
+        credentials: "include"
+      });
+      if (!response.ok) throw new Error("Failed to fetch cart");
+      const data = await response.json();
+      currentCartItems = data.products || [];
+      renderCart(currentCartItems);
+    } catch (error) {
+      console.error(error);
+      document.getElementById("checkout-cart-items").innerHTML = "<p>Error loading cart.</p>";
+    }
+  }
+
+  function renderCart(products) {
+    const container = document.getElementById("checkout-cart-items");
+    if (products.length === 0) {
+      container.innerHTML = "<p>Your cart is empty.</p>";
+      updateTotals(0);
+      return;
+    }
+
+    let total = 0;
+    container.innerHTML = products.map(item => {
+      const rawName = item.name || "";
+      const normalizedName = rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
+      const catalogItem = PRODUCT_CATALOG[normalizedName] || PRODUCT_CATALOG[rawName] || { filepath: "/testimonial-3.png" };
+      const itemTotal = (item.price || 0) * item.quantity;
+      total += itemTotal;
+
+      // Parse customizations for display
+      let customDisplay = "";
+      if (item.customizations) {
+         // Simple parsing for display
+         customDisplay = item.customizations.split('|').map(s => s.trim()).join(', ');
+      }
+
+      return `
+        <div class="checkout-item">
+          <img src="${catalogItem.filepath}" alt="${item.name}">
+          <div class="item-details">
+            <h4>${item.name}</h4>
+            <p class="qty">Qty: ${item.quantity}</p>
+            <p class="price">$${itemTotal.toFixed(2)}</p>
+            ${customDisplay ? `<p class="customs">${customDisplay}</p>` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    updateTotals(total);
+  }
+
+  function updateTotals(subtotal) {
+    document.getElementById("checkout-subtotal").textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById("checkout-total").textContent = `$${subtotal.toFixed(2)}`;
+  }
+
+  document.addEventListener("DOMContentLoaded", fetchCart);
+
+  // Form Submission
+  document.getElementById("checkout-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    if (currentCartItems.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    const formData = new FormData(e.target);
+    const orderData = Object.fromEntries(formData.entries());
+    
+    // Add cart items to the payload
+    const payload = {
+        ...orderData,
+        ProductsOrdered: currentCartItems
+    };
+
+    try {
+        const response = await fetch(`${ORDER_API_URL}/createOrder`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload),
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            alert("Order placed successfully!");
+            // Optionally clear cart here if backend doesn't do it automatically
+            // Redirect to home or success page
+            window.location.href = "/";
+        } else {
+            throw new Error(result.message || "Failed to place order");
+        }
+    } catch (error) {
+        console.error("Order submission error:", error);
+        alert("Error placing order: " + error.message);
+    }
+  });
+</script>
+
+<style>
+  .checkout-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #044A25;
+    margin-bottom: 40px;
+    font-size: 3rem;
+  }
+
+  .checkout-container {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .form-section {
+    flex: 2;
+    min-width: 300px;
+  }
+
+  .summary-section {
+    flex: 1;
+    min-width: 300px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    height: fit-content;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  h2 {
+    color: #044A25;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 20px;
+  }
+  .form-row .form-group {
+    flex: 1;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+  }
+
+  .place-order-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #D4596B;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
+  }
+  .place-order-btn:hover {
+    background-color: #b84656;
+  }
+
+  /* Cart Summary Styles */
+  .checkout-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+  }
+
+  .checkout-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .item-details h4 {
+    margin: 0 0 5px 0;
+    color: #044A25;
+  }
+
+  .item-details p {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+  }
+
+  .item-details .price {
+    font-weight: bold;
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  .item-details .customs {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    font-style: italic;
+  }
+
+  .summary-totals {
+    margin-top: 30px;
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+  }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .total-row.final {
+    font-size: 20px;
+    font-weight: bold;
+    color: #044A25;
+    margin-top: 10px;
+  }
+</style>

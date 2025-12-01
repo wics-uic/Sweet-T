@@ -1,6 +1,11 @@
----
+ ---
 const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
 import OrderAccordion from "./OrderAccordion.astro";
+import tryOtherTreats from "./tryOtherTreats.astro";
+
+// ADDED 
+import CartSidebar from "../components/CartSidebar.astro";
+
 const isCustom = item_name === "Cake" || item_name === "Cupcake"
 const isCake = item_name === "Cake"
 ---
@@ -12,7 +17,10 @@ const isCake = item_name === "Cake"
       <img id="carouselImage" src={url} alt={item_name} />
     </div>
     <div class="circles">
-      <button class="circle" onclick="showImage(0)" aria-label="first-image"></button>
+      <button class="circle" onclick="
+import { getAbsoluteLocaleUrl } from "astro:i18n";
+
+showImage(0)" aria-label="first-image"></button>
       <button class="circle" onclick="showImage(1)" aria-label="second-image"></button>
       <button class="circle" onclick="showImage(2)" aria-label="third-image"></button>
       <button class="circle" onclick="showImage(3)" aria-label="fourth-image"></button>
@@ -68,7 +76,7 @@ const isCake = item_name === "Cake"
         </label>
       </div>
       
-      <button class="submit-request">Add to bag</button>
+      <button class="add-button">Add to bag</button>
 
 
     </div>
@@ -190,13 +198,23 @@ const isCake = item_name === "Cake"
     <button class="submit-request">Submit Request</button>
   </div> }
 
-  <div class="accordion-placeholder">
+  <button class="add-button">Submit Request</button>
+
+  
+</div> }
+
+<div class="accordion-placeholder">
     <OrderAccordion/>
   </div>
 
 </section>
 
-<script>
+<!-- ADDED -->
+<CartSidebar/> 
+
+<!-- JavaScript -->
+<script define:vars={{ item_name }}>
+  // Carousel Code
   document.addEventListener("DOMContentLoaded", () => {
     const images = [
       "src/assets/products-cupcake.png",
@@ -236,8 +254,10 @@ const isCake = item_name === "Cake"
         frostingSpan.textContent = frostingMap[flavor];
       });
     });
-
+    // ADDED 
+    const addBtn = document.querySelector(".add-button");
     const sizeInfo = { 5: { price: "$45", serve: "Feeds around 6–8 people." }, 8: { price: "$65", serve: "Feeds around 10–12 people." }, 10: { price: "$85", serve: "Feeds around 16–18 people." } };
+
     function setupSizeButtons(sectionId, updatePrice = true) {
       const section = document.getElementById(sectionId);
       const priceEl = section.querySelector(".price");
@@ -253,6 +273,9 @@ const isCake = item_name === "Cake"
           serveEl.textContent = serve;
           buttons.forEach(b => b.classList.remove("active"));
           btn.classList.add("active");
+
+          // ADDED 
+          addBtn?.classList.add("ready-to-add");
         });
       });
     }
@@ -344,6 +367,126 @@ const isCake = item_name === "Cake"
 
 
   
+  // ADDED  
+  function getSelectedOptions() {
+    // Check which tab is active (Ready or Custom)
+      const isReadyTab = document.getElementById("ready").classList.contains("active");
+      const containerId = isReadyTab ? "ready" : "custom";
+      const container = document.getElementById(containerId);
+
+      // 1. Get Size
+      const sizeBtn = container.querySelector(".size-button.active");
+      if (!sizeBtn) return null; // Validation failed (no size selected)
+      const size = sizeBtn.dataset.size + " inches";
+
+      // 2. Get Flavor
+      // Note: names are 'ready-flavor' or 'custom-flavor'
+      const flavorInput = container.querySelector(`input[name="${containerId}-flavor"]:checked`);
+      const flavor = flavorInput ? flavorInput.value : "Standard";
+
+      // 3. Get Frosting
+      let frosting = "Standard";
+      if (isReadyTab) {
+        // Grab the auto-text
+        frosting = document.getElementById("auto-frosting")?.textContent || "Standard";
+      } else {
+        const frostingInput = container.querySelector(`input[name="${containerId}-frosting"]:checked`);
+        frosting = frostingInput ? frostingInput.value : "Standard";
+      }
+
+      // 4. Get Message
+      const msgBox = isReadyTab ? document.getElementById("messageBoxReady") : document.getElementById("messageBoxCustom");
+      const message = msgBox.value.trim();
+
+      // 5. Get Rush
+      const rushInput = container.querySelector(".switch input");
+      const isRush = rushInput.checked ? "YES (+ $40)" : "No";
+
+      // Format the string for the DB
+      // We combine all details into one string since your DB has a single 'customizations' string field
+      let customString = `Style: ${isReadyTab ? 'Ready-Made' : 'Custom'} | Size: ${size} | Flavor: ${flavor} | Frosting: ${frosting} | Rush: ${isRush}`;
+      
+      if (message) {
+        customString += ` | Message: "${message}"`;
+      }
+
+      return customString;
+  }
+  // ADDED: The API Call 
+  function getCurrentPrice() {
+    // Find the active tab (ready or custom)
+    const isReadyTab = document.getElementById("ready").classList.contains("active");
+    const containerId = isReadyTab ? "ready" : "custom";
+    const container = document.getElementById(containerId);
+    
+    // Grab the text (e.g. "$65" or "$75+")
+    const priceText = container.querySelector(".price").textContent;
+    
+    // Remove "$" and "+" signs to get just the number (e.g. 65)
+    const cleanPrice = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+    return cleanPrice;
+  }
+
+  async function addToBag(productName, quantity, customizations, price) {
+    try {
+      const response = await fetch("http://localhost:8000/api/cart/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // <--- IMPORTANT: Sends the cookie
+        body: JSON.stringify({
+          name: productName,
+          quantity: quantity,
+          customizations: customizations,
+          price: price
+        })
+      });
+
+      if (response.ok) {
+          console.log("Added to bag!");
+          // 1. Refresh the cart sidebar (triggering the listener we added in CartSidebar.astro)
+          document.dispatchEvent(new Event('cartUpdated'));
+          
+          // 2. Open the sidebar visually
+          const cartWrapper = document.getElementById("cart-wrapper");
+          cartWrapper.classList.add("open");
+      } else {
+        console.error("Server error");
+        alert("Failed to add to bag. Please try again.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error.");
+    }
+  }
+
+  // Attach Click Listener to the Main "Add to Bag" Button
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      // 1. Gather Data
+      const customizations = getSelectedOptions();
+      const currentPrice = getCurrentPrice();
+
+      // 2. Validation
+      if (!customizations) {
+        alert("Please select a size first.");
+        return;
+      }
+
+      // 3. Send to API
+      // item_name comes from the define:vars at the top
+      addToBag(item_name, 1, customizations, currentPrice);
+    });
+  }
+
+
+  const openCartButton = document.querySelector(".add-button");
+    const cartWrapper = document.getElementById("cart-wrapper");
+
+    if (openCartButton && cartWrapper) {
+      openCartButton.addEventListener("click", () => {
+        cartWrapper.classList.add("open");
+      });
+    }
   });
 
 </script>
@@ -353,8 +496,8 @@ const isCake = item_name === "Cake"
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding: 80px 100px;
-    min-height: auto;
+    padding: 20px 100px;
+    min-height: 90vh;
     box-sizing: border-box;
     gap: 50px;
     margin-bottom: 40px;
@@ -405,7 +548,7 @@ const isCake = item_name === "Cake"
     flex-direction: column;
     gap: 20px;
     justify-content: flex-start;
-    // height: 80vh;
+    /* height: 80vh; */ /* remove this for the allergens section */
     min-height: auto;
   }
   .checkout-container h2 {
@@ -448,12 +591,16 @@ const isCake = item_name === "Cake"
   }
   .size-button {
     padding: 10px 20px;
-    border: 1px solid #c96b6b;
+    border: 1px solid #D4596B;
     border-radius: 8px;
     background: transparent;
     font-size: 15px;
     cursor: pointer;
     transition: all 0.2s ease;
+  }
+  .size-button:hover {
+    border-color: #D4596B;
+    background-color: #F0CAC9;
   }
 
   .add-button {
@@ -466,6 +613,13 @@ const isCake = item_name === "Cake"
     font-weight: bold;
   }
 
+  /* ADDED */
+  .add-button.ready-to-add {
+  background-color: #D4596B; /* Your theme's active color */
+  color: white;
+  border-color: #D4596B;
+  cursor: pointer;
+}
   .accordion-placeholder {
     margin-top: 30px;
     /* border: 1px dashed #aaa; */
