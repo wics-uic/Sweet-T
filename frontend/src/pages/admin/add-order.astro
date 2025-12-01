@@ -1,53 +1,99 @@
 ---
-import AdminNavbar from "../../components/AdminNavbar.astro";
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
 import AdminLayout from "../../layouts/adminLayout.astro";
 ---
 
-<AdminLayout>
+<AdminLayout currentTab="add-order">
   <div class="add-order-container">
     <h1 class="page-title">Create New Order</h1>
 
+    <!-- Product basics -->
     <div class="form-section">
-      <label class="label">Product Type</label>
-
-      <select id="productType" class="input-select">
-        <option value="">Choose a product...</option>
-        <option value="Cake">Cake</option>
-        <option value="Cupcakes">Cupcakes</option>
-        <option value="Pastelitos">Pastelitos</option>
-        <option value="Cookies">Cookies</option>
-        <option value="Flan">Flan</option>
-      </select>
+      <label class="label">Product Type <span class="hint">(ex: 6" Cake, Flan, Cookie Box)</span></label>
+      <input
+        id="productType"
+        class="input-select"
+        placeholder="Type a product name…"
+      />
     </div>
 
-    <div class="form-section" id="sizeOrQtySection" style="display:none;">
-      <label class="label" id="sizeOrQtyLabel"></label>
-      <div class="radio-group" id="sizeOrQtyOptions"></div>
+    <div class="form-section">
+      <label class="label">Size / Quantity</label>
+      <input
+        id="sizeOrQty"
+        class="input-select"
+        placeholder='ex: "6-inch", "12 pieces", "1 tray"'
+      />
     </div>
 
-    <div class="form-section" id="flavorSection" style="display:none;">
-      <label class="label">Flavor</label>
-      <div class="radio-group">
-        <label class="radio-item"><input type="radio" name="flavor" value="Vanilla" /> Vanilla</label>
-        <label class="radio-item"><input type="radio" name="flavor" value="Chocolate" /> Chocolate</label>
-        <label class="radio-item"><input type="radio" name="flavor" value="Red Velvet" /> Red Velvet</label>
-        <label class="radio-item"><input type="radio" name="flavor" value="Carrot" /> Carrot</label>
+    <!-- Flavors (dynamic) -->
+    <div class="form-section">
+      <label class="label">Flavors <span class="hint">(select at least one)</span></label>
+
+      <div class="tag-input">
+        <input
+          id="newFlavorInput"
+          class="input-inline"
+          placeholder="Add a flavor (ex: Vanilla Bean, Guava)"
+        />
+        <button type="button" id="addFlavorBtn" class="pill-btn">
+          + Add flavor
+        </button>
+      </div>
+
+      <div id="flavorList" class="pill-list">
+        <!-- default & custom flavors rendered here -->
       </div>
     </div>
 
-    <div class="form-section" id="frostingSection" style="display:none;">
-      <label class="label">Frosting</label>
-      <div class="radio-group">
-        <label class="radio-item"><input type="radio" name="frosting" value="Vanilla" /> Vanilla</label>
-        <label class="radio-item"><input type="radio" name="frosting" value="Chocolate" /> Chocolate</label>
-        <label class="radio-item"><input type="radio" name="frosting" value="Red Velvet" /> Red Velvet</label>
-        <label class="radio-item"><input type="radio" name="frosting" value="Carrot" /> Carrot</label>
+    <!-- Frostings (dynamic) -->
+    <div class="form-section">
+      <label class="label">Frostings <span class="hint">(optional)</span></label>
+
+      <div class="tag-input">
+        <input
+          id="newFrostingInput"
+          class="input-inline"
+          placeholder="Add a frosting (ex: Vanilla buttercream)"
+        />
+        <button type="button" id="addFrostingBtn" class="pill-btn">
+          + Add frosting
+        </button>
+      </div>
+
+      <div id="frostingList" class="pill-list">
+        <!-- default & custom frostings rendered here -->
       </div>
     </div>
 
-    <div class="form-section" id="notesSection" style="display:none;">
-      <label class="label" id="notesLabel">Notes</label>
-      <textarea id="notesInput" class="notes-box" placeholder="Notes"></textarea>
+    <!-- Extra custom fields like Filling, Decoration, Allergens -->
+    <div class="form-section">
+      <label class="label">Extra Options <span class="hint">(optional fields)</span></label>
+
+      <div class="tag-input">
+        <input
+          id="newFieldLabelInput"
+          class="input-inline"
+          placeholder='Field label (ex: "Filling", "Decoration Theme", "Allergen Notes")'
+        />
+        <button type="button" id="addFieldBtn" class="pill-btn">
+          + Add field
+        </button>
+      </div>
+
+      <div id="customFieldsContainer" class="custom-fields-container">
+        <!-- dynamic extra fields -->
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="form-section" id="notesSection">
+      <label class="label">Notes for this order</label>
+      <textarea
+        id="notesInput"
+        class="notes-box"
+        placeholder="Any special instructions, color palette, pickup notes, etc."
+      ></textarea>
     </div>
 
     <button id="submitBtn" class="submit-btn" disabled>
@@ -56,112 +102,186 @@ import AdminLayout from "../../layouts/adminLayout.astro";
   </div>
 
   <script>
-    const productType = document.getElementById("productType");
+    document.addEventListener("DOMContentLoaded", () => {
+      const productType = document.getElementById("productType");
+      const sizeOrQty = document.getElementById("sizeOrQty");
+      const submitBtn = document.getElementById("submitBtn");
 
-    const sizeOrQtySection = document.getElementById("sizeOrQtySection");
-    const sizeOrQtyLabel = document.getElementById("sizeOrQtyLabel");
-    const sizeOrQtyOptions = document.getElementById("sizeOrQtyOptions");
+      // Flavor elements
+      const flavorList = document.getElementById("flavorList");
+      const newFlavorInput = document.getElementById("newFlavorInput");
+      const addFlavorBtn = document.getElementById("addFlavorBtn");
 
-    const flavorSection = document.getElementById("flavorSection");
-    const frostingSection = document.getElementById("frostingSection");
+      // Frosting elements
+      const frostingList = document.getElementById("frostingList");
+      const newFrostingInput = document.getElementById("newFrostingInput");
+      const addFrostingBtn = document.getElementById("addFrostingBtn");
 
-    const notesSection = document.getElementById("notesSection");
-    const notesLabel = document.getElementById("notesLabel");
-    const submitBtn = document.getElementById("submitBtn");
+      // Custom fields
+      const customFieldsContainer = document.getElementById("customFieldsContainer");
+      const newFieldLabelInput = document.getElementById("newFieldLabelInput");
+      const addFieldBtn = document.getElementById("addFieldBtn");
 
-    function options(type) {
-      sizeOrQtySection.style.display = "none";
-      flavorSection.style.display = "none";
-      frostingSection.style.display = "none";
-      notesSection.style.display = "none";
+      const notesInput = document.getElementById("notesInput");
 
-      sizeOrQtyOptions.innerHTML = "";
-      if (!type) {
-        return;
-      } 
+      // Default bakery-friendly options
+      const defaultFlavors = ["Vanilla", "Chocolate", "Red Velvet", "Carrot"];
+      const defaultFrostings = ["Vanilla Buttercream", "Chocolate Buttercream", "Cream Cheese", "Whipped Cream"];
 
-      flavorSection.style.display = "block";
+      // --------- Helpers to render chips with checkbox + remove ---------
+      function createChoiceChip({ name, groupName }) {
+        const wrapper = document.createElement("label");
+        wrapper.className = "choice-chip";
 
-      if (type === "Cake") {
-        sizeOrQtySection.style.display = "block";
-        sizeOrQtyLabel.textContent = "Cake Size (inches)";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = groupName;
+        checkbox.value = name;
 
-        ["5", "8", "10"].forEach(size => {
-          sizeOrQtyOptions.innerHTML += `<label class="radio-item"> <input type="radio" name="sizeOrQty" value="${size}" /> ${size} </label>`;
+        const textSpan = document.createElement("span");
+        textSpan.className = "chip-label";
+        textSpan.textContent = name;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "chip-remove";
+        removeBtn.textContent = "×";
+
+        removeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          wrapper.remove();
+          validateForm();
         });
 
-        frostingSection.style.display = "block";
-        notesSection.style.display = "block";
-        notesLabel.textContent = "Notes and specific colors";
+        wrapper.appendChild(checkbox);
+        wrapper.appendChild(textSpan);
+        wrapper.appendChild(removeBtn);
 
-      } else if (type === "Cupcakes") {
-        sizeOrQtySection.style.display = "block";
-        sizeOrQtyLabel.textContent = "Quantity";
+        // Any change should trigger validation
+        checkbox.addEventListener("change", validateForm);
 
-        [1, 2, 6, 12].forEach(qty => {
-          sizeOrQtyOptions.innerHTML += ` <label class="radio-item"> <input type="radio" name="sizeOrQty" value="${qty}" /> ${qty} </label>`;
-        });
-
-        frostingSection.style.display = "block";
-        notesSection.style.display = "block";
-        notesLabel.textContent = "Notes and specific colors";
-
-      } else if (type === "Pastelitos" || type === "Flan") {
-        sizeOrQtySection.style.display = "block";
-        sizeOrQtyLabel.textContent = "Quantity";
-
-        [1, 2, 6, 12].forEach(qty => {
-          sizeOrQtyOptions.innerHTML += `<label class="radio-item"> <input type="radio" name="sizeOrQty" value="${qty}" /> ${qty} </label>`;
-        });
-
-        notesSection.style.display = "block";
-        notesLabel.textContent = "Notes";
-
-      } else if (type === "Cookies") {
-        sizeOrQtySection.style.display = "block";
-        sizeOrQtyLabel.textContent = "Quantity";
-
-        [1, 2, 6, 12].forEach(qty => {
-          sizeOrQtyOptions.innerHTML += `<label class="radio-item"> <input type="radio" name="sizeOrQty" value="${qty}" /> ${qty} </label>`;
-        });
-
-        frostingSection.style.display = "block";
-        notesSection.style.display = "block";
-        notesLabel.textContent = "Notes";
-      }
-    }
-
-    function validateForm() {
-      const type = productType.value;
-      if (!type){
-        return (submitBtn.disabled = true);
-      } 
-
-      const sizeOrQty = document.querySelector('input[name="sizeOrQty"]:checked');
-      const flavor = document.querySelector('input[name="flavor"]:checked');
-
-      let frosting = true;
-      if (frostingSection.style.display !== "none") {
-        frosting = document.querySelector('input[name="frosting"]:checked');
+        return wrapper;
       }
 
-      if (type && sizeOrQty && flavor && frosting) {
-        submitBtn.disabled = false;
-      } else {
-        submitBtn.disabled = true;
+      function addFlavor(name) {
+        const trimmed = name.trim();
+        if (!trimmed) return;
+        const chip = createChoiceChip({ name: trimmed, groupName: "flavors" });
+        flavorList.appendChild(chip);
+        newFlavorInput.value = "";
+        validateForm();
       }
-    }
 
-    productType.addEventListener("change", () => {
-      options(productType.value);
+      function addFrosting(name) {
+        const trimmed = name.trim();
+        if (!trimmed) return;
+        const chip = createChoiceChip({ name: trimmed, groupName: "frostings" });
+        frostingList.appendChild(chip);
+        newFrostingInput.value = "";
+        validateForm();
+      }
+
+      // Seed defaults
+      defaultFlavors.forEach(addFlavor);
+      defaultFrostings.forEach(addFrosting);
+
+      // --------- Extra fields ---------
+      function addCustomField(labelText) {
+        const trimmed = labelText.trim();
+        if (!trimmed) return;
+
+        const fieldWrapper = document.createElement("div");
+        fieldWrapper.className = "custom-field";
+
+        const label = document.createElement("label");
+        label.className = "custom-field-label";
+        label.textContent = trimmed;
+
+        const input = document.createElement("input");
+        input.className = "input-select";
+        input.placeholder = `Enter ${trimmed.toLowerCase()}…`;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "chip-remove field-remove";
+        removeBtn.textContent = "×";
+
+        removeBtn.addEventListener("click", () => {
+          fieldWrapper.remove();
+        });
+
+        fieldWrapper.appendChild(label);
+        fieldWrapper.appendChild(input);
+        fieldWrapper.appendChild(removeBtn);
+
+        customFieldsContainer.appendChild(fieldWrapper);
+        newFieldLabelInput.value = "";
+      }
+
+      // --------- Validation ---------
+      function validateForm() {
+        const type = productType.value.trim();
+        const sizeVal = sizeOrQty.value.trim();
+
+        const selectedFlavors = document.querySelectorAll(
+          'input[name="flavors"]:checked'
+        );
+
+        // Required:
+        // - product type
+        // - size/qty
+        // - at least one flavor checked
+        const isValid =
+          type.length > 0 &&
+          sizeVal.length > 0 &&
+          selectedFlavors.length > 0;
+
+        submitBtn.disabled = !isValid;
+      }
+
+      // --------- Event wiring ---------
+      addFlavorBtn.addEventListener("click", () => addFlavor(newFlavorInput.value));
+      newFlavorInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addFlavor(newFlavorInput.value);
+        }
+      });
+
+      addFrostingBtn.addEventListener("click", () =>
+        addFrosting(newFrostingInput.value)
+      );
+      newFrostingInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addFrosting(newFrostingInput.value);
+        }
+      });
+
+      addFieldBtn.addEventListener("click", () =>
+        addCustomField(newFieldLabelInput.value)
+      );
+      newFieldLabelInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          addCustomField(newFieldLabelInput.value);
+        }
+      });
+
+      // Global input/change to keep validation up to date
+      document.addEventListener("input", validateForm);
+      document.addEventListener("change", validateForm);
+
+      // Initial validation
       validateForm();
-    });
 
-    document.addEventListener("change", validateForm);
-
-    submitBtn.addEventListener("click", () => {
-      alert("Order submitted!");
-      window.location.href = "/admin/dashboard";
+      // --------- Submit handler ---------
+      submitBtn.addEventListener("click", () => {
+        // For now just a simple success message.
+        // You can hook this into your backend later.
+        alert("Order submitted!");
+        window.location.href = "/admin/orders";
+      });
     });
   </script>
 
@@ -190,26 +310,122 @@ import AdminLayout from "../../layouts/adminLayout.astro";
       font-weight: 500;
     }
 
+    .hint {
+      font-size: 12px;
+      font-weight: 400;
+      color: #6b7280;
+      margin-left: 4px;
+    }
+
     .input-select {
       width: 100%;
       border: 1px solid #d1d5db;
       border-radius: 12px;
       padding: 12px;
       font-size: 16px;
+      background-color: #ffffff;
     }
 
-    .radio-group {
+    .tag-input {
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 10px;
+      gap: 8px;
+      margin-bottom: 10px;
     }
 
-    .radio-item {
+    .input-inline {
+      flex: 1;
+      border: 1px solid #d1d5db;
+      border-radius: 9999px;
+      padding: 8px 12px;
+      font-size: 14px;
+      background-color: #ffffff;
+    }
+
+    .pill-btn {
+      border-radius: 9999px;
+      background-color: #f3f4f6;
+      border: 1px solid #d1d5db;
+      font-size: 14px;
+      padding: 8px 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .pill-btn:hover {
+      background-color: #e5e7eb;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .choice-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 9999px;
+      border: 1px solid #d1d5db;
+      background-color: #ffffff;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .choice-chip input[type="checkbox"] {
+      cursor: pointer;
+    }
+
+    .chip-label {
+      font-size: 13px;
+    }
+
+    .chip-remove {
+      border: none;
+      background: none;
+      color: #9ca3af;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0 2px;
+      line-height: 1;
+    }
+
+    .chip-remove:hover {
+      color: #4b5563;
+    }
+
+    .custom-fields-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .custom-field {
+      position: relative;
+    }
+
+    .custom-field-label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .field-remove {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      background-color: #fee2e2;
+      border-radius: 9999px;
+      width: 20px;
+      height: 20px;
       display: flex;
       align-items: center;
-      font-size: 16px;
-      gap: 8px;
+      justify-content: center;
+      font-size: 12px;
     }
 
     .notes-box {
@@ -217,17 +433,30 @@ import AdminLayout from "../../layouts/adminLayout.astro";
       min-height: 120px;
       border-radius: 12px;
       padding: 12px;
-      border: 1px solid var(--color-gray-50); 
+      border: 1px solid #e5e7eb;
       font-size: 16px;
       background-color: white;
     }
 
     .submit-btn {
-      background-color: #d5586b;
+      background-color: #d1d5db;
       color: white;
       border-radius: 9999px;
       padding: 14px 26px;
       font-size: 18px;
+      border: none;
+      cursor: not-allowed;
+      transition: background-color 0.2s ease, transform 0.05s ease;
+    }
+
+    .submit-btn:not(:disabled) {
+      background-color: #d5586b;
+      cursor: pointer;
+    }
+
+    .submit-btn:not(:disabled):hover {
+      background-color: #cf4b5c;
+      transform: translateY(-1px);
     }
   </style>
 </AdminLayout>

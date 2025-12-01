@@ -1,10 +1,10 @@
 ---
 import AdminLayout from "../../layouts/adminLayout.astro"
-import MyOrders from "../../components/admin/ordersPage.astro"
+import CustomOrders from "../../components/admin/ordersPage.astro"
 import AdminNavbar from "../../components/admin/AdminNavbar.astro"
 ---
-<AdminLayout currentTab="orders">
-    <MyOrders/>
+<AdminLayout currentTab="custom">
+    <CustomOrders custom={true}/>
 </AdminLayout>
 
 <style>
