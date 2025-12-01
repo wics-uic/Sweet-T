@@ -1,1 +1,17 @@
 ---
+import AdminLayout from "../../layouts/adminLayout.astro"
+import MyOrders from "../../components/admin/customOrdersPage.astro"
+import AdminNavbar from "../../components/admin/AdminNavbar.astro";
+---
+<AdminLayout currentTab="orders">
+    <MyOrders/>
+</AdminLayout>
+
+<style>
+    html,
+    body {
+        margin-top: 0;
+        margin-bottom: 0;
+        gap: 0;
+    }
+</style>
