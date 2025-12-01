@@ -4,7 +4,7 @@ import { analytics } from "./admin-data/sales_calculations.ts";
 const baseTop = analytics.topProductsThisMonth;
 
 // decorate with rank + colors for UI
-const products = baseTop.map((p, index) => ({
+const decorated = baseTop.map((p, index) => ({
   rank: index + 1,
   name: p.name,
   revenue: p.revenue,
@@ -17,6 +17,14 @@ const products = baseTop.map((p, index) => ({
 //     {rank: 2, name: 'Custom Birthday Cakes', revenue: 980, color: '#D4E8DB'},
 //     {rank: 3, name: 'Tres Leches Cake', revenue: 765, color: '#F0CAC9'},
 // ];
+
+const fallback = [
+  { rank: 1, name: "Guava Pastelitos",        revenue: 1240, color: "#044A25" },
+  { rank: 2, name: "Custom Birthday Cakes",   revenue:  980, color: "#D4E8DB" },
+  { rank: 3, name: "Tres Leches Cake",        revenue:  765, color: "#F0CAC9" },
+];
+
+const products = decorated.length ? decorated : fallback;
 
 ---
 <div class="top-products-container flex">
