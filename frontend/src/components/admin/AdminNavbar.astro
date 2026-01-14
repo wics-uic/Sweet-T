@@ -1,7 +1,11 @@
 ---
 import userIcon from '../../assets/nav-user.svg?url';
-import "../../styles/global.css"
-const {currentTab="orders"} = Astro.props;
+
+interface Props {
+  currentTab: "login" | "add-order" | "orders" | "custom" | "sales";
+}
+
+const { currentTab } = Astro.props;
 ---
 
 <div class="admin-nav-container flex bg-white">
@@ -156,5 +160,3 @@ const {currentTab="orders"} = Astro.props;
 }
 
 </style>
-
-

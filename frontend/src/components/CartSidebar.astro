@@ -250,12 +250,12 @@ import '../styles/cartSidebar.css';
     // Helper function to build product DOM 
     function createProduct(item) {
       const product = document.createElement("div");
-      product.className = "product";
+      product.className = "cart-product";
 
       product.innerHTML = `
       <img src="${item.filepath}" alt="${item.name}">
-      <div class="content">
-        <h3 class="product-name">${item.name}</h3>
+      <div class="cart-content">
+        <h3 class="cart-product-name">${item.name}</h3>
         <p class="flavor">${item.flavor}</p>
         <p class="frosting">${item.frosting}</p>
         <p>${item.customizationDisplay}</p>
@@ -411,7 +411,7 @@ import '../styles/cartSidebar.css';
     display: none;
   }
 
-  .product {
+  .cart-product {
     width: 100%;
 
     display: flex;
@@ -420,11 +420,11 @@ import '../styles/cartSidebar.css';
     padding: 15px;
     padding-left: 5px;
 
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
 
   }
   
-  .product-name {
+  .cart-product-name {
     color: black;
   }
   
@@ -436,14 +436,14 @@ import '../styles/cartSidebar.css';
     gap: 1px;
   }
 
-  .product img {
+  .cart-product img {
     width: 100px;
     max-width: 50%;
     aspect-ratio: 1/1;
     object-fit: cover;
     border-radius: 7px;
   }
-  h3 {
+  .cart-content > h3 {
     color: #044A25;
     font-weight: 600;
     font-size: x-large;
@@ -516,4 +516,7 @@ import '../styles/cartSidebar.css';
   .checkout-btn:hover {
     background-color: #b84656 !important;
   }
+
+  
 </style>
+
