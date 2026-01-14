@@ -1,6 +1,6 @@
 ---
 // customOrderPage.astro
-import CustomOrder from "./customOrderItem.astro"
+import CustomOrder from "./orderItem.astro"
 import Orders from "./admin-data/orders.ts";
 
 const {custom=false} = Astro.props
@@ -62,10 +62,10 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
 
           <!-- Filter Buttons -->
           <div class="flex gap-2 mb-6 overflow-x-auto pb-2">
-            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-[#044A25] text-white" data-filter="all">All</button>
-            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]" data-filter="Pending">Pending</button>
-            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]" data-filter="Ready for Pickup">Ready for Pickup</button>
-            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25]" data-filter="Complete">Complete</button>
+            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-[#044A25] text-white cursor-pointer" data-filter="all">All</button>
+            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25] cursor-pointer" data-filter="Pending">Pending</button>
+            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25] cursor-pointer" data-filter="Ready for Pickup">Ready for Pickup</button>
+            <button class="filter-btn px-4 py-2 rounded-full whitespace-nowrap transition-colors text-sm bg-white text-gray-700 border border-gray-300 hover:border-[#044A25] cursor-pointer" data-filter="Complete">Complete</button>
           </div>
 
           <div class="space-y-3" id="orders-container">
@@ -256,6 +256,8 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
         
 
         updateFilterButtons('all');
+applyFilters();
+
       });
     </script>
   </body>

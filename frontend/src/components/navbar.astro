@@ -138,11 +138,11 @@ const navLinksRightSide = [
 const button = document.getElementById("menu-button");
 const menu = document.getElementById("mobile-menu");
 
-button.addEventListener("click", function() {
-  if (menu.classList.contains("hidden")) {
+button?.addEventListener("click", function() {
+  if (menu?.classList.contains("hidden")) {
     menu.classList.remove("hidden");
   } else {
-    menu.classList.add("hidden");
+    menu?.classList.add("hidden");
   }
 });
 

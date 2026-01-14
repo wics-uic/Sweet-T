@@ -7,11 +7,12 @@ import tryOtherTreats from "./tryOtherTreats.astro";
 import CartSidebar from "../components/CartSidebar.astro";
 
 const isCustom = item_name === "Cake" || item_name === "Cupcake"
+const isCake = item_name === "Cake"
 ---
 
-<section class="relative order-section z-[999] mb-[200px]">
+<section class="relative order-section z-[999] mb-[200px] flex flex-col lg:flex-row justify-center">
   <!-- left -->
-  <div class="img-carousel">
+  <div class="img-carousel sm:w-[full">
     <div class="carousel">
       <img id="carouselImage" src={url} alt={item_name} />
     </div>
@@ -36,7 +37,7 @@ showImage(0)" aria-label="first-image"></button>
     </div>
     <!--ready tab -->
     <div id="ready" class="tab-content active">
-      {isCustom && <div class="sizes">
+      {isCake && <div class="sizes">
         <button class="size-button" data-size="5" >5 inches</button>
         <button class="size-button" data-size="8" >8 inches</button>
         <button class="size-button" data-size="10" >10 inches</button>
@@ -55,6 +56,7 @@ showImage(0)" aria-label="first-image"></button>
           <label><input type="radio" name="ready-flavor" value="red velvet"> Red Velvet</label>
         </div>
       </div> }
+      
 
       {isCustom && 
       <div id="frosting" class="frosting">
@@ -76,14 +78,11 @@ showImage(0)" aria-label="first-image"></button>
       
       <button class="add-button">Add to bag</button>
 
-      {/* <OrderAccordion/> */}
-
 
     </div>
 
- <!--custom tab -->
+ 
 { isCustom && <div id="custom" class="tab-content">
-  <!-- Customer Information Section -->
   <div class="customer-info">
     <h3>Customer Information</h3>
     <div class="input-group">
@@ -100,7 +99,6 @@ showImage(0)" aria-label="first-image"></button>
     </div>
   </div>
 
-  <!-- Event Details Section -->
   <div class="event-details">
     <h3>Event Details</h3>
     <div class="event-grid">
@@ -122,11 +120,10 @@ showImage(0)" aria-label="first-image"></button>
     </div>
   </div>
 
-  <!-- Cake Specifications Section -->
+  
   <div class="cake-specs">
     <h3>Cake Specifications</h3>
     
-    <!-- Number of Servings -->
     <div class="input-group">
       <label>Number of servings <span class="required">*</span></label>
       <div class="servings-radio">
@@ -158,20 +155,17 @@ showImage(0)" aria-label="first-image"></button>
       </div>
     </div>
 
-    <!-- Cake Flavor -->
     <div class="input-group">
       <label>Cake Flavor <span class="required">*</span></label>
       <input type="text" placeholder="Enter cake flavor preferences" class="custom-input" required>
     </div>
 
-    <!-- Describe Your Vision -->
     <div class="input-group">
       <label>Describe your vision <span class="required">*</span></label>
       <textarea placeholder="Include colors, theme, style (elegant, whimsical, minimalist), and any specific elements you'd like incorporated." class="custom-textarea" required></textarea>
     </div>
   </div>
 
-  <!-- Inspiration Photos Section -->
   <div class="inspiration-photos">
     <h3>Inspiration Photos</h3>
     <div class="input-group">
@@ -187,7 +181,6 @@ showImage(0)" aria-label="first-image"></button>
     </div>
   </div>
 
-  <!-- Budget Section -->
   <div class="budget-section">
     <h3>Budget</h3>
     <div class="input-group">
@@ -202,6 +195,8 @@ showImage(0)" aria-label="first-image"></button>
       </select>
     </div>
   </div>
+    <button class="submit-request">Submit Request</button>
+  </div> }
 
   <button class="add-button">Submit Request</button>
 
@@ -286,6 +281,91 @@ showImage(0)" aria-label="first-image"></button>
     }
   setupSizeButtons("ready", true);
   setupSizeButtons("custom", false);
+
+    // --- Ready-made validation (cake only) ---
+  const readySection = document.getElementById("ready");
+  const readyButton = readySection?.querySelector(".submit-request");
+  const sizeButtonsReady = readySection?.querySelectorAll(".size-button") || [];
+  const flavorRadiosReady = document.querySelectorAll("input[name='ready-flavor']");
+
+  function updateReadyButtonState() {
+    if (!readyButton || sizeButtonsReady.length === 0 || flavorRadiosReady.length === 0) {
+      if (readyButton) readyButton.disabled = false;
+      return;
+    }
+
+    const sizeSelected = readySection.querySelector(".size-button.active");
+    const flavorSelected = readySection.querySelector("input[name='ready-flavor']:checked");
+
+    const isValid = !!sizeSelected && !!flavorSelected;
+    readyButton.disabled = !isValid;
+  }
+
+  sizeButtonsReady.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      updateReadyButtonState();
+    });
+  });
+
+  flavorRadiosReady.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      updateReadyButtonState();
+    });
+  });
+
+  // Initial state on load
+  updateReadyButtonState();
+
+    // --- Custom order validation (custom tab) ---
+  const customSection = document.getElementById("custom");
+
+  if (customSection) {
+    const customButton = customSection.querySelector(".submit-request");
+    const requiredInputs = customSection.querySelectorAll(".custom-input[required]");
+    const requiredTextarea = customSection.querySelector(".custom-textarea[required]");
+    const servingsRadios = customSection.querySelectorAll("input[name='servings']");
+    const fileInput = customSection.querySelector("#inspirationUpload");
+
+    function updateCustomButtonState() {
+      if (!customButton) return;
+
+      let allTextFilled = true;
+      requiredInputs.forEach((input) => {
+        if (!input.value.trim()) {
+          allTextFilled = false;
+        }
+      });
+
+      if (!requiredTextarea || !requiredTextarea.value.trim()) {
+        allTextFilled = false;
+      }
+
+      const servingsSelected = customSection.querySelector("input[name='servings']:checked");
+
+      const hasPhoto = fileInput && fileInput.files && fileInput.files.length > 0;
+
+      const isValid = allTextFilled && !!servingsSelected && !!hasPhoto;
+      customButton.disabled = !isValid;
+    }
+    requiredInputs.forEach((input) => {
+      input.addEventListener("input", updateCustomButtonState);
+    });
+
+    if (requiredTextarea) {
+      requiredTextarea.addEventListener("input", updateCustomButtonState);
+    }
+
+    servingsRadios.forEach((radio) => {
+      radio.addEventListener("change", updateCustomButtonState);
+    });
+
+    if (fileInput) {
+      fileInput.addEventListener("change", updateCustomButtonState);
+    }
+    updateCustomButtonState();
+  }
+
+
   
   // ADDED  
   function getSelectedOptions() {
@@ -411,7 +491,6 @@ showImage(0)" aria-label="first-image"></button>
 
 </script>
 
-<!-- Styles -->
 <style>
   .order-section {
     display: flex;
@@ -426,11 +505,11 @@ showImage(0)" aria-label="first-image"></button>
 
   .img-carousel {
     flex: 1;
-    max-width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
   }
+  
   #carouselImage {
     display: block;
     width: 100%;
@@ -802,6 +881,12 @@ input:checked + .slider:before {
 }
 
 /* Submit Button */
+.submit-request:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+
 .submit-request {
   margin-top: 30px;
   padding: 16px 0px;
@@ -819,8 +904,5 @@ input:checked + .slider:before {
 .submit-request:hover {
   background-color: #d46777;
 }
-
-
-
 
 </style>
