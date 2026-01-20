@@ -1,0 +1,395 @@
+
+> backend@1.0.0 start
+> nodemon index.js
+
+[33m[nodemon] 3.1.10[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node index.js`[39m
+Database connected successfully.
+Database URL: mongodb+srv://zpate6_db_user:SweetTBackend@cluster0.rucxdhr.mongodb.net/SweetT
+Admin user already exists
+Server is running on port 8000
+Admin email: admin@gmail.com pass: admin123
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4317 seconds)
+Received Order Request Body: {
+  "name": "Zeel Patel",
+  "email": "zpate6@uic.edu",
+  "phone": "2244444444",
+  "address": "12t8924y7",
+  "city": "Chicago",
+  "state": "Illinois",
+  "country": "grsrg",
+  "zipCode": "69127",
+  "pickupTime": "2025-11-30T01:49",
+  "cardType": "visa",
+  "credCardNum": "0000000000000000",
+  "expirationDate": "12/12",
+  "cvv": "123",
+  "ProductsOrdered": [
+    {
+      "name": "Cake",
+      "quantity": 1,
+      "customizations": "Style: Ready-Made | Size: 5 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: \"Make it nice!\"",
+      "price": 45,
+      "_id": "692bf61c79cdbc88816b6b29"
+    }
+  ]
+}
+User ID from request: ca0ecade-76c5-4b8d-91b2-baa72efd715f
+Error creating order: Error: Orders validation failed: CVV: Path `CVV` is required.
+    at ValidationError.inspect (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/error/validation.js:52:26)
+    at formatValue (node:internal/util/inspect:1148:19)
+    at inspect (node:internal/util/inspect:409:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2896:40)
+    at formatWithOptions (node:internal/util/inspect:2758:10)
+    at console.value (node:internal/console/constructor:356:14)
+    at console.error (node:internal/console/constructor:423:61)
+    at createOrder (file:///Users/zeelpatel/Documents/Third%20Year/WiCS/SweetT/Sweet-T/backend/Controller/checkoutController.js:52:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  errors: {
+    CVV: ValidatorError: Path `CVV` is required.
+        at validate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1414:13)
+        at SchemaType.doValidate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1398:7)
+        at /Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/document.js:3115:18
+        at process.processTicksAndRejections (node:internal/process/task_queues:84:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'CVV',
+      value: undefined,
+      reason: undefined,
+      Symbol(mongoose#validatorError): true
+    }
+  },
+  _message: 'Orders validation failed'
+}
+Validation Errors: {
+  CVV: ValidatorError: Path `CVV` is required.
+      at validate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1414:13)
+      at SchemaType.doValidate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1398:7)
+      at /Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/document.js:3115:18
+      at process.processTicksAndRejections (node:internal/process/task_queues:84:11) {
+    properties: {
+      validator: [Function (anonymous)],
+      message: 'Path `CVV` is required.',
+      type: 'required',
+      path: 'CVV',
+      fullPath: undefined,
+      value: undefined
+    },
+    kind: 'required',
+    path: 'CVV',
+    value: undefined,
+    reason: undefined,
+    Symbol(mongoose#validatorError): true
+  }
+}
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4323 seconds)
+Received Order Request Body: {
+  "name": "Zeel Patel",
+  "email": "zpate6@uic.edu",
+  "phone": "2244444444",
+  "address": "12t8924y7",
+  "city": "Chicago",
+  "state": "Illinois",
+  "country": "grsrg",
+  "zipCode": "69127",
+  "pickupTime": "2025-11-30T01:49",
+  "cardType": "visa",
+  "credCardNum": "0000000000000000",
+  "expirationDate": "12/12",
+  "cvv": "123",
+  "ProductsOrdered": [
+    {
+      "name": "Cake",
+      "quantity": 1,
+      "customizations": "Style: Ready-Made | Size: 5 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: \"Make it nice!\"",
+      "price": 45,
+      "_id": "692bf61c79cdbc88816b6b29"
+    }
+  ]
+}
+User ID from request: ca0ecade-76c5-4b8d-91b2-baa72efd715f
+Error creating order: Error: Orders validation failed: CVV: Path `CVV` is required.
+    at ValidationError.inspect (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/error/validation.js:52:26)
+    at formatValue (node:internal/util/inspect:1148:19)
+    at inspect (node:internal/util/inspect:409:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2896:40)
+    at formatWithOptions (node:internal/util/inspect:2758:10)
+    at console.value (node:internal/console/constructor:356:14)
+    at console.error (node:internal/console/constructor:423:61)
+    at createOrder (file:///Users/zeelpatel/Documents/Third%20Year/WiCS/SweetT/Sweet-T/backend/Controller/checkoutController.js:52:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  errors: {
+    CVV: ValidatorError: Path `CVV` is required.
+        at validate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1414:13)
+        at SchemaType.doValidate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1398:7)
+        at /Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/document.js:3115:18
+        at process.processTicksAndRejections (node:internal/process/task_queues:84:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'CVV',
+      value: undefined,
+      reason: undefined,
+      Symbol(mongoose#validatorError): true
+    }
+  },
+  _message: 'Orders validation failed'
+}
+Validation Errors: {
+  CVV: ValidatorError: Path `CVV` is required.
+      at validate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1414:13)
+      at SchemaType.doValidate (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/schemaType.js:1398:7)
+      at /Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/mongoose/lib/document.js:3115:18
+      at process.processTicksAndRejections (node:internal/process/task_queues:84:11) {
+    properties: {
+      validator: [Function (anonymous)],
+      message: 'Path `CVV` is required.',
+      type: 'required',
+      path: 'CVV',
+      fullPath: undefined,
+      value: undefined
+    },
+    kind: 'required',
+    path: 'CVV',
+    value: undefined,
+    reason: undefined,
+    Symbol(mongoose#validatorError): true
+  }
+}
+New user cookie generated: ef4ffcf0-0cf5-4348-a775-032c06b4d8b1 at 1:53:50 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4385 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4385 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4431 seconds)
+Received Order Request Body: {
+  "name": "Zeel Patel",
+  "email": "zpate6@uic.edu",
+  "phone": "2244444444",
+  "address": "12t8924y7",
+  "city": "Chicago",
+  "state": "Illinois",
+  "country": "grsrg",
+  "zipCode": "69127",
+  "pickupTime": "2025-11-30T01:54",
+  "cardType": "visa",
+  "credCardNum": "0000000000000000",
+  "expirationDate": "12/12",
+  "CVV": "123",
+  "ProductsOrdered": [
+    {
+      "name": "Cake",
+      "quantity": 1,
+      "customizations": "Style: Ready-Made | Size: 5 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: \"Make it nice!\"",
+      "price": 45,
+      "_id": "692bf61c79cdbc88816b6b29"
+    }
+  ]
+}
+User ID from request: ca0ecade-76c5-4b8d-91b2-baa72efd715f
+Order created by user ca0ecade-76c5-4b8d-91b2-baa72efd715f: new ObjectId('692bf83dc4402ab2136aed9b')
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4433 seconds)
+New user cookie generated: 7eef96b6-eca9-4910-a999-993021debf0d at 1:55:10 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4477 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4477 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4479 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4491 seconds)
+Debug - UserID: ca0ecade-76c5-4b8d-91b2-baa72efd715f
+Debug - Body: {
+  name: 'Cupcake',
+  quantity: 1,
+  customizations: 'Style: Ready-Made | Size: 5 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: "I would like many cupcakes!"',
+  price: 45
+}
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4491 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4494 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4509 seconds)
+Debug - UserID: ca0ecade-76c5-4b8d-91b2-baa72efd715f
+Debug - Body: {
+  name: 'Cake',
+  quantity: 1,
+  customizations: 'Style: Ready-Made | Size: 10 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: "Write a happy birthday message on it."',
+  price: 85
+}
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4509 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4510 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4510 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4543 seconds)
+Received Order Request Body: {
+  "name": "Jill Patricha",
+  "email": "zpate6@uic.edu",
+  "phone": "2244444444",
+  "address": "12t8924y7",
+  "city": "Chicago",
+  "state": "Illinois",
+  "country": "grsrg",
+  "zipCode": "69127",
+  "pickupTime": "2025-12-01T01:56",
+  "cardType": "visa",
+  "credCardNum": "0000000000000000",
+  "expirationDate": "12/12",
+  "CVV": "123",
+  "ProductsOrdered": [
+    {
+      "name": "Cupcake",
+      "quantity": 1,
+      "customizations": "Style: Ready-Made | Size: 5 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: \"I would like many cupcakes!\"",
+      "price": 45,
+      "_id": "692bf878c4402ab2136aeda6"
+    },
+    {
+      "name": "Cake",
+      "quantity": 1,
+      "customizations": "Style: Ready-Made | Size: 10 inches | Flavor: vanilla | Frosting: vanilla buttercream | Rush: No | Message: \"Write a happy birthday message on it.\"",
+      "price": 85,
+      "_id": "692bf88ac4402ab2136aedae"
+    }
+  ]
+}
+User ID from request: ca0ecade-76c5-4b8d-91b2-baa72efd715f
+Order created by user ca0ecade-76c5-4b8d-91b2-baa72efd715f: new ObjectId('692bf8acc4402ab2136aedb9')
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4545 seconds)
+New user cookie generated: 13d92a58-2ef1-4f47-ba3d-9672b0233135 at 1:56:36 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4600 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 4602 seconds)
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+Database connected successfully.
+Database URL: mongodb+srv://zpate6_db_user:SweetTBackend@cluster0.rucxdhr.mongodb.net/SweetT
+Admin user already exists
+node:events:486
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at app.listen (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/express/lib/application.js:635:24)
+    at file:///Users/zeelpatel/Documents/Third%20Year/WiCS/SweetT/Sweet-T/backend/index.js:213:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+
+Node.js v25.1.0
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+Database connected successfully.
+Database URL: mongodb+srv://zpate6_db_user:SweetTBackend@cluster0.rucxdhr.mongodb.net/SweetT
+[32m[nodemon] restarting due to changes...[39m
+Admin user already exists
+[32m[nodemon] starting `node index.js`[39m
+Database connected successfully.
+Database URL: mongodb+srv://zpate6_db_user:SweetTBackend@cluster0.rucxdhr.mongodb.net/SweetT
+Admin user already exists
+node:events:486
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::8000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at app.listen (/Users/zeelpatel/Documents/Third Year/WiCS/SweetT/Sweet-T/backend/node_modules/express/lib/application.js:635:24)
+    at file:///Users/zeelpatel/Documents/Third%20Year/WiCS/SweetT/Sweet-T/backend/index.js:213:9
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:89:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '::',
+  port: 8000
+}
+
+Node.js v25.1.0
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+file:///Users/zeelpatel/Documents/Third%20Year/WiCS/SweetT/Sweet-T/backend/index.js:14
+<<<<<<< HEAD
+^^
+
+SyntaxError: Unexpected token '<<'
+    at compileSourceTextModule (node:internal/modules/esm/utils:317:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:111:18)
+    at #translate (node:internal/modules/esm/loader:541:20)
+    at afterLoad (node:internal/modules/esm/loader:594:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:599:12)
+    at #createModuleJob (node:internal/modules/esm/loader:623:36)
+    at #getJobFromResolveResult (node:internal/modules/esm/loader:329:34)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:294:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:25)
+
+Node.js v25.1.0
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+file:///Users/zeelpatel/Documents/Third%20Year/WiCS/SweetT/Sweet-T/backend/index.js:14
+<<<<<<< HEAD
+^^
+
+SyntaxError: Unexpected token '<<'
+    at compileSourceTextModule (node:internal/modules/esm/utils:317:16)
+    at ModuleLoader.moduleStrategy (node:internal/modules/esm/translators:111:18)
+    at #translate (node:internal/modules/esm/loader:541:20)
+    at afterLoad (node:internal/modules/esm/loader:594:29)
+    at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:599:12)
+    at #createModuleJob (node:internal/modules/esm/loader:623:36)
+    at #getJobFromResolveResult (node:internal/modules/esm/loader:329:34)
+    at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:294:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:25)
+
+Node.js v25.1.0
+[31m[nodemon] app crashed - waiting for file changes before starting...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node index.js`[39m
+Database connected successfully.
+Database URL: mongodb+srv://zpate6_db_user:SweetTBackend@cluster0.rucxdhr.mongodb.net/SweetT
+Admin user already exists
+Server is running on port 8000
+Admin email: admin@gmail.com pass: admin123
+New user cookie generated: 23610085-e31a-4f00-877d-5cd9ee4985ed at 2:24:11 AM
+New user cookie generated: d99d8de5-6b10-426f-8554-c1a93bbe329d at 2:24:12 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6207 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6283 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6285 seconds)
+New user cookie generated: 12350867-47ec-4de7-9420-a4a1c123bcf5 at 2:25:32 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6287 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6390 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6392 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6395 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6395 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6396 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6397 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6413 seconds)
+New user cookie generated: 0ccf41fa-f9cf-4595-aa7d-be2fbe11eab8 at 2:27:45 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6420 seconds)
+New user cookie generated: bd0bcabf-ae85-4c4f-86ad-32e4e1b5b6e9 at 2:28:52 AM
+New user cookie generated: e75718d7-84e7-431d-9b9d-d7bc9246b704 at 2:28:53 AM
+New user cookie generated: 376ab044-0ce6-4763-92a0-f49929e2cd41 at 2:29:00 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6495 seconds)
+New user cookie generated: 5fc3de3c-d786-47d9-8dab-c037365b5228 at 2:29:02 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6507 seconds)
+New user cookie generated: 64520216-9814-4eb5-ba50-bbb2823432f9 at 2:29:14 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6509 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6676 seconds)
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6676 seconds)
+New user cookie generated: 6d2eb99f-4e75-4e2b-851c-3937aa3749f4 at 2:33:06 AM
+New user cookie generated: fa5fc36c-de4b-47d4-9e1e-de2d4eba75b9 at 2:33:06 AM
+Existing user: ca0ecade-76c5-4b8d-91b2-baa72efd715f (age: 6741 seconds)

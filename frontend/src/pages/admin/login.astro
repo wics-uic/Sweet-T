@@ -1,11 +1,10 @@
 ---
-import LoginSection from "../../components/loginSection.astro"
+import LoginSection from "../../components/admin/loginSection.astro"
 import AdminLayout from "../../layouts/adminLayout.astro"
+import "../../styles/global.css";
 ---
 
-
----
-<AdminLayout>
+<AdminLayout currentTab="login">
     <LoginSection/>
 </AdminLayout>
 

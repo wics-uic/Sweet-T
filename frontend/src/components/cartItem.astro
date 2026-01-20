@@ -1,0 +1,144 @@
+---
+const {id, image, name, qty, price} = Astro.props
+---
+
+<div class="cart-item" data-item-id={id}>
+    <img src={image} alt={name} class="item-image" />
+    <div class="item-info">
+        <h3 class="item-name">{name}</h3>
+        <p class="item-qty">Qty: {qty}</p>
+        <p class="item-notes">Notes:</p>
+        <div class="item-actions">
+        <button class="action-link delete-btn" data-item-id={id}>Delete</button>
+        <span class="separator">|</span>
+        <button class="action-link edit-btn" data-item-id={id}>Edit</button>
+        </div>
+    </div>
+    <div class="item-price-section">
+        <p class="price-label">Total:</p>
+        <p class="item-price" data-item-id={id}>${price.toFixed(2)}</p>
+    </div>
+</div>
+
+
+<style>
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+
+  .cart-item {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 20px;
+    align-items: start;
+  }
+
+  .item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .item-name {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .item-qty,
+  .item-notes {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .item-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .action-link {
+    background: none;
+    border: none;
+    color: #5a8c6f;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .action-link:hover {
+    color: #4a7c5f;
+  }
+
+  .separator {
+    color: #999;
+  }
+
+  .item-price-section {
+    text-align: right;
+  }
+
+  .price-label {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0 0 5px 0;
+  }
+
+  .item-price {
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .cart-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 2px solid #d4c4a8;
+  }
+
+  .items-count,
+  .items-total {
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .cart-page {
+      padding: 20px;
+    }
+
+    .cart-item {
+      grid-template-columns: 60px 1fr;
+      gap: 15px;
+    }
+
+    .item-price-section {
+      grid-column: 2;
+      text-align: left;
+      margin-top: 10px;
+    }
+  }
+</style>

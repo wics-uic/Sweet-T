@@ -10,7 +10,7 @@ import flan from "/src/assets/products-flan.png";
 ---
 
 <section class="products-section">
-  <h1>What celebration are we creating together?</h1>
+  <h1 class="lg:ml-[125px] md:text-center sm:text-center">What celebration are we creating together?</h1>
 
   <div class="grid grid-top">
     {Products.slice(0, 2).map((product, i) => (
@@ -48,7 +48,7 @@ import flan from "/src/assets/products-flan.png";
 }
 
 .products-section {
-  padding: 2rem;
+  padding: 30px;
 }
 
 .products-section h1 {
@@ -63,7 +63,7 @@ import flan from "/src/assets/products-flan.png";
   display: grid;
   margin: 0 auto 2rem;
   width: 100%;
-  max-width: calc(var(--card-w) * 3); 
+  max-width: calc(var(--card-w) * 3.5); 
   column-gap: 1.5rem;
   row-gap: 1.5rem;
 }

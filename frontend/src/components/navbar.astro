@@ -8,7 +8,7 @@ const navLinks = [
 ];
 const navLinksRightSide = [ 
   {name: "Cart", path: "/cart", image: "src/assets/nav-basket.svg"}, 
-  {name: "Login", path: "/login", image: "src/assets/nav-user.svg"} 
+  {name: "Login", path: "/admin/login", image: "src/assets/nav-user.svg"} 
 ];
 ---
 
@@ -31,7 +31,7 @@ const navLinksRightSide = [
 
   <div class="nav-bar-right absolute right-[70px] hidden md:flex">
     <ul>
-      {navLinksRightSide.map((link) => <li><a class="link" href={link.path}><img src={link.image} height="32px" width="32px"/></a></li>)}  
+      {navLinksRightSide.map((link) => <li><a class="link" href={link.path} id={link.name === "Cart" ? "desktop-cart-btn" : ""}><img src={link.image} height="32px" width="32px"/></a></li>)}  
     </ul>
   </div>
 </div>
@@ -44,7 +44,7 @@ const navLinksRightSide = [
 
   <ul class="icon-row flex justify-center gap-6 mt-4">
     {navLinksRightSide.map((link) =>
-      <li><a href={link.path}><img src={link.image} width="28" height="28"/></a></li>
+      <li><a href={link.path} id={link.name === "Cart" ? "mobile-cart-btn" : ""}><img src={link.image} width="28" height="28"/></a></li>
     )}
   </ul>
 </div>
@@ -138,12 +138,32 @@ const navLinksRightSide = [
 const button = document.getElementById("menu-button");
 const menu = document.getElementById("mobile-menu");
 
-button.addEventListener("click", function() {
-  if (menu.classList.contains("hidden")) {
+button?.addEventListener("click", function() {
+  if (menu?.classList.contains("hidden")) {
     menu.classList.remove("hidden");
   } else {
-    menu.classList.add("hidden");
+    menu?.classList.add("hidden");
   }
 });
+
+// Cart Toggle Logic
+function setupCartToggle(btnId) {
+  const btn = document.getElementById(btnId);
+  const cartWrapper = document.getElementById("cart-wrapper");
+  
+  if (btn && cartWrapper) {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      cartWrapper.classList.add("open");
+      // Close mobile menu if open
+      if (!menu.classList.contains("hidden")) {
+        menu.classList.add("hidden");
+      }
+    });
+  }
+}
+
+setupCartToggle("desktop-cart-btn");
+setupCartToggle("mobile-cart-btn");
 
 </script>
