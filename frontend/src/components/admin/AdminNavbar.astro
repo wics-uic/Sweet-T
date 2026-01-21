@@ -11,7 +11,7 @@ const { currentTab } = Astro.props;
 <div class="admin-nav-container flex bg-white">
   <div class="header-content">
     <a class="title" href="/">Sweet T Bakery</a>
-    <a href="/admin/account" class="account-btn">
+    <a href="admin/account" class="account-btn">
       <img src={userIcon} />
     </a>
   </div>
@@ -19,26 +19,26 @@ const { currentTab } = Astro.props;
   <div class="nav-buttons">
     <div class="tabs">
       <a
-        href="/admin/orders"
+        href="admin/orders"
         class={`nav-btn ${currentTab === "orders" ? "active" : ""}`}
       >
         Orders
       </a>
       <a
-        href="/admin/custom-requests"
+        href="admin/custom-requests"
         class={`nav-btn ${currentTab === "custom" ? "active" : ""}`}
       >
         Custom Requests
       </a>
       <a
-        href="/admin/sales"
+        href="admin/sales"
         class={`nav-btn ${currentTab === "sales" ? "active" : ""}`}
       >
         Sales
       </a>
     </div>
 
-    <a href="/admin/add-order" class="add-order-btn">
+    <a href="admin/add-order" class="add-order-btn">
       <span class="plus">+</span>
       <span>Add Order</span>
     </a>
