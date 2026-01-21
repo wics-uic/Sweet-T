@@ -7,6 +7,8 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://wics-uic.github.io',
+  base: '/Sweet-T',
   output: 'server',
   vite: {
     plugins: [tailwindcss()]
