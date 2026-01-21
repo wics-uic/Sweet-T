@@ -11,7 +11,7 @@ steps:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./frontend # <--- Add this
+        working-directory: ./frontend # 
 
       - name: Build Astro
         run: npm run build
