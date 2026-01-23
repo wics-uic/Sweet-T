@@ -6,12 +6,12 @@ const {name = "default",body="default", url="default", order="left"} = Astro.pro
         <h2 class="flex justify-start font-bold text-[28px] sm:text-[32px] md:text-[44px] lg:text-[50px]">{name}</h2>
             <p class="text-left font-medium text-[16px] sm:text-[18px] md:text-[22px] lg:text-[26]">{body}</p>
         <div class="flex justify-start">
-            <a href="cakes" class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px] text-center"> Shop all treats </a>
+            <a href={`${import.meta.env.BASE_URL}/cakes`} class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px] text-center"> Shop all treats </a>
         </div> :
         <h2 class="flex justify-end font-bold text-[28px] sm:text-[32px] md:text-[44px] lg:text-[50px]">{name}</h2>
             <p class="text-right font-medium text-[16px] sm:text-[18px] md:text-[22px] lg:text-[26]">{body}</p>
         <div class="flex justify-end">
-            <a href="cakes" class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px] text-center"> Shop all treats </a>
+            <a href={`${import.meta.env.BASE_URL}/cakes`} class="font-medium text-white rounded-[8px] bg-[#D4596B] p-5 w-[200px] text-center"> Shop all treats </a>
         </div>
 
     }

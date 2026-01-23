@@ -31,18 +31,18 @@ const navInfoLinks = ["Contact us", "FAQ"];
 
   <!-- Navigation links -->
   <div class="mt-10 flex flex-wrap justify-center gap-4 sm:gap-6 text-beige-50 text-sm">
-    <a href="cakes" class="hover:underline">🍰 Cakes</a>
-    <a href="customCakes" class="hover:underline">🎂 Custom cakes</a>
-    <a href="cupcakes" class="hover:underline">🧁 Cupcakes</a>
-    <a href="customCupcakes" class="hover:underline">🧁✨ Custom cupcakes</a>
-    <a href="pastelitos" class="hover:underline">🥧 Pastelitos</a>
-    <a href="flans" class="hover:underline">🍮 Flan</a>
-    <a href="cookies" class="hover:underline">🍪 Assorted cookies</a>
+    <a href={`${import.meta.env.BASE_URL}/cakes`} class="hover:underline">🍰 Cakes</a>
+    <a href={`${import.meta.env.BASE_URL}/customCakes`} class="hover:underline">🎂 Custom cakes</a>
+    <a href={`${import.meta.env.BASE_URL}/cupcakes`} class="hover:underline">🧁 Cupcakes</a>
+    <a href={`${import.meta.env.BASE_URL}/customCupcakes`} class="hover:underline">🧁✨ Custom cupcakes</a>
+    <a href={`${import.meta.env.BASE_URL}/pastelitos`} class="hover:underline">🥧 Pastelitos</a>
+    <a href={`${import.meta.env.BASE_URL}/flans`} class="hover:underline">🍮 Flan</a>
+    <a href={`${import.meta.env.BASE_URL}/cookies`} class="hover:underline">🍪 Assorted cookies</a>
   </div>
 
   <div class="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-6 text-beige-50 text-sm justify-center">
-    <a href="#" class="hover:underline">Contact us</a>
-    <a href="Faq" class="hover:underline">FAQ</a>
+    <a href={`${import.meta.env.BASE_URL}/`} class="hover:underline">Contact us</a>
+    <a href={`${import.meta.env.BASE_URL}/Faq`} class="hover:underline">FAQ</a>
   </div>
 </div>
 
