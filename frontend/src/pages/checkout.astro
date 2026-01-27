@@ -115,14 +115,18 @@ import Layout from "../layouts/layout.astro";
   const ORDER_API_URL = "http://localhost:8000/api/orders";
   
   // Reuse catalog logic for images (simplified version of CartSidebar logic)
-  const PRODUCT_CATALOG = {
-    "Cupcake": { filepath: "/products-cupcake.png" },
-    "Cake": { filepath: "/landing-cake.png" },
-    "Pastelito": { filepath: "/products-pastelitos.png" },
-    "Cookie": { filepath: "/products-cookie.png" },
-    "Flan": { filepath: "/products-flan.png" }
-  };
+  const BASE_PATH = "/Sweet-T";
 
+  const PRODUCT_CATALOG = {
+    "Cupcake": { filepath: `${BASE_PATH}/src/assets/products-cupcake.png` },
+    "Cake": { filepath: `${BASE_PATH}/src/assets/landing-cake.png` },
+    "Pastelito": { filepath: `${BASE_PATH}/src/assets/products-pastelitos.png` },
+    "Cookie": { filepath: `${BASE_PATH}/src/assets/products-cookie.png` },
+    "Flan": { filepath: `${BASE_PATH}/src/assets/products-flan.png` }
+  };
+  
+  // Update your default/fallback image as well
+  const FALLBACK_IMAGE = `${BASE_PATH}/testimonial-3.png`;
   let currentCartItems = [];
 
   async function fetchCart() {
@@ -153,7 +157,7 @@ import Layout from "../layouts/layout.astro";
     container.innerHTML = products.map(item => {
       const rawName = item.name || "";
       const normalizedName = rawName.charAt(0).toUpperCase() + rawName.slice(1).toLowerCase();
-      const catalogItem = PRODUCT_CATALOG[normalizedName] || PRODUCT_CATALOG[rawName] || { filepath: "/testimonial-3.png" };
+      const catalogItem = PRODUCT_CATALOG[normalizedName] || PRODUCT_CATALOG[rawName] || { filepath: FALLBACK_IMAGE};
       const itemTotal = (item.price || 0) * item.quantity;
       total += itemTotal;
 
@@ -221,7 +225,7 @@ import Layout from "../layouts/layout.astro";
             alert("Order placed successfully!");
             // Optionally clear cart here if backend doesn't do it automatically
             // Redirect to home or success page
-            window.location.href = "/";
+            window.location.href = `${BASE_PATH}/`;
         } else {
             throw new Error(result.message || "Failed to place order");
         }

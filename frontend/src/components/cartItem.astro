@@ -1,9 +1,11 @@
 ---
-const {id, image, name, qty, price} = Astro.props
+const {id, image, name, qty, price} = Astro.props;
+const base = import.meta.env.BASE_URL;
+const imagePath = `${base}/${image.replace(/^\//, '')}`;
 ---
 
 <div class="cart-item" data-item-id={id}>
-    <img src={image} alt={name} class="item-image" />
+    <img src={imagePath} alt={name} class="item-image" />
     <div class="item-info">
         <h3 class="item-name">{name}</h3>
         <p class="item-qty">Qty: {qty}</p>

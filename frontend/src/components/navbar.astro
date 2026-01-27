@@ -1,14 +1,16 @@
 ---
+const base = import.meta.env.BASE_URL;
 const navLinks = [ 
-  {name: "Cakes", path: "/cakes"}, 
-  {name: "Cupcakes", path: "/cupcakes"}, 
-  {name: "Pastelitos", path: "/pastelitos"}, 
-  {name: "Cookies", path: "/cookies"}, 
-  {name: "Flans", path: "/flans"} 
+  {name: "Cakes", path: `${base}/cakes/`}, 
+  {name: "Cupcakes", path: `${base}/cupcakes/`}, 
+  {name: "Pastelitos", path: `${base}/pastelitos/`}, 
+  {name: "Cookies", path: `${base}/cookies/`}, 
+  {name: "Flans", path: `${base}/flans/`} 
 ];
+
 const navLinksRightSide = [ 
-  {name: "Cart", path: "/cart", image: "src/assets/nav-basket.svg"}, 
-  {name: "Login", path: "/admin/login", image: "src/assets/nav-user.svg"} 
+  {name: "Cart", path: `${base}/cart/`, image: `${base}/src/assets/nav-basket.svg`}, 
+  {name: "Login", path: `${base}/admin/login/`, image: `${base}/src/assets/nav-user.svg`} 
 ];
 ---
 
@@ -21,19 +23,28 @@ const navLinksRightSide = [
 
   <div class="nav-bar-left absolute left-[70px] hidden md:flex">
     <ul>
-      {navLinks.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}  
+      {navLinks.map((link) => (
+        <li><a class="link" href={link.path}>{link.name}</a></li>
+      ))}  
     </ul>
   </div>
 
   <div class="nav-bar-center">
-    <a class="logo" href={`${import.meta.env.BASE_URL}/`}><img src="src/assets/Sweet_T.svg"/></a>
+    <a class="logo" href={`${base}/`}>
+      <img src={`${base}/src/assets/Sweet_T.svg`} alt="Sweet T Logo"/>
+    </a>
   </div>
 
   <div class="nav-bar-right absolute right-[70px] hidden md:flex">
     <ul>
-      {navLinksRightSide.map((link) => <li><a class="link" href={link.path} id={link.name === "Cart" ? "desktop-cart-btn" : ""}><img src={link.image} height="32px" width="32px"/></a></li>)}  
+      {navLinksRightSide.map((link) => (
+        <li>
+          <a class="link" href={link.path} id={link.name === "Cart" ? "desktop-cart-btn" : ""}>
+            <img src={link.image} height="32" width="32"/>
+          </a>
+        </li>
+      ))}  
     </ul>
-  </div>
 </div>
 
 <!-- code for phone -->
