@@ -6,6 +6,7 @@ export default defineConfig({
   site: 'https://wics-uic.github.io',
   base: '/Sweet-T',
   output: 'static',
+  trailingSlash: 'always',
   vite: {
     plugins: [tailwindcss()]
   }
