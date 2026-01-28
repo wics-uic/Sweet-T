@@ -1,5 +1,6 @@
 ---
 import '../styles/cartSidebar.css';
+import navBasket from '../assets/nav-basket.svg';
 ---
 
 <div class="cart-wrapper" id="cart-wrapper">
@@ -7,7 +8,7 @@ import '../styles/cartSidebar.css';
 
   <aside class="cart-sidebar">
     <div class="cart-header">
-      <img src={`${import.meta.env.BASE_URL}/src/assets/nav-basket.svg`} alt="Shopping Bag"/>
+      <img src={navBasket.src} alt="Shopping Bag"/>
       <h2>Your Bag</h2>
       <button id="close-cart-btn" class="close-btn" aria-label="Close cart">&times;</button>
     </div>
