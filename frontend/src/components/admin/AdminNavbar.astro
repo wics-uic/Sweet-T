@@ -1,5 +1,7 @@
 ---
 import userIcon from '../../assets/nav-user.svg?url';
+const base = import.meta.env.BASE_URL;
+const imagePath = `${base}/${userIcon.replace(/^\//, '')}`;
 
 interface Props {
   currentTab: "login" | "add-order" | "orders" | "custom" | "sales";
@@ -12,7 +14,7 @@ const { currentTab } = Astro.props;
   <div class="header-content">
     <a class="title" href={`${import.meta.env.BASE_URL}/`}>Sweet T Bakery</a>
     <a href={`${import.meta.env.BASE_URL}/admin/account`} class="account-btn">
-      <img src={userIcon} />
+      <img src={imagePath} />
     </a>
   </div>
 

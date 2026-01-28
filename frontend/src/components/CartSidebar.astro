@@ -267,7 +267,7 @@ import '../styles/cartSidebar.css';
               <button onclick="window.updateCartItem('${item._id}', 'increase')">+</button>
             </div>
             <button class="trash" onclick="window.deleteCartItem('${item._id}')">
-                <img src="src/assets/trash.svg" alt="Remove">
+                <img src="${import.meta.env.BASE_URL}/src/assets/trash.svg" alt="Remove">
             </button>
           </div>
           <p class="total">$${item.total.toFixed(2)}</p>
