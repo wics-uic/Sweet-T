@@ -1,13 +1,12 @@
 ---
 const { url = "", item_name = "default name", price = "$0", ready=false, link="/" } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const imagePath = `${base}/${url.replace(/^\//, '')}`;
 ---
 
 <div class="product">
   <a href=`/${link}`>
     <div class="product-image-container">
-      <img src={imagePath} class="product-image" />
+      <img src={url.src} class="product-image" />
     </div>
   
   <div class="product-text">
