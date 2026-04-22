@@ -1,12 +1,16 @@
 ---
+import cupcake from "/src/assets/products-cupcake.png";
+import pastelitos from "/src/assets/products-pastelitos.png";
+import cookie from "/src/assets/products-cookie.png";
+import flan from "/src/assets/products-flan.png";
 
 const base = import.meta.env.BASE_URL;
 
 const treats = [
-  { name: "Ready made & custom cupcakes", price: "$42/dozen", img: "/src/assets/products-cupcake.png", url:`${base}/cakes` },
-  { name: "Pastelitos", price: "$36/dozen", img: "/src/assets/products-pastelitos.png", url: `${base}/pastelitos` },
-  { name: "Assorted cookies", price: "$36/dozen", img: "/src/assets/products-cookie.png", url: `${base}/cookies` },
-  { name: "Flan", price: "$30/dozen", img: "/src/assets/products-flan.png", url: `${base}/flans` },
+  { name: "Ready made & custom cupcakes", price: "$42/dozen", img: cupcake.src, url:`${base}/cupcakes` },
+  { name: "Pastelitos", price: "$36/dozen", img: pastelitos.src, url: `${base}/pastelitos` },
+  { name: "Assorted cookies", price: "$36/dozen", img: cookie.src, url: `${base}/cookies` },
+  { name: "Flan", price: "$30/dozen", img: flan.src, url: `${base}/flans` },
 ];
 ---
 
