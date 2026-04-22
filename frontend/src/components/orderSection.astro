@@ -4,6 +4,13 @@ import OrderAccordion from "./OrderAccordion.astro";
 import tryOtherTreats from "./tryOtherTreats.astro";
 import { getAbsoluteLocaleUrl } from "astro:i18n";
 
+import CupcakeImg from "../assets/products-cupcake.png";
+import CakeImg from "../assets/products-cake.png";
+import CookieImg from "../assets/products-cookie.png";
+import FlanImg from "../assets/products-flan.png";
+
+const carouselImages = [CupcakeImg.src, CakeImg.src, CookieImg.src, FlanImg.src];
+
 // ADDED 
 import CartSidebar from "../components/CartSidebar.astro";
 
@@ -218,15 +225,10 @@ showImage(0)" aria-label="first-image"></button>
 <CartSidebar/> 
 
 <!-- JavaScript -->
-<script define:vars={{ item_name }}>
+<script define:vars={{ item_name, carouselImages  }}>
   // Carousel Code
   document.addEventListener("DOMContentLoaded", () => {
-    const images = [
-      "src/assets/products-cupcake.png",
-      "src/assets/products-cake.png",
-      "src/assets/products-cookie.png",
-      "src/assets/products-flan.png"
-    ];
+    const images = carouselImages;
 
     const img = document.getElementById("carouselImage");
     const buttons = document.querySelectorAll(".circle");

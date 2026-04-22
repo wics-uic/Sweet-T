@@ -1,15 +1,15 @@
 ---
 import TestimonialItem from "./testimonialItem.astro";
 import testimonials from "./product-data/testimonials";
-// shuffle function i got from stackoverflow, should be more random than the last one
+
+const images = import.meta.glob<{ default: { src: string } }>('/src/assets/*.{jpeg,jpg,png,gif}', { eager: true });
+
 function shuffle<T>(array: T[]) {
     let currentIndex = array.length,  randomIndex;
 
     while (currentIndex != 0) {
-  
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-  
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
@@ -22,9 +22,18 @@ let randomTests = shuffledTests.slice(0, 3)
 ---
 
 <section class="w-full flex p-4 sm:px-6 md:p-[10px] lg:px-20 justify-center">
-<div class="flex flex-col border  border-[#D4596B] rounded-[32px] bg-[#F0CAC9] items-center gap-[32px] w-full max-w-[1200px] mx-auto pt-[40px] pb-[40px] p-6 md:p-[12px] lg:px-[24px]">
-    {randomTests.map((test, i) => ( 
-        <TestimonialItem name={test.name}, body={test.message}, pic={test.picture}, order={i % 2 == 0 ? "right" : "left"}/>
-    ))}
+<div class="flex flex-col border border-[#D4596B] rounded-[32px] bg-[#F0CAC9] items-center gap-[32px] w-full max-w-[1200px] mx-auto pt-[40px] pb-[40px] p-6 md:p-[12px] lg:px-[24px]">
+    {randomTests.map((test, i) => {
+        const resolvedImagePath = images['/' + test.picture]?.default?.src;
+
+        return (
+            <TestimonialItem 
+                name={test.name} 
+                body={test.message} 
+                pic={resolvedImagePath} 
+                order={i % 2 == 0 ? "right" : "left"}
+            />
+        )
+    })}
 </div>
 </section>
