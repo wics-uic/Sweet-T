@@ -1,9 +1,9 @@
 ---
 const treats = [
-  { name: "Ready made & custom cupcakes", price: "$42/dozen", img: "src/assets/products-cupcake.png", url:"/cakes" },
-  { name: "Pastelitos", price: "$36/dozen", img: "src/assets/products-pastelitos.png", url: "/pastelitos" },
-  { name: "Assorted cookies", price: "$36/dozen", img: "src/assets/products-cookie.png", url: "/cookies" },
-  { name: "Flan", price: "$30/dozen", img: "src/assets/products-flan.png", url: "/flans" },
+  { name: "Ready made & custom cupcakes", price: "$42/dozen", img: "/src/assets/products-cupcake.png", url:"/cakes" },
+  { name: "Pastelitos", price: "$36/dozen", img: "/src/assets/products-pastelitos.png", url: "/pastelitos" },
+  { name: "Assorted cookies", price: "$36/dozen", img: "/src/assets/products-cookie.png", url: "/cookies" },
+  { name: "Flan", price: "$30/dozen", img: "/src/assets/products-flan.png", url: "/flans" },
 ];
 ---
 
@@ -16,10 +16,8 @@ const treats = [
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full max-w-7xl">
     {treats.map((treat) => (
       <a href={treat.url}>
-
-      
       <div class="flex flex-col items-start bg-beige-50  overflow-hidden">
-         src={treat.img} alt={treat.name} class="w-full rounded-2xl h-80 object-cover bg-beige-100" />
+         <img src={treat.img} alt={treat.name} class="w-full rounded-2xl h-80 object-cover bg-beige-100" />
         <div class="p-4 text-left">
           <h3 class="text-lg font-semibold text-green-900">{treat.name}</h3>
           <p class="text-black mt-1">{treat.price}</p>

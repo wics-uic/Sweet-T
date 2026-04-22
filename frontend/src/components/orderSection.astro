@@ -2,6 +2,7 @@
 const { item_name = "default name", price = "$0", url = "src/assets/landing-cake.png", images = [] } = Astro.props;
 import OrderAccordion from "./OrderAccordion.astro";
 import tryOtherTreats from "./tryOtherTreats.astro";
+import { getAbsoluteLocaleUrl } from "astro:i18n";
 
 // ADDED 
 import CartSidebar from "../components/CartSidebar.astro";
@@ -21,7 +22,7 @@ const imagePath = `${base}/${url.replace(/^\//, '')}`;
     </div>
     <div class="circles">
       <button class="circle" onclick="
-import { getAbsoluteLocaleUrl } from "astro:i18n";
+
 
 showImage(0)" aria-label="first-image"></button>
       <button class="circle" onclick="showImage(1)" aria-label="second-image"></button>
@@ -35,8 +36,8 @@ showImage(0)" aria-label="first-image"></button>
     <h2>{item_name == "Cake" || item_name == "Cupcake" ? item_name + " and Custom " + item_name + "s" : item_name}</h2>
     <!--tabs -->
     <div class="tabs">
-      <button class="tab active" onclick="switchTab(event, 'ready')">Ready made</button>
-      {isCustom && <button class="tab" onclick="switchTab(event, 'custom')">Custom</button>}
+      <button class="tab active" onclick="switchTab('ready')">Ready made</button>
+      {isCustom && <button class="tab" onclick="switchTab('custom')">Custom</button>}
     </div>
     <!--ready tab -->
     <div id="ready" class="tab-content active">

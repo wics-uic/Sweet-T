@@ -1,12 +1,7 @@
 ---
 import ProductItem from "./product.astro";
 import Products from "./product-data/products.ts";
-import type {Product} from "./product-data/products.ts";
-import cakes from "/src/assets/products-cake.png";
-import cupcakes from "/src/assets/products-cupcake.png";
-import pastelitos from "/src/assets/products-pastelitos.png";
-import cookies from "/src/assets/products-cookie.png";
-import flan from "/src/assets/products-flan.png";
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="products-section">
@@ -20,7 +15,7 @@ import flan from "/src/assets/products-flan.png";
           price={product.price}
           url={product.imagePath}
           ready={product.ready}
-          link={product.link}˜
+          link={`${base}/${product.link}`}
         />
       </div>
     ))}

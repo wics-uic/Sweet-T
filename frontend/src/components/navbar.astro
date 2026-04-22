@@ -10,15 +10,15 @@ const navLinks = [
 ];
 
 const navLinksRightSide = [ 
-  {name: "Cart", path: `${base}/cart/`, image: `../assets/nav-basket.svg`}, 
-  {name: "Login", path: `${base}/admin/login/`, image: `../assets/nav-user.svg`} 
+  {name: "Cart", path: `${base}/cart/`, image: `/src/assets/nav-basket.svg`}, 
+  {name: "Login", path: `${base}/admin/login/`, image: `/src/assets/nav-user.svg`} 
 ];
 
 
 ---
 
 <div class="nav-bar flex justify-center relative">
-  <button id = "menu-button" class = "md:hidden absolute right-5 top-5 flex flex-col gap-1">
+  <button id = "menu-button" class = "cursor-pointer md:hidden absolute right-5 top-5 flex flex-col gap-1">
     <span class = "block w-8 h-0.5 bg-black"></span>
     <span class = "block w-8 h-0.5 bg-black"></span>
     <span class = "block w-8 h-0.5 bg-black"></span>
@@ -51,7 +51,7 @@ const navLinksRightSide = [
 </div>
 
 <!-- code for phone -->
-<div id="mobile-menu" class="hidden md:hidden absolute right-5 top-35 bg-white px-6 py-4 shadow-lg rounded-lg w-[180px] cursor-pointer">
+<div id="mobile-menu" class="hidden md:hidden absolute right-5 top-10 bg-white px-6 py-4 shadow-lg rounded-lg w-[180px] cursor-pointer">
     <ul class="flex flex-col gap-4">
     {navLinks.map((link) => <li><a class="link" href={link.path}>{link.name}</a></li>)}
   </ul>
@@ -161,7 +161,7 @@ button?.addEventListener("click", function() {
 });
 
 // Cart Toggle Logic
-function setupCartToggle(btnId) {
+function setupCartToggle(btnId:string) {
   const btn = document.getElementById(btnId);
   const cartWrapper = document.getElementById("cart-wrapper");
   
@@ -170,8 +170,8 @@ function setupCartToggle(btnId) {
       e.preventDefault();
       cartWrapper.classList.add("open");
       // Close mobile menu if open
-      if (!menu.classList.contains("hidden")) {
-        menu.classList.add("hidden");
+      if (!menu?.classList.contains("hidden")) {
+        menu?.classList.add("hidden");
       }
     });
   }
