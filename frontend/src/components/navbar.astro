@@ -1,5 +1,8 @@
 ---
 import SweetT from "../assets/Sweet_T.svg";
+import NavBasket from "../assets/nav-basket.svg";
+import NavUser from "../assets/nav-user.svg";
+
 const base = import.meta.env.BASE_URL;
 const navLinks = [ 
   {name: "Cakes", path: `${base}/cakes/`}, 
@@ -10,8 +13,8 @@ const navLinks = [
 ];
 
 const navLinksRightSide = [ 
-  {name: "Cart", path: `${base}/cart/`, image: `/src/assets/nav-basket.svg`}, 
-  {name: "Login", path: `${base}/admin/login/`, image: `/src/assets/nav-user.svg`} 
+  {name: "Cart", path: `${base}/cart/`, image: NavBasket.src}, 
+  {name: "Login", path: `${base}/admin/login/`, image: NavUser.src} 
 ];
 
 

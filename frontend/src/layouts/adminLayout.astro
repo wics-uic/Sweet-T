@@ -23,7 +23,8 @@ const { currentTab } = Astro.props;
   </head>
   <body>
     <div class="justify-center flex flex-col align-middle">
-      <AdminNavbar currentTab={currentTab}/>
+      {currentTab != "login" &&  <AdminNavbar currentTab={currentTab}/>}
+    
         <slot />
     </div>
   </body>

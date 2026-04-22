@@ -1,3 +1,5 @@
+import type { Product } from "../../product-data/products";
+
 export type OrderStatus = "Pending" | "Ready for Pickup" | "Complete";
 export type OrderType = "regular" | "custom";
 
@@ -11,6 +13,7 @@ export interface DashboardOrder {
   type: OrderType;    
   productId: string; 
   totalPaid: number;  
+  orders: Product[];
 }
 const Orders: DashboardOrder[] = [
   {
@@ -19,10 +22,11 @@ const Orders: DashboardOrder[] = [
     order: '6" Celebration Cake – Vanilla + Strawberry',
     date: "2025-11-20",
     due: "2025-11-27",
-    status: "Pending",
+    status: "Ready for Pickup",
     type: "regular",
     productId: "CAKE_6_REGULAR",
     totalPaid: 65,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1002",
@@ -34,6 +38,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CUPCAKES_DOZEN",
     totalPaid: 42,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1003",
@@ -45,6 +50,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CAKE_9_CHOC_FUDGE",
     totalPaid: 75,
+    orders: [{name: 'Chocolate Fudge Cupcake', imagePath: "", quantity: 1, price: "75", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1004",
@@ -56,6 +62,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "SHEET_HALF_FUNFETTI",
     totalPaid: 110,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1005",
@@ -67,6 +74,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CUPCAKES_GF_DOZEN",
     totalPaid: 48,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1006",
@@ -74,10 +82,11 @@ const Orders: DashboardOrder[] = [
     order: '6" Red Velvet Cake',
     date: "2025-11-21",
     due: "2025-11-28",
-    status: "Pending",
+    status: "Complete",
     type: "regular",
     productId: "CAKE_6_RED_VELVET",
     totalPaid: 60,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1007",
@@ -89,6 +98,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "COOKIES_PLATTER_3DOZEN",
     totalPaid: 54,
+    orders: [{name: 'Chocolate Fudge Cupcake', imagePath: "", quantity: 1, price: "75", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1008",
@@ -96,10 +106,11 @@ const Orders: DashboardOrder[] = [
     order: "Custom Cake – Soccer Theme",
     date: "2025-11-17",
     due: "2025-11-24",
-    status: "Pending",
+    status: "Ready for Pickup",
     type: "custom",
     productId: "CAKE_CUSTOM_SOCCER",
     totalPaid: 135,
+    orders: [{name: 'Chocolate Fudge Cupcake', imagePath: "", quantity: 1, price: "75", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1009",
@@ -111,6 +122,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CAKE_CUSTOM_BABY_SHOWER",
     totalPaid: 150,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1010",
@@ -122,6 +134,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "COOKIES_DOZEN_CHOC_CHIP",
     totalPaid: 24,
+    orders: [{name: 'Chocolate Fudge Cupcake', imagePath: "", quantity: 1, price: "75", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1011",
@@ -133,6 +146,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CUPCAKE_TOWER_PASTEL",
     totalPaid: 160,
+    orders: [{name: 'Chocolate Fudge Cupcake', imagePath: "", quantity: 1, price: "75", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1012",
@@ -144,6 +158,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "FLAN_TRAY_12",
     totalPaid: 45,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1013",
@@ -155,6 +170,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "PASTELITOS_2DOZEN",
     totalPaid: 60,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1014",
@@ -166,6 +182,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CAKE_8_CARROT",
     totalPaid: 70,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1015",
@@ -177,6 +194,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CAKE_CUSTOM_WEDDING_3TIER",
     totalPaid: 520,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1016",
@@ -188,6 +206,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CUPCAKES_DOZEN_RED_VELVET",
     totalPaid: 44,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1017",
@@ -199,6 +218,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CAKE_6_VANILLA_RAINBOW",
     totalPaid: 55,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1018",
@@ -206,10 +226,11 @@ const Orders: DashboardOrder[] = [
     order: "Custom Sheet Cake – Corporate Logo",
     date: "2025-11-04",
     due: "2025-11-18",
-    status: "Pending",
+    status: "Complete",
     type: "custom",
     productId: "CAKE_CUSTOM_CORP_LOGO",
     totalPaid: 230,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1019",
@@ -221,6 +242,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "COOKIES_PLATTER_ASSORTED",
     totalPaid: 48,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1020",
@@ -232,6 +254,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CAKE_9_LEMON_BLUEBERRY",
     totalPaid: 72,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1021",
@@ -239,10 +262,11 @@ const Orders: DashboardOrder[] = [
     order: "Custom Cake – Encanto Theme",
     date: "2025-11-01",
     due: "2025-11-14",
-    status: "Pending",
+    status: "Complete",
     type: "custom",
     productId: "CAKE_CUSTOM_ENCANTO",
     totalPaid: 180,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1022",
@@ -254,6 +278,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CUPCAKES_DOZEN_VANILLA_PINK",
     totalPaid: 40,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1023",
@@ -265,6 +290,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "FLAN_CUPS_10",
     totalPaid: 38,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1024",
@@ -272,10 +298,11 @@ const Orders: DashboardOrder[] = [
     order: "Custom Cake – Gaming Controller Design",
     date: "2025-10-29",
     due: "2025-11-10",
-    status: "Pending",
+    status: "Ready for Pickup",
     type: "custom",
     productId: "CAKE_CUSTOM_GAMING",
     totalPaid: 165,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1025",
@@ -287,6 +314,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "SHEET_HALF_CHOC_OREO",
     totalPaid: 120,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1026",
@@ -294,10 +322,11 @@ const Orders: DashboardOrder[] = [
     order: "Cookie Platter – Holiday Assortment",
     date: "2025-10-27",
     due: "2025-11-03",
-    status: "Pending",
+    status: "Complete",
     type: "regular",
     productId: "COOKIES_PLATTER_HOLIDAY",
     totalPaid: 52,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1027",
@@ -309,6 +338,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CUPCAKES_24_UNICORN",
     totalPaid: 96,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1028",
@@ -320,6 +350,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CAKE_6_MARBLE_GANACHE",
     totalPaid: 62,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1029",
@@ -331,6 +362,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "PASTELITOS_MIXED_1DOZEN",
     totalPaid: 30,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1030",
@@ -342,6 +374,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CAKE_CUSTOM_RETIREMENT_GOLF",
     totalPaid: 190,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1031",
@@ -353,6 +386,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CAKE_8_STRAWBERRY_SHORTCAKE",
     totalPaid: 72,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1032",
@@ -360,10 +394,11 @@ const Orders: DashboardOrder[] = [
     order: "Dozen Cookies – Peanut Butter & Chocolate",
     date: "2025-11-30",
     due: "2025-12-02", // tomorrow-ish
-    status: "Pending",
+    status: "Complete",
     type: "regular",
     productId: "COOKIES_DOZEN_PB_CHOC",
     totalPaid: 26,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1033",
@@ -371,10 +406,11 @@ const Orders: DashboardOrder[] = [
     order: "Custom Cake – Princess Castle",
     date: "2025-11-30",
     due: "2025-12-05",
-    status: "Pending",
+    status: "Ready for Pickup",
     type: "custom",
     productId: "CAKE_CUSTOM_PRINCESS",
     totalPaid: 210,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1034",
@@ -386,6 +422,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "FLAN_TRAY_CARAMEL",
     totalPaid: 48,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1035",
@@ -397,6 +434,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CUPCAKES_24_GENDER_REVEAL",
     totalPaid: 98,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1036",
@@ -404,10 +442,11 @@ const Orders: DashboardOrder[] = [
     order: "Half Sheet Cake – Vanilla + Fresh Berries",
     date: "2025-12-01",
     due: "2025-12-24",
-    status: "Pending",
+    status: "Ready for Pickup",
     type: "regular",
     productId: "SHEET_HALF_VANILLA_BERRIES",
     totalPaid: 125,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1037",
@@ -419,6 +458,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "CUPCAKES_DOZEN_REDVELVET_CC",
     totalPaid: 46,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1038",
@@ -430,6 +470,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "CAKE_CUSTOM_BASEBALL",
     totalPaid: 175,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1039",
@@ -441,6 +482,7 @@ const Orders: DashboardOrder[] = [
     type: "regular",
     productId: "COOKIES_PLATTER_KIDS",
     totalPaid: 50,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
   {
     id: "ORD-1040",
@@ -452,6 +494,7 @@ const Orders: DashboardOrder[] = [
     type: "custom",
     productId: "DESSERT_TABLE_WEDDING",
     totalPaid: 680,
+    orders: [{name: 'Cake', imagePath: "", quantity: 1, price: "65", ready: true, link:"cakes"}]
   },
 ];
 

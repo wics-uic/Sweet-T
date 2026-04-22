@@ -71,8 +71,8 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
           <div class="space-y-3" id="orders-container">
             {filteredOrders.map((order) => {
               // Format ProductsOrdered into a string summary
-              const orderSummary = order.ProductsOrdered && Array.isArray(order.ProductsOrdered)
-                ? order.ProductsOrdered.map(p => `${p.quantity} ${p.name}`).join(", ")
+              const orderSummary = order.orders && Array.isArray(order.orders)
+                ? order.orders.map(p => `${p.quantity} ${p.name}`).join(", ")
                 : "No items";
 
               // Format Date
@@ -98,17 +98,17 @@ const Orders = Array.isArray(orders) ? orders : []; // Map prop to local variabl
 
               // Determine Status
               let statusStr = "Pending";
-              if (order.isPickedUp) {
-                  statusStr = "Complete";
-              } else if (order.Order_complete) {
+              if (order.status == "Ready for Pickup") {
                   statusStr = "Ready for Pickup";
-              } else {
-                  statusStr = "Pending";
+              } else if(order.status == "Complete") {
+                  statusStr = "Complete";
+              }  else {
+                statusStr= "Pending";
               }
 
               return (
                 <CustomOrder 
-                  id={order._id}
+                  id={order.productId}
                   name={order.name} 
                   order={orderSummary} 
                   date={dateStr} 

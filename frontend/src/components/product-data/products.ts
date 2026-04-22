@@ -11,6 +11,7 @@ export type Product = {
   price: string;
   ready: boolean;
   link: string;
+  quantity?: number | 0;
 };
 
 const team: Product[] = [

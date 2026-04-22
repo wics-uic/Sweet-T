@@ -50,9 +50,17 @@ export function getAnalytics(rawOrders: DashboardOrder[]): AnalyticsResult {
   const now = new Date();
   const today = startOfDay(now);
 
+  // Add this helper function at the top
+function endOfDay(d: Date) {
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate(), 23, 59, 59, 999);
+}
+
+// Then update your week window:
+const endThisWeek = endOfDay(now);
+
   // Define week windows as rolling 7-day windows:
   const startThisWeek = addDays(today, -6);       // last 7 days incl. today
-  const endThisWeek = today;
+  // const endThisWeek = today;
   const startLastWeek = addDays(startThisWeek, -7);
   const endLastWeek = addDays(startThisWeek, -1);
 
